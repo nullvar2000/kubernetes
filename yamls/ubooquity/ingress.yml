@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ubooquity
+  namespace: ubooquity
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+    - host: ubooquity.legion.lan
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/ubooquity"
+            backend:
+              service:
+                name: library
+                port:
+                  number: 2202
+
+              
+              

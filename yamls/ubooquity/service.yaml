@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  ubooquity
+  namespace: ubooquity
+  labels:
+    app: ubooquity
+spec:
+  selector:
+    app:  ubooquity
+  type: ClusterIP
+  ports:
+    - name: library
+      port: 2202
+      protocol: TCP
+      targetPort: 2202
+    - name: admin
+      port: 2203
+      protocol: TCP
+      targetPort: 2203
+      
+
