@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  jellyfin
+  namespace: jellyfin
+  labels:
+    app: jellyfin
+spec:
+  selector:
+    app:  jellyfin
+  type: ClusterIP
+  ports:
+    - name: ui
+      port: 8096
+      protocol: TCP
+      targetPort: 8096
+    - name: ui-secure
+      port: 8920
+      protocol: TCP
+      targetPort: 8920
+    - name: discovery1
+      port: 7359
+      protocol: TCP
+      targetPort: 7359
+    - name: discovery2
+      port: 1900
+      protocol: TCP
+      targetPort: 1900
