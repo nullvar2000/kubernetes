@@ -1,5 +1,5 @@
 apiVersion: networking.k8s.io/v1
-kind: Ingress
+kind: Ingress 
 metadata:
   name: ubooquity
   namespace: ubooquity
@@ -14,9 +14,15 @@ spec:
             path: "/ubooquity"
             backend:
               service:
-                name: library
+                name: ubooquity
                 port:
                   number: 2202
-
+          - pathType: Prefix
+            path: "/ubooquity/admin"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  number: 2203
               
               
