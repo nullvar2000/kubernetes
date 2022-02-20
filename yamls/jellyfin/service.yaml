@@ -20,9 +20,9 @@ spec:
       targetPort: 8920
     - name: discovery1
       port: 7359
-      protocol: TCP
+      protocol: UDP
       targetPort: 7359
     - name: discovery2
       port: 1900
-      protocol: TCP
+      protocol: UDP
       targetPort: 1900
