@@ -20,10 +20,10 @@ spec:
         image: louislam/uptime-kuma:1.15.1-debian
         ports:
         - containerPort: 3001
-      #   volumeMounts:
-      #   - mountPath: /app/data 
-      #     name: data
-      # volumes:
-      # - name: data
-      #   persistentVolumeClaim:
-      #     claimName: app-data
+        volumeMounts:
+        - mountPath: /app/data 
+          name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: app-data
