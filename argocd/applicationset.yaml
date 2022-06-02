@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: home-cluster
-  namespace: default
+  namespace: argo-cd
 spec:
   generators:
   - list:
@@ -24,7 +24,7 @@ spec:
       source:
         repoURL: https://github.com/nullvar2000/kubernetes.git
         targetRevision: HEAD
-        path: 'argocd/apps/nginx'
+        path: 'argocd/apps/nginx/'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{name}}'
