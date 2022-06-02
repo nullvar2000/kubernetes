@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: home-cluster
+spec:
+  generators:
+  - git:
+      repoURL:  https://github.com/nullvar2000/kubernetes.git
+      revision: HEAD
+      directories:
+      - path: argocd/apps/*
+  template:
+    metadata:
+      name: '{{ path[0] }}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/nullvar2000/kubernetes.git
+        targetRevision: HEAD
+        path: "{{ path }}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ path.basename }}"
