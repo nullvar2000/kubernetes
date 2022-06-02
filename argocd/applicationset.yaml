@@ -2,18 +2,23 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: home-cluster
+  namespace: default
 spec:
   generators:
-  - git:
+    - git:
       repoURL:  https://github.com/nullvar2000/kubernetes.git
-      revision: HEAD
+      revision: master
       directories:
-      - path: argocd/apps/*
+        - path: argocd/apps/*
   template:
     metadata:
       name: "{{ path.basename }}"
     spec:
       project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
       source:
         repoURL: https://github.com/nullvar2000/kubernetes.git
         targetRevision: HEAD
