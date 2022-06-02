@@ -6,10 +6,10 @@ metadata:
 spec:
   generators:
     - git:
-      repoURL:  https://github.com/nullvar2000/kubernetes.git
-      revision: master
-      directories:
-        - path: argocd/apps/*
+        repoURL:  https://github.com/nullvar2000/kubernetes.git
+        revision: master
+        directories:
+          - path: argocd/apps/*
   template:
     metadata:
       name: "{{ path.basename }}"
