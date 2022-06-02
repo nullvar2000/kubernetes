@@ -12,7 +12,7 @@ spec:
           - path: argocd/apps/*
   template:
     metadata:
-      name: "{{ path.basename }}"
+      name: '{{path.basename}}'
     spec:
       project: default
       syncPolicy:
@@ -22,7 +22,7 @@ spec:
       source:
         repoURL: https://github.com/nullvar2000/kubernetes.git
         targetRevision: HEAD
-        path: "{{ path }}"
+        path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ path.basename }}"
+        namespace: '{{path.basename}}'
