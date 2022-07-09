@@ -12,5 +12,5 @@ spec:
   project: helm
   source:
     path: argocd/helm/
-    repoURL: https://github.com/nullvar2000
+    repoURL: https://github.com/nullvar2000/kubernetes
     targetRevision: HEAD
