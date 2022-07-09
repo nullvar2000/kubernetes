@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: olm
+  name: argocd-setup
   namespace: argocd
 spec:
   generators:
@@ -9,7 +9,7 @@ spec:
       repoURL: https://github.com/nullvar2000/kubernetes
       revision: HEAD
       directories:
-      - path: argocd/olm/*
+      - path: argocd/argocd-setup/*
   template:
     metadata:
       name: '{{ path.basename }}'
