@@ -1,3 +1,0 @@
-nfs:
-  server: kasumi.lan
-  path: /data/kubernetes-persistent-volumes
