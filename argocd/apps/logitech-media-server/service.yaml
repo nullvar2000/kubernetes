@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  lms
+  namespace: music
+spec:
+  selector:
+    app:  lms
+  type: LoadBalancer
+  ports:
+    - name:  web
+      port:  9000
+      protocol: TCP
+    - name: cli
+      port: 9090
+      protocol: TCP
+    - name: squeeze-device-tcp
+      port: 3483
+      protocol: TCP 
+    # - name: squeeze-device-udp
+    #   port: 3483
+    #   protocol: UDP
