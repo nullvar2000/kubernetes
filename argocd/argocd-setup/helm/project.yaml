@@ -7,7 +7,10 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: Project for helm charts 
+  description: Project for helm charts
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
   # Allow manifests to deploy from any Git repos
   sourceRepos:
   - '*'
