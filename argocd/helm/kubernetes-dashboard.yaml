@@ -6,7 +6,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: helm
   source:
     repoURL: 'https://github.com/kubernetes/dashboard'
     path: aio/deploy/recommended
