@@ -11,6 +11,6 @@ spec:
     server: https://kubernetes.default.svc
   project: helm
   source:
-    path: helm
+    path: argocd/helm
     repoURL: https://github.com/nullvar2000
     targetRevision: HEAD
