@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nfs-temp
+  name: nfs-provisioner
 spec:
   destination:
     name: ''
