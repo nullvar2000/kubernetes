@@ -12,7 +12,7 @@ spec:
   sourceRepos:
   - '*'
   # Only permit applications to deploy to the olm namespaces in the same cluster
-  destinations:
-  - '*'
+  # destinations:
+  # - '*'
 
   
