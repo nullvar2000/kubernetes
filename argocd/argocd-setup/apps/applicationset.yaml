@@ -14,7 +14,7 @@ spec:
     metadata:
       name: '{{ path.basename }}'
     spec:
-      project: olm
+      project: apps
       source:
         repoURL: https://github.com/nullvar2000/kubernetes
         targetRevision: HEAD
