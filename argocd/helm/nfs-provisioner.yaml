@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: storage
+    namespace: default
     server: 'https://kubernetes.default.svc'
   source:
     path: ''
