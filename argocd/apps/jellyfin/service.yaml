@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     app:  jellyfin
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: ui
       port: 8096

@@ -18,28 +18,28 @@ spec:
     spec:
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin 
+          image: linuxserver/jellyfin:10.8.1
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
               value: America/New_York
-            - name: JELLYFIN_PublishedServerUrl
-              value: 10.5.10.60
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: spec.nodeName
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.name
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
+            # - name: JELLYFIN_PublishedServerUrl
+            #   value: 10.5.10.60
+            # - name: NODE_NAME
+            #   valueFrom:
+            #     fieldRef:
+            #       apiVersion: v1
+            #       fieldPath: spec.nodeName
+            # - name: POD_NAME
+            #   valueFrom:
+            #     fieldRef:
+            #       apiVersion: v1
+            #       fieldPath: metadata.name
+            # - name: POD_NAMESPACE
+            #   valueFrom:
+            #     fieldRef:
+            #       apiVersion: v1
+            #       fieldPath: metadata.namespace
           ports:
             - containerPort: 8096
               protocol: TCP
@@ -54,12 +54,13 @@ spec:
               name: media
               readOnly: True
             - mountPath: /config
-              name: jellyfin-config
+              name: config
       restartPolicy: Always
       volumes:
         - name: media
-          hostPath:
-            path: /mnt/media
-        - name: jellyfin-config
+          nfs:
+            server: kasumi
+            path: /data/Media/
+        - name: config
           persistentVolumeClaim:
-            claimName: jellyfin-config
+            claimName: config
