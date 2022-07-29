@@ -5,7 +5,7 @@ metadata:
   namespace: guacamole
 spec:
   selector:
-    app:  guacd
+    app:  guacamole
   type: ClusterIP
   ports:
     - name:  web
