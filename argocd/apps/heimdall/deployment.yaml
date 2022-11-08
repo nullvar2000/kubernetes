@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: heimdall
-        image: lscr.io/linuxserver/heimdall:2.4.12 
+        image: lscr.io/linuxserver/heimdall:2.4.15 
         env:
         - name: TZ
           value: America/New_York
