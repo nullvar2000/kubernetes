@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin:10.8.1
+          image: linuxserver/jellyfin:10.8.7
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
