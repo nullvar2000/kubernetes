@@ -3,23 +3,23 @@ kind: Namespace
 metadata:
   name: mariadb-operator
 ---
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: operatorgroup
-  namespace: mariadb-operator
-spec:
-  selector:
-      matchLabels:
-        allow.operator: "true"
----
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: mariadb-operator
-  namespace: mariadb-operator
-spec:
-  channel: alpha
-  name: mariadb-operator
-  source: operatorhubio-catalog
-  sourceNamespace: olm
+# apiVersion: operators.coreos.com/v1
+# kind: OperatorGroup
+# metadata:
+#   name: operatorgroup
+#   namespace: mariadb-operator
+# spec:
+#   selector:
+#       matchLabels:
+#         allow.operator: "true"
+# ---
+# apiVersion: operators.coreos.com/v1alpha1
+# kind: Subscription
+# metadata:
+#   name: mariadb-operator
+#   namespace: mariadb-operator
+# spec:
+#   channel: alpha
+#   name: mariadb-operator
+#   source: operatorhubio-catalog
+#   sourceNamespace: olm
