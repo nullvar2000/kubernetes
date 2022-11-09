@@ -10,6 +10,8 @@ spec:
     namespace: argocd
     server: https://kubernetes.default.svc
   project: helm
+  syncPolicy:
+        automated: {}
   source:
     path: argocd/helm/
     repoURL: https://github.com/nullvar2000/kubernetes
