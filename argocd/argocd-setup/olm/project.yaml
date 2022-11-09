@@ -13,9 +13,7 @@ spec:
   - '*'
   # Only permit applications to deploy to the olm namespaces in the same cluster
   destinations:
-  - namespace: olm
-    server: https://kubernetes.default.svc
-  - namespace: operators
+  - namespace: "*"
     server: https://kubernetes.default.svc
 
   
