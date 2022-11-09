@@ -9,8 +9,9 @@ metadata:
   name: operatorgroup
   namespace: mariadb-operator
 spec:
-  targetNamespaces:
-  - mariadb-operator
+  selector:
+      matchLabels:
+        allow.operator: "true"
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
