@@ -21,6 +21,6 @@ metadata:
   namespace: mariadb-operator
 spec:
   channel: alpha
-  name: mariadb-operator
+  name: mariadb-operator-app
   source: operatorhubio-catalog
   sourceNamespace: olm
