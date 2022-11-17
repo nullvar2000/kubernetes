@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  namespace: homeassistant
+  labels:
+    app: mosquitto
+spec:
+  selector:
+    matchLabels:
+      app: mosquitto
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+      - name: mosquitto
+        image: eclipse-mosquitto:2.0.15
+        ports:
+        - containerPort: 1883
+        volumeMounts:
+        - mountPath: /mosquitto/config/
+          name: config
+          readOnly: true
+        - mountPath: /mosquitto/data
+          name: data
+        - mountPath: /mosquitto/log
+          name: log
+        resources:  {}
+      volumes:
+      - name: config
+        configMap:
+          name: mosquitto-conf.yaml
+      - name: data
+        persistentVolumeClaim:
+          claimName: mosquitto-data
+      - name: log
+        persistentVolumeClaim:
+          claimName: mosquitto-log
+
