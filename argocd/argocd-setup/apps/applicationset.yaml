@@ -21,6 +21,8 @@ spec:
         repoURL: https://github.com/nullvar2000/kubernetes
         targetRevision: HEAD
         path: '{{ path }}'
+        directory:
+          recurse: true
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ path.basename }}'
