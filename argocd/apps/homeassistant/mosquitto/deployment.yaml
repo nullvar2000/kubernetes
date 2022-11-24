@@ -18,7 +18,6 @@ spec:
       containers:
       - name: mosquitto
         image: eclipse-mosquitto:2.0.15
-        # command: ["top"]
         ports:
         - containerPort: 1883
         volumeMounts:
