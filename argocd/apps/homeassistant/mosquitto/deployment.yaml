@@ -18,11 +18,17 @@ spec:
       containers:
       - name: mosquitto
         image: eclipse-mosquitto:2.0.15
+        # command: ["top"]
         ports:
         - containerPort: 1883
         volumeMounts:
-        - mountPath: /mosquitto/config/
+        - mountPath: /mosquitto/config/mosquitto.conf
           name: config
+          subPath: mosquitto.conf
+          readOnly: true
+        - mountPath: /mosquitto/config/passwd
+          name: passwd
+          subPath: passwd
           readOnly: true
         - mountPath: /mosquitto/data
           name: data
@@ -32,7 +38,13 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: mosquitto-conf.yaml
+          name: mosquitto-conf
+          items:
+            - key: mosquitto.conf
+              path: mosquitto.conf
+      - name: passwd
+        secret:
+          secretName: mosquitto-passwd
       - name: data
         persistentVolumeClaim:
           claimName: mosquitto-data
