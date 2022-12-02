@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: influxdb-env
+  namespace: homeassistant
+data:
+  DOCKER_INFLUXDB_INIT_MODE: setup
+  DOCKER_INFLUXDB_INIT_USERNAME: homeassistant
+  DOCKER_INFLUXDB_INIT_ORG: homeassistant
+  DOCKER_INFLUXDB_INIT_BUCKET: home
+  DOCKER_INFLUXDB_INIT_RETENTION: 1y
