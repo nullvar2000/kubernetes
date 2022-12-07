@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: influxdb
+  namespace: homeassistant
+spec:
+  rules:
+  - host: ha-influxdb.legion.lan
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: influxdb
+            port:
+              number: 8086
