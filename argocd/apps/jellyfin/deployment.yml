@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin:10.8.7
+          image: linuxserver/jellyfin:10.8.10
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
@@ -55,6 +55,7 @@ spec:
               readOnly: True
             - mountPath: /config
               name: config
+          resources: {}
       restartPolicy: Always
       volumes:
         - name: media
