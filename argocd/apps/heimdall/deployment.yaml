@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: heimdall
-        image: lscr.io/linuxserver/heimdall:2.4.15 
+        image: lscr.io/linuxserver/heimdall:2.5.6 
         env:
         - name: TZ
           value: America/New_York
@@ -27,6 +27,7 @@ spec:
         volumeMounts:
         - mountPath: /config 
           name: config
+        resources: {}
       volumes:
       - name: config
         persistentVolumeClaim:
