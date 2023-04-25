@@ -17,12 +17,13 @@ spec:
     spec:
       containers:
       - name: uptime-kuma
-        image: louislam/uptime-kuma:1.15.1-debian
+        image: louislam/uptime-kuma:1.21.2-debian
         ports:
         - containerPort: 3001
         volumeMounts:
         - mountPath: /app/data 
           name: data
+        resources: {}
       volumes:
       - name: data
         persistentVolumeClaim:
