@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typesense
+  namespace: immich
+  labels:
+    app: typesense
+spec:
+  selector:
+    matchLabels:
+      app: typesense
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: typesense
+    spec:
+      containers:
+      - name: typesense
+        image: typesense/typesense:0.24.0
+        ports:
+        - containerPort: 8108
+        envFrom:
+          - secretRef:
+              name: typesense-secrets
+        volumeMounts:
+        - mountPath: /data
+          name: typesense-data
+        resources:  {}
+      volumes:
+      - name: typesense-data
+        persistentVolumeClaim:
+          claimName: typesense-data
+
