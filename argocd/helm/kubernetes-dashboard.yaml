@@ -8,9 +8,9 @@ metadata:
 spec:
   project: helm
   source:
-    repoURL: 'https://github.com/kubernetes/dashboard'
-    path: aio/deploy/recommended
-    targetRevision: HEAD
+    repoURL: 'https://kubernetes.github.io/dashboard'
+    path: kubernetes-dashboard
+    targetRevision: 6.0.8
   destination:
     namespace: kubernetes-dashboard
     server: 'https://kubernetes.default.svc'
