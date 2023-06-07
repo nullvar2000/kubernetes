@@ -18,4 +18,6 @@ spec:
           value: kasumi.lan
         - name: nfs.path
           value: /data/kubernetes-persistent-volumes
+  syncPolicy:
+    automated: {}
   project: helm
