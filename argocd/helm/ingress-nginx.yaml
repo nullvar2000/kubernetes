@@ -4,15 +4,16 @@ metadata:
   name: ingress-nginx
   namespace: argocd
 spec:
-  destination:
-    name: ''
-    namespace: ingress-nginx
-    server: 'https://kubernetes.default.svc'
+  project: helm
   source:
-    path: ''
+    chart: ingress-nginx
     repoURL: 'https://kubernetes.github.io/ingress-nginx'
     targetRevision: 4.7.0
-    chart: ingress-nginx
+  destination:
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
   syncPolicy:
     automated: {}
-  project: helm
+    syncOptions:
+      - CreateNamespace=true
+  
