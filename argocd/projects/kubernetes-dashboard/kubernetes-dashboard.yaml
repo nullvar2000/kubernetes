@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubernetes-dashboard
+  name: kubernetes-dashboard-install
   namespace: argocd
 spec:
   project: kubernetes-dashboard
