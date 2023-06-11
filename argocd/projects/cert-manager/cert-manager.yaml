@@ -12,7 +12,7 @@ spec:
     helm:
       parameters:
         - name: installCRDs
-          vale: true
+          value: "true"
   destination:
     namespace: cert-manager
     server: 'https://kubernetes.default.svc'
