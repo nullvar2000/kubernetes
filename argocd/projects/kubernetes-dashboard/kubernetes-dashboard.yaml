@@ -3,10 +3,8 @@ kind: Application
 metadata:
   name: kubernetes-dashboard
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
-  project: helm
+  project: kubernetes-dashboard
   source:
     chart: kubernetes-dashboard
     repoURL: 'https://kubernetes.github.io/dashboard'
