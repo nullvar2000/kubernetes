@@ -14,7 +14,7 @@ spec:
     metadata:
       name: '{{ path.basename }}'
     spec:
-      project: default
+      project: '{{ path.basename }}'
       source:
         repoURL: https://github.com/nullvar2000/kubernetes
         targetRevision: HEAD
