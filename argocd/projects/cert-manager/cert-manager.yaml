@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cert-manager-install
   namespace: argocd
 spec:
   project: cert-manager
@@ -10,6 +10,7 @@ spec:
     repoURL: 'https://charts.jetstack.io'
     targetRevision: v1.12.0
     helm:
+      releaseName: cert-manager
       parameters:
         - name: installCRDs
           value: "true"
