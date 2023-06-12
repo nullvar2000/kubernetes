@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name:  heimdall
   namespace: heimdall
+  labels:
+    app: heimdall
 spec:
   selector:
     app:  heimdall
