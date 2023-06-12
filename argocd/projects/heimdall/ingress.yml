@@ -4,6 +4,7 @@ metadata:
   name: heimdall
   namespace: heimdall
 spec:
+  ingressClassName: nginx
   rules:
   - host: heimdall.legion.lan
     http:
