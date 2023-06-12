@@ -43,6 +43,8 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ path.basename }}'
+      directory:
+        recurse: true
       syncPolicy:
         automated:
           prune: false
