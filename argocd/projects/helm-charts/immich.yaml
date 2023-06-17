@@ -51,9 +51,6 @@ spec:
             postgresql:
               auth:
                 existingSecret: postgres-secrets
-          persistence:
-            data:
-              existingClaim: postgresql-data
 
         redis:
           enabled: false
