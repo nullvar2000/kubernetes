@@ -86,7 +86,7 @@ spec:
             pullPolicy: IfNotPresent
           envFrom:
             - secretRef:
-              name: postgres-secrets
+                name: postgres-secrets
 
         microservices:
           enabled: true
