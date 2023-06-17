@@ -33,18 +33,18 @@ spec:
             # - containerPort: 1900
             #   protocol: UDP
           volumeMounts:
-            - mountPath: /data/media
-              name: media
-              readOnly: True
+            # - mountPath: /data/media
+            #   name: media
+            #   readOnly: True
             - mountPath: /config
               name: config
           resources: {}
       restartPolicy: Always
       volumes:
-        - name: media
-          nfs:
-            server: kasumi
-            path: /data/Media/
+        # - name: media
+        #   nfs:
+        #     server: kasumi
+        #     path: /data/Media/
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
