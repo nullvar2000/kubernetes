@@ -53,10 +53,11 @@ spec:
                 existingSecret: postgres-secrets
 
         redis:
-          enabled: true
+          enabled: false
           architecture: standalone
           auth:
             enabled: false
+          persistence:
 
         typesense:
           enabled: true
