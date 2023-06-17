@@ -51,6 +51,8 @@ spec:
             postgresql:
               auth:
                 existingSecret: postgres-secrets
+          persistence:
+            storageClass: nfs-client
 
         redis:
           enabled: false
