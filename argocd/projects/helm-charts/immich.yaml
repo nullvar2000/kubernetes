@@ -8,7 +8,7 @@ spec:
   source:
     chart: immich
     repoURL: 'https://immich-app.github.io/immich-charts'
-    targetRevision: immich-0.1.1
+    targetRevision: 0.1.1
     helm:
       releaseName: immich
       values: |
