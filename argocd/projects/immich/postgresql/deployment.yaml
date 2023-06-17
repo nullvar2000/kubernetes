@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: immich-postgresql
+  name: immich-postgres
   namespace: immich
   labels:
-    app: postgresql
+    app: postgres
 spec:
   selector:
     matchLabels:
-      app: postgresql
+      app: postgres
   replicas: 1
   template:
     metadata:
       labels:
-        app: postgresql
+        app: postgres
     spec:
       containers:
       - name: postgres
