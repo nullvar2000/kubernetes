@@ -4,6 +4,7 @@ metadata:
   name: esphome
   namespace: homeassistant
 spec:
+  ingressClassName: nginx
   rules:
   - host: esphome.legion.lan
     http:
