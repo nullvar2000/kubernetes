@@ -52,6 +52,9 @@ spec:
               auth:
                 existingSecret: postgres-secrets
           persistence:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 8Gi
             storageClass: nfs-client
 
         redis:
@@ -60,6 +63,7 @@ spec:
           auth:
             enabled: false
           persistence:
+            storageClass: nfs-client
 
         typesense:
           enabled: true
