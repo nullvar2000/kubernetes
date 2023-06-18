@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: immich
+            name: immich-server
             port:
-              number: 80
+              number: 3001
