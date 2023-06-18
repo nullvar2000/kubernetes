@@ -22,8 +22,10 @@ spec:
           - "/bin/sh"
           - "./start-server.sh"
         ports:
-        - containerPort: 3001
+          - containerPort: 3001
         envFrom:
+          - secretRef:
+              name: typesense-secrets
           - secretRef:
               name: postgres-secrets
         volumeMounts:
