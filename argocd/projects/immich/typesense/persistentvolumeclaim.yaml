@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: typesense-tsdata
+  name: typesense-data
   namespace: immich
   labels:
     app: typesense
