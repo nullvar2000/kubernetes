@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typesense
+  namespace: immich
+  labels:
+    app: typesense
+spec:
+  selector:
+    matchLabels:
+      app: typesense
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: typesense
+    spec:
+      containers:
+      - name: typesense
+        image: docker.io/typesense/typesense:0.24.0
+        ports:
+        - containerPort: 8108
+          name: http
+          protocol: TCP
+        envFrom:
+          - secretRef:
+              name: typesense-secrets
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+        volumeMounts:
+          - mountPath: /tsdata
+            name: tsdata
+        resources:  {}
+      volumes:
+      - name: tsdata
+        persistentVolumeClaim:
+          claimName: typesense-tsdata
+
