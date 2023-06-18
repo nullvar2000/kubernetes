@@ -39,7 +39,7 @@ spec:
           timeoutSeconds: 1
           failureThreshold: 3
       volumes:
-      - name: immich-data
-        persistentVolumeClaim:
-          claimName: immich-data
+        - name: immich-data
+          persistentVolumeClaim:
+            claimName: immich-data
 
