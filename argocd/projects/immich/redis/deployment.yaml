@@ -18,10 +18,20 @@ spec:
       containers:
       - name: redis
         image: redis:6.2
+        command:
+          - redis-server
+          - "/redis/redis.conf"
         ports:
-        - containerPort: 6379
-          name: redis
-          protocol: TCP
+          - containerPort: 6379
+        volumeMounts: 
+          - mountPath: /redis
+            name: config
         resources:  {}
-
+      volumes:
+        - name: config
+          configMap:
+            name: redis-conf
+            items:
+              - key: redis.conf
+                path: redis.conf
 
