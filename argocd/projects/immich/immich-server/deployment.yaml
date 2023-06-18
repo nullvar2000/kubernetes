@@ -25,10 +25,10 @@ spec:
         - containerPort: 3001
         envFrom:
           - secretRef:
-              name: immich-server-secrets
+              name: postgres-secrets
         volumeMounts:
         - mountPath: /usr/src/app/upload
-          name: immich-server-data
+          name: immich-data
         resources:  {}
         livenessProbe:
           httpGet:
@@ -39,7 +39,7 @@ spec:
           timeoutSeconds: 1
           failureThreshold: 3
       volumes:
-      - name: immich-server-data
+      - name: immich-data
         persistentVolumeClaim:
-          claimName: immich-server-data
+          claimName: immich-data
 

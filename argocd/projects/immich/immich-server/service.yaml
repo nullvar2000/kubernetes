@@ -8,6 +8,6 @@ spec:
     app:  immich-server
   type: ClusterIP
   ports:
-    - name:  immich-server
+    - name:  http
       port:  3001
       protocol: TCP 
