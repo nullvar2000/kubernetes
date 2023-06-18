@@ -34,7 +34,7 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 1
         volumeMounts:
-          - mountPath: /tsdata
+          - mountPath: /data
             name: tsdata
         resources:  {}
       volumes:
