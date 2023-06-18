@@ -7,3 +7,7 @@ data:
   DB_HOSTNAME: postgres
   REDIS_HOSTNAME: redis
   REDIS_PORT: "6379"
+  IMMICH_WEB_URL: http://immich-web:3000
+  IMMICH_SERVER_URL: http://immich-server:3001
+  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
+  TYPESENSE_URL: W3snaG9zdCc6ICd0eXBlc2Vuc2UnLCAncG9ydCc6ICc0NDMnLCAncHJvdG9jb2wnOiAnaHR0cHMnfV0=
