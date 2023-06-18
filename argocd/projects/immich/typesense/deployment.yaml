@@ -25,14 +25,14 @@ spec:
         envFrom:
           - secretRef:
               name: typesense-secrets
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /health
-            port: http
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
+        # readinessProbe:
+        #   failureThreshold: 3
+        #   httpGet:
+        #     path: /health
+        #     port: http
+        #   initialDelaySeconds: 0
+        #   periodSeconds: 10
+        #   timeoutSeconds: 1
         volumeMounts:
           - mountPath: /data
             name: tsdata
