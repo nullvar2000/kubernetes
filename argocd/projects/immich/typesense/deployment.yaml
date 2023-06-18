@@ -18,6 +18,10 @@ spec:
       containers:
       - name: typesense
         image: typesense/typesense:0.24.1
+        command:
+          - '--data-dir $TYPESENSE_DATA_DIR'
+          - '--api-key=$TYPESENSE_API_KEY'
+          - '--enable-cors'
         ports:
         - containerPort: 8108
           name: http
