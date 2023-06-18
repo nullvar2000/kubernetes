@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-server-config
+  namespace: immich
+data:
+  DB_HOSTNAME: postgres
+  REDIS_HOSTNAME: redis
+  REDIS_PORT: "6379"

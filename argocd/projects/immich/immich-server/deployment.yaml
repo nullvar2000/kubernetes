@@ -28,6 +28,8 @@ spec:
               name: typesense-secrets
           - secretRef:
               name: postgres-secrets
+          - configMapRef:
+              name: immich-server-config
         volumeMounts:
         - mountPath: /usr/src/app/upload
           name: immich-data
