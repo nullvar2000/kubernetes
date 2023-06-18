@@ -2,10 +2,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich-server-data
+  name: immich-data
   namespace: immich
-  labels:
-    app: immich-server
 spec:
   storageClassName: nfs-client
   accessModes:
