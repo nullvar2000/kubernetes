@@ -5,10 +5,9 @@ metadata:
   namespace: immich
 spec:
   selector:
-    app.kubernetes.io/instance: immich
-    app.kubernetes.io/name: typesense
+    app: typesense
   type: ClusterIP
   ports:
-    - name:  http
-      port:  8108
+    - name: http
+      port: 8108
       protocol: TCP 
