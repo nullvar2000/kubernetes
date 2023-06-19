@@ -23,6 +23,8 @@ spec:
           - "/redis/redis.conf"
         ports:
           - containerPort: 6379
+            name: redis
+            protocol: TCP
         volumeMounts: 
           - mountPath: /redis
             name: config
