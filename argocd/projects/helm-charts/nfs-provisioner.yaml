@@ -18,6 +18,8 @@ spec:
           value: kasumi.lan
         - name: nfs.path
           value: /data/kubernetes-persistent-volumes
+        - name: storageClass.defaultClass
+          value: "true"
   syncPolicy:
     automated: {}
   project: default
