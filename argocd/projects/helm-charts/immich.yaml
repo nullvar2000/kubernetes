@@ -87,7 +87,7 @@ spec:
             pullPolicy: IfNotPresent
 
         microservices:
-          enabled: true
+          enabled: false
           env:
             REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
           persistence:
