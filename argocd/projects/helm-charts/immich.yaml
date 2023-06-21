@@ -110,7 +110,7 @@ spec:
             pullPolicy: IfNotPresent
 
         microservices:
-          enabled: false
+          enabled: true
           env:
             REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
           persistence:
@@ -126,7 +126,7 @@ spec:
             pullPolicy: IfNotPresent
 
         machine-learning:
-          enabled: false
+          enabled: true
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
             pullPolicy: IfNotPresent
@@ -142,7 +142,7 @@ spec:
               storageClass: nfs-client
 
         web:
-          enabled: false
+          enabled: true
           image:
             repository: ghcr.io/immich-app/immich-web
             pullPolicy: IfNotPresent
@@ -151,7 +151,7 @@ spec:
               enabled: false
 
         proxy:
-          enabled: false
+          enabled: true
           image:
             repository: ghcr.io/immich-app/immich-proxy
             pullPolicy: IfNotPresent
