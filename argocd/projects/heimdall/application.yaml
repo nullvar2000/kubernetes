@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: heimdall
+  namespace: argocd
+spec:
+  project: heimdall
+  source:
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/apps/heimdall
+  destination:
+    namespace: '*'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: {}
