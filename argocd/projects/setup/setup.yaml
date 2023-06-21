@@ -1,51 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
-kind: AppProject
+kind: Application
 metadata:
-  name: setup
-  namespace: argocd
-  # Finalizer that ensures that project is not deleted until it is not referenced by any application
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  description: Project for setup
-  clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
-  # Allow manifests to deploy from any Git repos
-  sourceRepos:
-  - '*'
-  # Only permit applications to deploy to the olm namespaces in the same cluster
-  destinations:
-  - namespace: '*'
-    server: https://kubernetes.default.svc
----
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: setup
+  name: projects
   namespace: argocd
 spec:
-  generators:
-  - git:
-      repoURL: https://github.com/nullvar2000/kubernetes
-      revision: HEAD
-      directories:
-      - path: argocd/projects/*
-  template:
-    metadata:
-      name: '{{ path.basename }}'
-    spec:
-      project: '{{ path.basename }}'
-      source:
-        repoURL: https://github.com/nullvar2000/kubernetes
-        targetRevision: HEAD
-        path: '{{ path }}'
-        directory:
-          recurse: true
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: '{{ path.basename }}'
-      syncPolicy:
-        automated:
-          prune: false
-          selfHeal: true
+  project: default
+  source:
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/projects/*
+    directory:
+      recurse: true
+  destination:
+    namespace: '*'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: {}
