@@ -13,6 +13,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: https
+            name: immich-proxy
             port:
-              number: 3001
+              number: 8080
