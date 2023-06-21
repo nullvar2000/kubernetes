@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: uptime-kuma
+  namespace: argocd
+spec:
+  project: uptime-kuma
+  source:
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/apps/uptime-kuma
+  destination:
+    namespace: '*'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: {}
