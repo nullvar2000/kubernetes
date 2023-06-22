@@ -1,10 +1,10 @@
 # kubernetes
 
 initial setup
-
+`
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+`
 kubectl -n argocd edit service/argocd-server
   - change Type to LoadBalancer
 
