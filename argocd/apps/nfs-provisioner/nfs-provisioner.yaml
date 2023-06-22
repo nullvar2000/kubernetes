@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nfs-provisioner-install
+  name: nfs-provisioner-helm-chart
   namespace: argocd
 spec:
   destination:
