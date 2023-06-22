@@ -1,6 +1,6 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: ingress-nginx
+  name: kubernetes-dashboard
   labels:
-    name: ingress-nginx
+    name: kubernetes-dashboard
