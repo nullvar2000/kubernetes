@@ -9,6 +9,8 @@ spec:
     repoURL: 'https://github.com/nullvar2000/kubernetes.git'
     targetRevision: main
     path: argocd/apps/homeassistant
+    directory:
+      recurse: true
   destination:
     namespace: '*'
     server: 'https://kubernetes.default.svc'
