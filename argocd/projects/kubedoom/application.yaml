@@ -7,7 +7,7 @@ spec:
   project: kubedoom
   source:
     repoURL: 'https://github.com/storax/kubedoom.git'
-    targetRevision: main
+    targetRevision: master
     path: manifest
   destination:
     namespace: '*'
