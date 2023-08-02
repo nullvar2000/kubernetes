@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubedoom
+  namespace: argocd
+spec:
+  project: kubedoom
+  source:
+    repoURL: 'https://github.com/storax/kubedoom.git'
+    targetRevision: main
+    path: manifest
+  destination:
+    namespace: '*'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: {}
