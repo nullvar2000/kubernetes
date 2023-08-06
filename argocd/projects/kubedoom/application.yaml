@@ -13,4 +13,4 @@ spec:
     namespace: '*'
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
-      automated: {}
+    automated: {}
