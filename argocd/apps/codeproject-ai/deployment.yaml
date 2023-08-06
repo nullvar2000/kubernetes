@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: codeproject-ai
-  replicas: 1 
+  replicas: 1
   template:
     metadata:
       labels:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: codeproject-ai
-        image: codeproject/ai-server:cpu-2.1.9 
+        image: codeproject/ai-server:cpu-2.1.10
         ports:
           - containerPort: 32168
         volumeMounts:
