@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portainer-helm-chart
+  namespace: argocd
+spec:
+  project: portainer
+  source:
+    chart: portainer
+    repoURL: 'https://portainer.github.io/k8s/'
+    targetRevision: 1.0.44
+    helm:
+      releaseName: portainer
+      parameters:
+        - name: service.type
+          value: LoadBalancer
+        - name: tls.force
+          value: "true"
+  destination:
+    namespace: portainer
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+  
