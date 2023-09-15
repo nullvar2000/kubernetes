@@ -6,15 +6,22 @@ metadata:
 spec:
   selector:
     app:  jellyfin
-  type: ClusterIP
+  type: LoadBalancer
   ports:
-    # - name: ui
-    #   port: 8096
-    #   protocol: TCP
-    #   targetPort: 8096
+    - name: http
+      port: 8096
+      protocol: TCP
+      targetPort: 8096
     - name: https
       port: 8920
       protocol: TCP
       targetPort: 8920
-
+    - name: discovery
+      port: 7359
+      protocol: UDP
+      targetPort: 7359
+    - name: dnla
+      port: 1900
+      protocol: UDP
+      targetPort: 1900
 
