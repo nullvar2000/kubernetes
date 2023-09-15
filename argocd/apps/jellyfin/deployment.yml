@@ -43,7 +43,7 @@ spec:
       volumes:
         - name: media
           nfs:
-            server: kasumi
+            server: kasumi.lan
             path: /data/Media/
         - name: config
           persistentVolumeClaim:
