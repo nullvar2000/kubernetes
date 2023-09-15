@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: llama-gpt
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: llama-gpt.legion.lan
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: llama-gpt
+            port:
+              number: 3001
