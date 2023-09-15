@@ -7,7 +7,7 @@ spec:
   project: llama-gpt
   source:
     repoURL: 'https://github.com/getumbrel/llama-gpt.git'
-    targetRevision: main
+    targetRevision: master
     path: deploy/kubernetes
   destination:
     namespace: 'llama-gpt'
