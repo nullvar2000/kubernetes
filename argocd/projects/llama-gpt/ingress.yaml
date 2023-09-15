@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: llama-gpt
+            name: llama-gpt-ui
             port:
               number: 3001
