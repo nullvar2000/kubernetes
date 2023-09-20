@@ -15,4 +15,4 @@ spec:
           service:
             name: llama-gpt-ui
             port:
-              number: 3001
+              number: 3000
