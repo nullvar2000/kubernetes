@@ -29,7 +29,7 @@ spec:
     targetRevision: main
     path: argocd/apps/llama-gpt
   destination:
-    namespace: '*'
+    namespace: 'llama-gpt'
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
     automated: {}
