@@ -16,4 +16,20 @@ spec:
     automated: {}
     syncOptions:
       - CreateNamespace=true
-    
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubernetes-dashboard-addons
+  namespace: argocd
+spec:
+  project: kubernetes-dashboard
+  source:
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/apps/kubernetes-dashboard
+  destination:
+    namespace: kubernetes-dashboard
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: 
+    automated: {}
