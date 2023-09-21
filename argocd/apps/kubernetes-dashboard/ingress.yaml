@@ -7,7 +7,7 @@ spec:
   ingressClassName: nginx
   rules:
   - host: kubernetes-dashboard.legion.lan
-    https:
+    http:
       paths:
       - path: /
         pathType: Prefix
