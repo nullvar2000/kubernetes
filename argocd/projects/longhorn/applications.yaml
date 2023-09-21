@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  project: longhorn
+  source:
+    chart: longhorn
+    repoURL: 'https://charts.longhorn.io'
+    targetRevision: 1.5.1
+    helm:
+      releaseName: longhorn
+  destination:
+    namespace: longhorn-system
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: longhorn-addons
+#   namespace: argocd
+# spec:
+#   project: longhorn
+#   source:
+#     repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+#     targetRevision: main
+#     path: argocd/apps/longhorn
+#   destination:
+#     namespace: longhorn-system
+#     server: 'https://kubernetes.default.svc'
+#   syncPolicy: 
+#     automated: {}
