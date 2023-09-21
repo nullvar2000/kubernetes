@@ -16,3 +16,20 @@ spec:
     automated: {}
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: llama-gpt-addons
+  namespace: argocd
+spec:
+  project: llama-gpt
+  source:
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/apps/llama-gpt
+  destination:
+    namespace: '*'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: 
+    automated: {}
