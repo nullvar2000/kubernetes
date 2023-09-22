@@ -6,9 +6,9 @@ metadata:
 spec:
   project: openebs
   source:
-    chart: openebs-jiva/jiva
+    chart: jiva
     repoURL: 'https://openebs.github.io/jiva-operator'
-    targetRevision: 3.5.0
+    targetRevision: 3.5.1
     helm:
       releaseName: openebs-jiva
   destination:
