@@ -11,6 +11,7 @@ spec:
     targetRevision: 51.2.0
     helm:
       releaseName: prometheus
+      skipCrds: true
   destination:
     namespace: 'prometheus'
     server: 'https://kubernetes.default.svc'
