@@ -26,4 +26,4 @@ spec:
     - name:  http
       port:  10300
       protocol: TCP 
-      targetPort: 10200
+      targetPort: 10300
