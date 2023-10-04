@@ -19,6 +19,26 @@ spec:
     automated: {}
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-crds
+  namespace: argocd
+spec:
+  project: prometheus
+  source:
+    repoURL: https://github.com/prometheus-community/helm-charts.git
+    path: charts/prometheus-operator-crds/charts/crds/templates/
+    targetRevision: kube-prometheus-stack-51.2.0
+    directory:
+      recurse: true
+  destination:
+    namespace: 'prometheus'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    syncOptions:
+    - Replace=true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
