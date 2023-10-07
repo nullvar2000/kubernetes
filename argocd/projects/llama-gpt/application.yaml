@@ -6,30 +6,15 @@ metadata:
 spec:
   project: llama-gpt
   source:
-    repoURL: 'https://github.com/getumbrel/llama-gpt.git'
-    targetRevision: master
-    path: deploy/kubernetes
-  destination:
-    namespace: 'llama-gpt'
-    server: 'https://kubernetes.default.svc'
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: llama-gpt-addons
-  namespace: argocd
-spec:
-  project: llama-gpt
-  source:
     repoURL: 'https://github.com/nullvar2000/kubernetes.git'
     targetRevision: main
     path: argocd/apps/llama-gpt
+    directory:
+      recurse: true
   destination:
     namespace: 'llama-gpt'
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
     automated: {}
+    syncOptions:
+      - CreateNamespace=true
