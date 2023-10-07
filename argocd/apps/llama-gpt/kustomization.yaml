@@ -4,6 +4,6 @@ bases:
   - github.com/getumbrel/llama-gpt/deploy/kubernetes/
 # patchesStrategicMerge:
 #   - api.yaml
-# resources:
-#   - ingress.yaml
-#   - pvc.yaml
+resources:
+  - ingress.yaml
+  - pvc.yaml
