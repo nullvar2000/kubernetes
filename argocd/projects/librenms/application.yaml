@@ -14,6 +14,8 @@ spec:
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
     automated: {}
+    syncOptions:
+      - RespectIgnoreDifferences=true
   ignoreDifferences:
     - jsonPointers:
         - /data
