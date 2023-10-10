@@ -1,7 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - deployments/mariadb.yaml
+  - configmaps/environment.yaml
+  - configmaps/librenms.yaml
+  #- deployments/mariadb.yaml
+  #- deployments/redis
   - pvcs/mariadb.yaml
-  - deployments/redis.yaml
+  - secrets/mariadb.yaml
+  - services/mariadb.yaml
+  - services/redis.yaml
   
