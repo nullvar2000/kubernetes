@@ -5,7 +5,7 @@ resources:
   - configmaps/environment.yaml
   - configmaps/librenms.yaml
   - deployments/mariadb.yaml
-  - deployments/redis
+  - deployments/redis.yaml
   - pvcs/mariadb.yaml
   - secrets/mariadb.yaml
   - services/mariadb.yaml
