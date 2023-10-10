@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: librenms
+  name: dispatcher
   namespace: librenms
   labels:
-    app: librenms
+    app: dispatcher
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: librenms
+      app: dispatcher
   template:
     metadata:
       labels:
-        app: librenms
+        app: dispatcher
     spec:
       containers:
         - envFrom:
@@ -41,8 +41,12 @@ spec:
                   key: MYSQL_PASSWORD
             - name: DB_TIMEOUT
               value: "60"
+            - name: DISPATCHER_NODE_ID
+              value: dispatcher1
+            - name: SIDECAR_DISPATCHER
+              value: "1"
           image: librenms/librenms:23.9.1
-          name: librenms
+          name: dispatcher
           ports:
             - containerPort: 8000
               hostPort: 8000
@@ -50,10 +54,10 @@ spec:
           resources: {}
           volumeMounts:
             - mountPath: /data
-              name: librenms-data
+              name: dispatcher-data
       restartPolicy: Always
       volumes:
-        - name: librenms-data
+        - name: dispatcher-data
           persistentVolumeClaim:
-            claimName: librenms-data
+            claimName: dispatcher-data
 
