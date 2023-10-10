@@ -17,8 +17,8 @@ spec:
     syncOptions:
       - RespectIgnoreDifferences=true
   ignoreDifferences:
-    - jsonPointers:
+    - kind: Secret
+      jsonPointers:
         - /data
         - /stringData
-      group: ""
-      kind: Secret
+      
