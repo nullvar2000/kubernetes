@@ -16,7 +16,7 @@ spec:
     automated: {}
   ignoreDifferences:
     - jsonPointers:
-        - data
-        - stringData
+        - /data
+        - /stringData
       group: ""
       kind: Secret
