@@ -9,5 +9,5 @@ spec:
   storageClassName: openebs-jiva-csi-default
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Gi
 
