@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: unifi-controller
-          image: linuxserver/unifi-controller:7.2.94
+          image: linuxserver/unifi-controller:7.5.176
           imagePullPolicy: Always
           env:
             - name: TZ
