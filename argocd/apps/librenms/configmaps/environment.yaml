@@ -4,14 +4,5 @@ metadata:
   namespace: librenms
 apiVersion: v1
 data:
-  SMTP_AUTH: "on"
-  SMTP_FROM: foo@gmail.com
-  SMTP_HOST: smtp.gmail.com
-  SMTP_PASSWORD: bar
-  SMTP_PORT: "587"
-  SMTP_STARTTLS: "on"
-  SMTP_TLS: "on"
-  SMTP_TLS_CHECKCERT: "on"
-  SMTP_USER: foo
   TZ: America\New_York
 
