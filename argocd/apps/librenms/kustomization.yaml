@@ -4,8 +4,8 @@ resources:
   - namespace.yaml
   - configmaps/environment.yaml
   - configmaps/librenms.yaml
-  #- deployments/mariadb.yaml
-  #- deployments/redis
+  - deployments/mariadb.yaml
+  - deployments/redis
   - pvcs/mariadb.yaml
   - secrets/mariadb.yaml
   - services/mariadb.yaml
