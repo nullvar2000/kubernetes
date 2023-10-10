@@ -19,6 +19,8 @@ spec:
         - envFrom:
             - configMapRef:
                 name: environment
+            - configMapRef:
+                name: librenms
           env:
             - name: DB_HOST
               value: mariadb
@@ -39,7 +41,7 @@ spec:
                   key: MYSQL_PASSWORD
             - name: DB_TIMEOUT
               value: "60"
-          image: librenms/librenms:latest
+          image: librenms/librenms:23.9.1
           name: librenms
           ports:
             - containerPort: 8000
