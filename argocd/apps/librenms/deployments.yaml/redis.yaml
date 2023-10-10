@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: librenms
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: environment
+          image: redis:7.2.1-alpine
+          name: redis
+          resources: {}
+      restartPolicy: Always
+
