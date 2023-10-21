@@ -14,8 +14,8 @@ spec:
   destination:
     namespace: openebs
     server: 'https://kubernetes.default.svc'
-  syncPolicy:
-    automated: {}
+  # syncPolicy:
+  #   automated: {}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
