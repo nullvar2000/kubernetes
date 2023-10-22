@@ -146,7 +146,7 @@ spec:
               size: 1Gi
               # Optional: Set this to pvc to avoid downloading the geodata every start.
               type: pvc
-              accessMode: ReadWriteMany
+              accessMode: ReadWriteOnce
               storageClass: openebs-jiva-csi-default
           image:
             repository: ghcr.io/immich-app/immich-server
@@ -165,7 +165,7 @@ spec:
               size: 10Gi
               # Optional: Set this to pvc to avoid downloading the ML models every start.
               type: pvc
-              accessMode: ReadWriteMany
+              accessMode: ReadWriteOnce
               storageClass: openebs-jiva-csi-default
 
         web:
