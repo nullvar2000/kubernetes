@@ -33,7 +33,7 @@ spec:
           IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
         image:
-          tag: v1.64.0
+          tag: v1.79.1
 
         immich:
           persistence:
@@ -48,6 +48,7 @@ spec:
         postgresql:
           enabled: true
           global:
+            storageClass: openebs-jiva-csi-default
             postgresql:
               auth:
                 existingSecret: postgres-secrets
@@ -69,7 +70,7 @@ spec:
               enabled: true
               accessMode: ReadWriteOnce
               size: 1Gi
-              storageClass: nfs-client
+              storageClass: openebs-jiva-csi-default
           image:
             repository: docker.io/typesense/typesense
             tag: 0.24.0
@@ -146,7 +147,7 @@ spec:
               # Optional: Set this to pvc to avoid downloading the geodata every start.
               type: pvc
               accessMode: ReadWriteMany
-              storageClass: nfs-client
+              storageClass: openebs-jiva-csi-default
           image:
             repository: ghcr.io/immich-app/immich-server
             pullPolicy: IfNotPresent
@@ -165,7 +166,7 @@ spec:
               # Optional: Set this to pvc to avoid downloading the ML models every start.
               type: pvc
               accessMode: ReadWriteMany
-              storageClass: nfs-client
+              storageClass: openebs-jiva-csi-default
 
         web:
           enabled: true
