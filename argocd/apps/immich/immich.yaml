@@ -54,13 +54,13 @@ spec:
                 existingSecret: postgres-secrets
 
         redis:
-          enabled: true
+          enabled: false
           architecture: standalone
           auth:
             enabled: false
 
         typesense:
-          enabled: true
+          enabled: false
           env:
             TYPESENSE_DATA_DIR: /tsdata
             TYPESENSE_API_KEY: typesense
@@ -111,7 +111,7 @@ spec:
             pullPolicy: IfNotPresent
 
         microservices:
-          enabled: true
+          enabled: false
           env:
             - name: REVERSE_GEOCODING_DUMP_DIRECTORY
               value: /geodata-cache
@@ -153,7 +153,7 @@ spec:
             pullPolicy: IfNotPresent
 
         machine-learning:
-          enabled: true
+          enabled: false
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
             pullPolicy: IfNotPresent
