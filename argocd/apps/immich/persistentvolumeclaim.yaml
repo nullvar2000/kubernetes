@@ -5,7 +5,7 @@ metadata:
   name: library
   namespace: immich
 spec:
-  storageClassName: nfs-client
+  storageClassName: openebs-jiva-csi-default
   accessModes:
     - ReadWriteOnce
   resources:
