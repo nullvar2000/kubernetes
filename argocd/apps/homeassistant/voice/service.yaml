@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     app:  piper
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name:  http
       port:  10200
@@ -21,7 +21,7 @@ metadata:
 spec:
   selector:
     app:  whisper
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name:  http
       port:  10300
