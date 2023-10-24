@@ -24,15 +24,15 @@ grafana:
     hosts:
       - monitoring.legion.lan
     path: /grafana
-# prometheus:
-#   ingress:
-#     enabled: 'true'
-#     ingressClassName: nginx
-#     hosts:
-#       - monitoring.legion.lan
-#     paths:
-#       - /prometheus
-#     pathType: Prefix
-#   premetheusSpec:
-#     externalUrl: http://monitoring.legion.lan/prometheus
-#     routePrefix: /prometheus
+prometheus:
+  ingress:
+    enabled: 'true'
+    ingressClassName: nginx
+    hosts:
+      - monitoring.legion.lan
+    paths:
+      - /prometheus
+    pathType: Prefix
+  premetheusSpec:
+    # externalUrl: http://monitoring.legion.lan/prometheus
+    routePrefix: /prometheus
