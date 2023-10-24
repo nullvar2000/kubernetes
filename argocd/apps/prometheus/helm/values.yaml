@@ -33,3 +33,5 @@ prometheus:
     paths:
       - /prometheus
     pathType: Prefix
+  premetheusSpec:
+    routePrefix: /prometheus
