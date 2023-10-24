@@ -30,9 +30,9 @@ prometheus:
     ingressClassName: nginx
     hosts:
       - monitoring.legion.lan
-    paths:
-      - /prometheus
-    pathType: Prefix
+    # paths:
+    #   - /prometheus
+    # pathType: Prefix
   premetheusSpec:
-    externalUrl: http://monitoring.legion.lan/prometheus
-    routePrefix: /prometheus
+    externalUrl: http://monitoring.legion.lan/
+    # routePrefix: /prometheus
