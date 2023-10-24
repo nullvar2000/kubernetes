@@ -4,3 +4,8 @@ alertmanager:
     ingressClassName: nginx
     hosts:
       - monitoring.legion.lan
+    paths:
+      - /alertmanager
+  alertmanagerSpec:
+    routePrefix: /alertmanager
+    
