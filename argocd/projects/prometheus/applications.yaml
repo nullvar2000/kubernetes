@@ -11,7 +11,7 @@ spec:
       targetRevision: 51.2.0
       helm:
         releaseName: prometheus
-        valuesFiles:
+        valueFiles:
           - $values/argocd/apps/prometheus/helm/values.yaml
     - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
       targetRevision: main
