@@ -15,9 +15,7 @@ grafana:
     ingressClassName: nginx
     hosts:
       - monitoring.legion.lan
-    paths:
-      - /grafana
-    pathType: Prefix
+    path: /grafana
 prometheus:
   thanosIngress:
     enabled: 'true'
