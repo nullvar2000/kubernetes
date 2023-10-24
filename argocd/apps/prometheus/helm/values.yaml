@@ -34,5 +34,5 @@ prometheus:
       - /prometheus
     pathType: Prefix
   premetheusSpec:
-    # externalUrl: http://monitoring.legion.lan/prometheus
+    externalUrl: http://monitoring.legion.lan/prometheus
     routePrefix: /prometheus
