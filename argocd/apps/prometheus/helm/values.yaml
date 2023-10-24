@@ -10,8 +10,8 @@ alertmanager:
       - /alertmanager
     pathType: Prefix
   alertmanagerSpec:
-    externalUrl: http://monitoring.legion.lan/alertmanager
-    routePrefix: /
+    # externalUrl: http://monitoring.legion.lan/alertmanager
+    routePrefix: /alertmanager
 # grafana:
 #   env:
 #     GF_SERVER_ROOT_URL: http://monitoring.legion.lan/grafana
