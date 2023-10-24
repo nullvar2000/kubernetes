@@ -6,6 +6,7 @@ alertmanager:
       - monitoring.legion.lan
     paths:
       - /alertmanager
+    pathType: Prefix
   alertmanagerSpec:
     routePrefix: /alertmanager
 grafana:
@@ -16,6 +17,7 @@ grafana:
       - monitoring.legion.lan
     paths:
       - /grafana
+    pathType: Prefix
 prometheus:
   thanosIngress:
     enabled: 'true'
@@ -24,6 +26,7 @@ prometheus:
       - monitoring.legion.lan
     paths:
       - /thanos
+    pathType: Prefix
   ingress:
     enabled: 'true'
     ingressClassName: nginx
@@ -31,3 +34,4 @@ prometheus:
       - monitoring.legion.lan
     paths:
       - /prometheus
+    pathType: Prefix
