@@ -8,4 +8,26 @@ alertmanager:
       - /alertmanager
   alertmanagerSpec:
     routePrefix: /alertmanager
-    
+grafana:
+  ingress:
+    enabled: 'true'
+    ingressClassName: nginx
+    hosts:
+      - monitoring.legion.lan
+    paths:
+      - /grafana
+prometheus:
+  thanosIngress:
+    enabled: 'true'
+    ingressClassName: nginx
+    hosts:
+      - monitoring.legion.lan
+    paths:
+      - /thanos
+  ingress:
+    enabled: 'true'
+    ingressClassName: nginx
+    hosts:
+      - monitoring.legion.lan
+    paths:
+      - /prometheus
