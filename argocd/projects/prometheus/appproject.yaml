@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: prometheus
+  name: monitoring
   namespace: argocd
   # Finalizer that ensures that project is not deleted until it is not referenced by any application
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: Project for kube-prometheus-stack
+  description: Project for monitoring
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
@@ -16,7 +16,7 @@ spec:
   - '*'
   # Only permit applications to deploy to the olm namespaces in the same cluster
   destinations:
-  - namespace: '*'
+  - namespace: 'monitoring'
     server: https://kubernetes.default.svc
 
 

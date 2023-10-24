@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: monitoring
   namespace: argocd
 spec:
-  project: prometheus
+  project: monitoring
   source:
     chart: kube-prometheus-stack
     repoURL: 'https://prometheus-community.github.io/helm-charts'
@@ -13,7 +13,7 @@ spec:
       releaseName: prometheus
       skipCrds: false
   destination:
-    namespace: 'prometheus'
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   syncPolicy:
     automated: {}
@@ -24,16 +24,16 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-addons
+  name: monitoring-extras
   namespace: argocd
 spec:
-  project: prometheus
+  project: monitoring
   source:
     repoURL: 'https://github.com/nullvar2000/kubernetes.git'
     targetRevision: main
     path: argocd/apps/prometheus
   destination:
-    namespace: prometheus
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
     automated: {}
