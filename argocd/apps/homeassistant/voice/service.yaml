@@ -8,8 +8,7 @@ spec:
     app:  piper
   type: LoadBalancer
   ports:
-    - name:  http
-      port:  10200
+    - port:  10200
       protocol: TCP 
       targetPort: 10200
 ---
@@ -23,7 +22,6 @@ spec:
     app:  whisper
   type: LoadBalancer
   ports:
-    - name:  http
-      port:  10300
+    - port:  10300
       protocol: TCP 
       targetPort: 10300
