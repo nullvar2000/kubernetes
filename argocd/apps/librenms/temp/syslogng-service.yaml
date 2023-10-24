@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.31.1 (46dcb9181)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: syslogng
+  name: syslogng
+  namespace: default
+spec:
+  ports:
+    - name: "514"
+      port: 514
+      targetPort: 514
+    - name: 514-udp
+      port: 514
+      protocol: UDP
+      targetPort: 514
+  selector:
+    io.kompose.service: syslogng
+status:
+  loadBalancer: {}
