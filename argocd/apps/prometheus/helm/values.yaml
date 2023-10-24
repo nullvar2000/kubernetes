@@ -13,6 +13,11 @@ alertmanager:
     externalUrl: http://monitoring.legion.lan/alertmanager
     routePrefix: /
 grafana:
+  env:
+    GF_SERVER_ROOT_URL: http://monitoring.legion.lan/grafana
+    GF_SERVER_SERVE_FROM_SUB_PATH: 'true'
+  annotations: 
+    - nginx.ingress.kubernetes.io/rewrite-target: /$2
   ingress:
     enabled: 'true'
     ingressClassName: nginx
@@ -20,22 +25,14 @@ grafana:
       - monitoring.legion.lan
     path: /grafana
 prometheus:
-  thanosIngress:
-    enabled: 'true'
-    ingressClassName: nginx
-    hosts:
-      - monitoring.legion.lan
-    paths:
-      - /thanos
-    pathType: Prefix
   ingress:
     enabled: 'true'
     ingressClassName: nginx
     hosts:
       - monitoring.legion.lan
-      - prometheus.legion.lan
     paths:
       - /prometheus
     pathType: Prefix
   premetheusSpec:
+    externalUrl: http://monitoring.legion.lan/prometheus
     routePrefix: /prometheus
