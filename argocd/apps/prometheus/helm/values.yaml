@@ -3,5 +3,4 @@ alertmanager:
     enabled: 'true'
     ingressClassName: nginx
     hosts:
-      - alertmanager.legion.lan
-      
+      - monitoring.legion.lan
