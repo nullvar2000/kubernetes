@@ -10,7 +10,7 @@ spec:
     targetRevision: main
     path: argocd/apps/portainer
   destination:
-    namespace: 'portainer'
+    namespace: 'argocd'
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
     automated: {}
