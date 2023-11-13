@@ -10,7 +10,7 @@ spec:
     targetRevision: main
     path: argocd/apps/codeproject-ai
   destination:
-    namespace: '*'
+    namespace: 'codeproject-ai'
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
     automated: {}

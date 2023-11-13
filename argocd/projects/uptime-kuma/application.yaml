@@ -10,7 +10,7 @@ spec:
     targetRevision: main
     path: argocd/apps/uptime-kuma
   destination:
-    namespace: '*'
+    namespace: 'uptime-kuma'
     server: 'https://kubernetes.default.svc'
   syncPolicy: 
       automated: {}
