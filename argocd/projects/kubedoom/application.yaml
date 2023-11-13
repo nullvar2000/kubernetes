@@ -10,7 +10,7 @@ spec:
     targetRevision: master
     path: manifest
   destination:
-    namespace: '*'
+    namespace: 'kubedoom'
     server: 'https://kubernetes.default.svc'
   # syncPolicy: 
     # automated: {}
