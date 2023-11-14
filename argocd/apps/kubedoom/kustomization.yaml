@@ -3,3 +3,6 @@ kind: Kustomization
 resources:
   - github.com/storax/kubedoom/manifest?ref=master
   - service.yaml
+
+patchesStrategicMerge:
+  - namespace.yaml
