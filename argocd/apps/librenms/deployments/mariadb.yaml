@@ -27,7 +27,7 @@ spec:
                 name: environment
             - secretRef:
                 name: mariadb
-          image: mariadb:11.1
+          image: mariadb:10.5
           name: mariadb
           resources: {}
           volumeMounts:
