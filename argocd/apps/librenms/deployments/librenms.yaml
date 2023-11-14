@@ -21,6 +21,8 @@ spec:
                 name: environment
             - configMapRef:
                 name: librenms
+            - secretRef:
+                name: librenms
           env:
             - name: DB_HOST
               value: mariadb
