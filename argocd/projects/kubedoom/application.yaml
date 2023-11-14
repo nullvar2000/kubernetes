@@ -6,11 +6,11 @@ metadata:
 spec:
   project: kubedoom
   source:
-    repoURL: 'https://github.com/storax/kubedoom.git'
-    targetRevision: master
-    path: manifest
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/apps/kubedoom
   destination:
     namespace: 'kubedoom'
     server: 'https://kubernetes.default.svc'
-  # syncPolicy: 
-    # automated: {}
+  syncPolicy: 
+    automated: {}
