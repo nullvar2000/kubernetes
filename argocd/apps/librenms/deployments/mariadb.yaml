@@ -29,6 +29,9 @@ spec:
                 name: mariadb
           image: mariadb:10.5
           name: mariadb
+          ports:
+            - containerPort: 3306
+              protocol: TCP
           resources: {}
           volumeMounts:
             - mountPath: /var/lib/mysql
