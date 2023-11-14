@@ -11,6 +11,7 @@ resources:
   - pvcs/librenms.yaml
   - pvcs/mariadb.yaml
   - secrets/mariadb.yaml
+  - secrets/snmp-community.yaml
   - services/mariadb.yaml
   - services/redis.yaml
   

@@ -22,7 +22,7 @@ spec:
             - configMapRef:
                 name: librenms
             - secretRef:
-                name: librenms
+                name: snmp-community
           env:
             - name: DB_HOST
               value: mariadb
