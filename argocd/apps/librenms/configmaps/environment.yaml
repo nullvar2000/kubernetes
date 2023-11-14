@@ -4,5 +4,5 @@ metadata:
   namespace: librenms
 apiVersion: v1
 data:
-  TZ: America\New_York
+  TZ: "America\\New_York"
 
