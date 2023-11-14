@@ -4,7 +4,7 @@ resources:
   - namespace.yaml
   - configmaps/environment.yaml
   - configmaps/librenms.yaml
-  - deployments/dispatcher.yaml
+  # - deployments/dispatcher.yaml
   - deployments/librenms.yaml
   - deployments/mariadb.yaml
   - deployments/redis.yaml
