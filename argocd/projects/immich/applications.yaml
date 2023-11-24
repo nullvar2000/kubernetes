@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring
+  name: immich
   namespace: argocd
 spec:
-  project: monitoring
+  project: immich
   sources:
     - chart: immich
       repoURL: 'https://immich-app.github.io/immich-charts'
@@ -20,7 +20,7 @@ spec:
       targetRevision: main
       path: argocd/apps/immich
   destination:
-    namespace: monitoring
+    namespace: immich
     server: 'https://kubernetes.default.svc'
   syncPolicy:
     automated: {}
