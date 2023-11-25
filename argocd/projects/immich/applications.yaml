@@ -6,16 +6,16 @@ metadata:
 spec:
   project: immich
   sources:
-    - chart: immich
-      repoURL: 'https://immich-app.github.io/immich-charts'
-      targetRevision: v1.88.0
-      helm:
-        releaseName: immich
-        valueFiles:
-          - $values/argocd/apps/immich/helm/values.yaml
-    - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
-      targetRevision: main
-      ref: values
+    # - chart: immich
+    #   repoURL: 'https://immich-app.github.io/immich-charts'
+    #   targetRevision: v1.88.0
+    #   helm:
+    #     releaseName: immich
+    #     valueFiles:
+    #       - $values/argocd/apps/immich/helm/values.yaml
+    # - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    #   targetRevision: main
+    #   ref: values
     - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
       targetRevision: main
       path: argocd/apps/immich
