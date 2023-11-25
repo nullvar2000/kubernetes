@@ -64,6 +64,12 @@ typesense:
 
 server:
   enabled: true
+  env:
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-secrets
+          key: password
   image:
     repository: ghcr.io/immich-app/immich-server
     pullPolicy: IfNotPresent
@@ -83,7 +89,12 @@ server:
 microservices:
   enabled: true
   env:
-    REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
+    - REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-secrets
+          key: password
   persistence:
     geodata-cache:
       enabled: true
