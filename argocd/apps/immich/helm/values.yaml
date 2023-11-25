@@ -89,7 +89,8 @@ server:
 microservices:
   enabled: true
   env:
-    - REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
+    - name: REVERSE_GEOCODING_DUMP_DIRECTORY
+      value: /geodata-cache
     - name: DB_PASSWORD
       valueFrom:
         secretKeyRef:
