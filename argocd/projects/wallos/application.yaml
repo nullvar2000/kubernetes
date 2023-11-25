@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wallos
+  namespace: argocd
+spec:
+  project: wallos
+  source:
+    repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+    targetRevision: main
+    path: argocd/apps/wallos
+  destination:
+    namespace: 'wallos'
+    server: 'https://kubernetes.default.svc'
+  syncPolicy: 
+    automated: {}
