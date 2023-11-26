@@ -22,11 +22,11 @@ spec:
   destination:
     namespace: immich
     server: 'https://kubernetes.default.svc'
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
-      - RespectIgnoreDifferences=true
+  # syncPolicy:
+  #   automated: {}
+  #   syncOptions:
+  #     - CreateNamespace=true
+  #     - RespectIgnoreDifferences=true
   ignoreDifferences:
     - kind: Secret
       jsonPointers:
