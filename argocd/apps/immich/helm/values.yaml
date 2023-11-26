@@ -154,9 +154,9 @@ microservices:
       enabled: true
       size: 1Gi
       # Optional: Set this to pvc to avoid downloading the geodata every start.
-      type: emptyDir
-      accessMode: ReadWriteMany
-      # storageClass: your-class
+      type: pvc
+      accessMode: ReadWriteOnce
+      storageClass: openebs-jiva-csi-default
   image:
     repository: ghcr.io/immich-app/immich-server
     pullPolicy: IfNotPresent
@@ -173,6 +173,6 @@ machine-learning:
       enabled: true
       size: 10Gi
       # Optional: Set this to pvc to avoid downloading the ML models every start.
-      type: emptyDir
-      accessMode: ReadWriteMany
-      # storageClass: your-class
+      type: pvc
+      accessMode: ReadWriteOnce
+      storageClass: openebs-jiva-csi-default
