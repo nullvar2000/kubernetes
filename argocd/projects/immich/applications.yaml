@@ -23,7 +23,7 @@ spec:
     namespace: immich
     server: 'https://kubernetes.default.svc'
   syncPolicy:
-    automated: {}
+    # automated: {}
     syncOptions:
       - RespectIgnoreDifferences=true
   ignoreDifferences:
