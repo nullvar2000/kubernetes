@@ -32,8 +32,8 @@ immich:
 postgresql:
   enabled: true
   global:
+    storageClass: openebs-jiva-csi-default
     postgresql:
-      storageClass: openebs-jiva-csi-default
       auth:
         existingSecret: postgres-secrets
 
