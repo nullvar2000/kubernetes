@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: koillection-config
+  namespace: koillection
+immutable: true
+data:
+  APP_DEBUG: "0"
+  APP_ENV: prod
+  HTTPS_ENABLED: "1"
+  UPLOAD_MAX_FILESIZE: 20M
+  PHP_MEMORY_LIMIT: 512M
+  PHP_TZ: America/New_York
+  CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+  JWT_SECRET_KEY: "%kernel.project_dir%/config/jwt/private.pem"
+  JWT_PUBLIC_KEY: "%kernel.project_dir%/config/jwt/public.pem"
+  # JWT_PASSPHRASE=
+  DB_DRIVER: pdo_pgsql
+  DB_HOST: postgresql
+  DB_PORT: "5432"
+  DB_VERSION: "16"
