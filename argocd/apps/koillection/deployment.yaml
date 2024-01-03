@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: koillection
-          image: koillection/koillection:10.8.10
+          image: koillection/koillection:1.5.0
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -57,7 +57,7 @@ spec:
         app: postgresql
     spec:
       containers:
-        - image: postgresql:16.1-alpine3.19
+        - image: postgres:16.1-alpine3.19
           name: postgresql
           env:
             - name: POSTGRES_DB
