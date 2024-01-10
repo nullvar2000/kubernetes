@@ -12,5 +12,5 @@ spec:
   destination:
     namespace: 'koillection'
     server: 'https://kubernetes.default.svc'
-  syncPolicy: 
-    automated: {}
+  # syncPolicy: 
+  #   automated: {}
