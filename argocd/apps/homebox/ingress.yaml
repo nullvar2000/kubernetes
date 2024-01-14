@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: homebox-ui
+            name: homebox
             port:
               number: 7745
