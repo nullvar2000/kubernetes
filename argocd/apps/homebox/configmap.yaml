@@ -7,4 +7,4 @@ immutable: true
 data:
   HBOX_MODE: "production"
   HBOX_WEB_PORT: "7745"
-  HBOX_LOG_LEVEL: "info"
+  HBOX_LOG_LEVEL: "debug"
