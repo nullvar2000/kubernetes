@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: homebox
-          image: ghcr.io/hay-kot/homebox:v0.10.2-rootless
+          image: ghcr.io/hay-kot/homebox:v0.10.2 #-rootless
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
