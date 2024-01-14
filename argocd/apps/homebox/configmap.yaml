@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: homebox-config
   namespace: homebox
-immutable: true
 data:
   HBOX_MODE: "production"
   HBOX_WEB_PORT: "7745"
