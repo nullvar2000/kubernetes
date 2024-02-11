@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: koillection
+  namespace: koillection
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: koillection.legion.lan
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: koillection
+            port:
+              number: 8080
