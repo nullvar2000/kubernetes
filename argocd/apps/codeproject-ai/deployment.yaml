@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: codeproject-ai
-        image: codeproject/ai-server:cpu-2.1.10
+        image: codeproject/ai-server:cpu-2.5.4
         ports:
           - containerPort: 32168
         volumeMounts:

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: wyoming-piper
-        image: rhasspy/wyoming-piper:1.4.0
+        image: rhasspy/wyoming-piper:1.5.0
         args: ["--voice", "en-gb-southern_english_female-low"]
         ports:
         - containerPort: 10200
@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
       - name: wyoming-whisper
-        image: rhasspy/wyoming-whisper:1.0.0
+        image: rhasspy/wyoming-whisper:2.1.0
         args: ["--model", "tiny-int8", "--language", "en"]
         ports:
         - containerPort: 10300
