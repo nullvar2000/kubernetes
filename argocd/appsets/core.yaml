@@ -1,0 +1,52 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: core
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Project for core applications
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  sourceRepos:
+    - 'https://github.com/nullvar2000/kubernetes.git'
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: core
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+        revision: HEAD
+        directories:
+          - path: argocd/apps/core/*
+  template:
+    metadata:
+      name: ''
+    spec:
+      project: core
+      source:
+        repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+        directory:
+          exclude: 'helm/values.yaml'
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        # automated: {}
+        syncOptions:
+          - CreateNamespace=true
