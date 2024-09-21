@@ -7,5 +7,5 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   addresses:
-  - 10.5.30.130-10.5.30.200
+  - 192.168.30.130-192.168.30.200
 
