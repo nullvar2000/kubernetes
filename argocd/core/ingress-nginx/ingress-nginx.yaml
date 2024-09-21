@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx-helm-chart
+  namespace: argocd
+spec:
+  project: core
+  destination:
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: ingress-nginx
+      repoURL: 'https://kubernetes.github.io/ingress-nginx'
+      targetRevision: 4.11.2
+      helm:
+        releaseName: ingress-nginx
+        valueFiles:
+          - $values/argocd/core/ingress-nginx/helm/values.yaml
+    - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated: {}
+  
