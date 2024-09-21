@@ -34,7 +34,7 @@ spec:
           - path: argocd/core/*
   template:
     metadata:
-      name: ''
+      name: '{{.path.basename}}'
     spec:
       project: core
       source:
