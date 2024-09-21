@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-helm-chart
+  namespace: argocd
+spec:
+  project: core
+  destination:
+    namespace: metallb
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: metallb
+      repoURL: 'https://metallb.github.io/metallb'
+      targetRevision: 0.14.8
+      helm:
+        releaseName: metallb
+        valueFiles:
+          - $values/argocd/core/metallb/helm/values.yaml
+    - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated: {}
+  
