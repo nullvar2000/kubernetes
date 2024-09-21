@@ -2,6 +2,8 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: metallb
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
   labels:
     app.kubernetes.io/name: metallb
     app.kubernetes.io/managed-by: argocd
