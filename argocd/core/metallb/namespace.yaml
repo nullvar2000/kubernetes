@@ -1,12 +1,10 @@
-kind: Namespace
 apiVersion: v1
+kind: Namespace
 metadata:
   name: metallb
   annotations:
     argocd.argoproj.io/sync-wave: "0"
   labels:
-    app.kubernetes.io/name: metallb
-    app.kubernetes.io/managed-by: argocd
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/audit: privileged
     pod-security.kubernetes.io/warn: privileged
