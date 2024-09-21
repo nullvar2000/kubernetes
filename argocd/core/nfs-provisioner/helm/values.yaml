@@ -8,7 +8,7 @@ image:
 imagePullSecrets: []
 
 nfs:
-  server: kasumi.lan
+  server: kasumi
   path: /data/kubernetes-persistent-volumes
   mountOptions:
   volumeName: nfs-subdir-external-provisioner-root
