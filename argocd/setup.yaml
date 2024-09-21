@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/nullvar2000/kubernetes.git'
-    targetRevision: refactor
+    targetRevision: main
     path: argocd/appsets
   destination:
     server: 'https://kubernetes.default.svc'
