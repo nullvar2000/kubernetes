@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubernetes-dashboard
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: monitoring
+  destination:
+    namespace: kubernetes-dashboard
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: kubernetes-dashboard
+      repoURL: 'https://kubernetes.github.io/dashboard'
+      targetRevision: 7.6.1
+      helm:
+        releaseName: kubernetes-dashboard
+        valueFiles:
+          - $values/argocd/monitoring/kubernetes-dashboard/helm/values.yaml
+    - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
