@@ -17,5 +17,5 @@ data:
 
     persistence true
     persistence_location /mosquitto/data/
-    log_dest file /mosquitto/log/mosquitto.log
+    log_dest file /tmp/mosquitto.log
 immutable: false

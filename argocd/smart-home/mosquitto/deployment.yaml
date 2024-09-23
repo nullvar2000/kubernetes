@@ -31,8 +31,6 @@ spec:
           readOnly: true
         - mountPath: /mosquitto/data
           name: data
-        - mountPath: /mosquitto/log
-          name: log
         resources:  {}
       volumes:
       - name: config
@@ -47,7 +45,3 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: mosquitto-data
-      - name: log
-        persistentVolumeClaim:
-          claimName: mosquitto-log
-
