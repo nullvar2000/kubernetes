@@ -1,18 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: projects
+  name: setup
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/nullvar2000/kubernetes.git'
-    targetRevision: main
-    path: argocd/projects
-    directory:
-      recurse: true
+    targetRevision: refactor
+    path: argocd/appsets
   destination:
-    namespace: '*'
     server: 'https://kubernetes.default.svc'
-  syncPolicy: 
-    automated: {}
+    namespace: argocd
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true  
+    automated: 
+      prune: true 
+      selfHeal: true
