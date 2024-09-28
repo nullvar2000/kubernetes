@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-proxy-manager-data
+  namespace: cert-manager
+  labels:
+    app: nginx-proxy-manager
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-proxy-manager-letsencrypt
+  namespace: cert-manager
+  labels:
+    app: nginx-proxy-manager
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
