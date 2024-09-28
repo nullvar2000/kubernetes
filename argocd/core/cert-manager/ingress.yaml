@@ -5,6 +5,9 @@ metadata:
   namespace: cert-manager
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+      - nginx-proxy-manager.legion.lan
   rules:
   - host: nginx-proxy-manager.legion.lan
     http:
