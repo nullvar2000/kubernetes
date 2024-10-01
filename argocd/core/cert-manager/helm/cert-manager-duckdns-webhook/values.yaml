@@ -1,9 +1,0 @@
- token:
-   value: <your DuckDNS token>
- clusterIssuer:
-   email: <your email>
-   production:
-     create: true
-   staging:
-     create: true
-     
