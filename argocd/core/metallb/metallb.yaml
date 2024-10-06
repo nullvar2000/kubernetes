@@ -21,6 +21,13 @@ spec:
     - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
       targetRevision: main
       ref: values
+  ignoreDifferences:
+    - group: "apiextensions.k8s.io"
+      kind: CustomResourceDefinition
+      name: bgppeers.metallb.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
   syncPolicy:
-    automated: {}
+    automated: 
+      - RespectIgnoreDifferences=true
   
