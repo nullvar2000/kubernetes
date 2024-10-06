@@ -28,6 +28,7 @@ spec:
       jsonPointers:
         - /spec/conversion/webhook/clientConfig/caBundle
   syncPolicy:
-    automated: 
+    automated: {}
+    syncOptions:
       - RespectIgnoreDifferences=true
   
