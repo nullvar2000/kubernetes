@@ -6,7 +6,7 @@ metadata:
   labels:
     app: heimdall
 spec:
-  storageClassName: nfs-client
+  storageClassName: longhorn-static
   accessModes:
     - ReadWriteOnce
   resources:
