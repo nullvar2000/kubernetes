@@ -6,7 +6,7 @@ metadata:
   labels:
     app: heimdall
 spec:
-  storageClassName: longhorn-static
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
