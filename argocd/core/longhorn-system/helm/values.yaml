@@ -1,6 +1,6 @@
 global:
-  nodeSelector:
-    node-role.kubernetes.io/storage: storage
+  # nodeSelector:
+  #   node-role.kubernetes.io/storage: storage
   tolerations: 
     - key: node-role.kubernetes.io/storage
       operator: Exists
@@ -9,3 +9,10 @@ ingress:
   enabled: true
   ingressClassName: nginx
   host: longhorn.legion.lan
+# defaultSettings:
+#   createDefaultDiskLabeledNodes: true
+persistence:
+  defaultClass: false
+  defaultNodeSelector:
+    enabled: true
+    selector: storage
