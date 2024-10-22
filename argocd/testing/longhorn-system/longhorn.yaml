@@ -17,7 +17,7 @@ spec:
       helm:
         releaseName: longhorn
         valueFiles:
-          - $values/argocd/core/longhorn-system/helm/values.yaml
+          - $values/argocd/testing/longhorn-system/helm/values.yaml
     - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
       targetRevision: main
       ref: values
