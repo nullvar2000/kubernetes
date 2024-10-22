@@ -6,10 +6,9 @@ metadata:
   labels:
     app: uptime-kuma
 spec:
-  storageClassName: nfs-client
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
-
