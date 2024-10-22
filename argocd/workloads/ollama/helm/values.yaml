@@ -1,0 +1,23 @@
+nameOverride: ""
+
+ollama:
+  enabled: true
+  models:
+    - llama2
+  persistentVolume:
+    enabled: true
+    storageClass: "nfs-client"
+
+replicaCount: 1
+
+ingress:
+  enabled: true
+  class: "nginx"
+  host: "ollama.legion.lan"
+  tls: false
+persistence:
+  enabled: true
+  size: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClass: "longhorn"
