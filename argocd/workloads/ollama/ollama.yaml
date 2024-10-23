@@ -11,11 +11,11 @@ spec:
     namespace: ollama
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: ollama
+    - chart: open-webui
       repoURL: 'https://helm.openwebui.com/'
       targetRevision: 3.4.0
       helm:
-        releaseName: ollama
+        releaseName: open-webui
         valueFiles:
           - $values/argocd/workloads/ollama/helm/values.yaml
     - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
