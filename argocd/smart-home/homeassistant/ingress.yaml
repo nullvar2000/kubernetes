@@ -16,3 +16,6 @@ spec:
             name: homeassistant
             port:
               number: 8123
+
+# 400 Bad Request
+# https://community.home-assistant.io/t/home-assistant-400-bad-request-docker-proxy-solution/322163
