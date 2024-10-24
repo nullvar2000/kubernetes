@@ -24,8 +24,13 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
+        - mountPath: /workspace
+          name: homeassistant-config
         resources:  {}
       volumes:
       - name: config
         persistentVolumeClaim:
           claimName: vscode-config
+      - name: homeassistant-config
+        PersistentVolumeClaim:
+          claimName: homeassistant-config
