@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vscode
+  namespace: homeassistant
+  labels:
+    app: vscode
+spec:
+  selector:
+    matchLabels:
+      app: vscode
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vscode
+    spec:
+      containers:
+      - name: vscode
+        image: linuxserver/code-server:4.93.1
+        env:
+        - name: TZ
+          value: "America/New_York"
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        resources:  {}
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: vscode-config
