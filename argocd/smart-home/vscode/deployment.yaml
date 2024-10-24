@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: vscode
-        image: linuxserver/code-server:4.93.1
+        image: ghcr.io/hassio-addons/vscode/amd64:5.17.2
         env:
         - name: TZ
           value: "America/New_York"
