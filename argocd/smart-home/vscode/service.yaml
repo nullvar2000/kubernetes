@@ -9,6 +9,6 @@ spec:
   type: ClusterIP
   ports:
     - name: vscode
-      port: 8443
+      port: 1337
       protocol: TCP 
-      targetPort: 8443
+      targetPort: 1337
