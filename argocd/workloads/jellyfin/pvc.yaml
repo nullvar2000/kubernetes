@@ -6,7 +6,7 @@ metadata:
   labels:
     app: jellyfin
 spec:
-  storageClassName: nfs-client
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
