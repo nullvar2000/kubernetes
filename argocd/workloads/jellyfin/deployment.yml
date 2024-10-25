@@ -21,8 +21,8 @@ spec:
           image: jellyfin/jellyfin:10.10.0
           imagePullPolicy: Always
           ports:
-            # - containerPort: 8096
-            #   protocol: TCP
+            - containerPort: 8096
+              protocol: TCP
             - containerPort: 8920
               protocol: TCP
             - containerPort: 7359

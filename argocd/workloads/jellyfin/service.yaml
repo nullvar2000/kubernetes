@@ -8,10 +8,10 @@ spec:
     app:  jellyfin
   type: LoadBalancer
   ports:
-    # - name: http
-    #   port: 8096
-    #   protocol: TCP
-    #   targetPort: 8096
+    - name: http
+      port: 8096
+      protocol: TCP
+      targetPort: 8096
     - name: https
       port: 8920
       protocol: TCP
