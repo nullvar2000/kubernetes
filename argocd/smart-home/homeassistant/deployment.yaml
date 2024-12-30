@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: homeassistant
-        image: homeassistant/home-assistant:2024.10.3
+        image: homeassistant/home-assistant:2024.12.5
         ports:
         - containerPort: 8123
         volumeMounts:
