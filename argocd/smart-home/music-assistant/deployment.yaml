@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-assistant
+  namespace: homeassistant
+  labels:
+    app: music-assistant
+spec:
+  selector:
+    matchLabels:
+      app: music-assistant
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: music-assistant
+    spec:
+      containers:
+        - name: music-assistant
+          image: ghcr.io/music-assistant/server:2.3.5
+          ports:
+            - containerPort: 8095
+          volumeMounts:
+            - mountPath: /data
+              name: data
+            - mountPath: /media
+              name: media
+          resources:  {}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: music-assistant-data
+        - name: media
+          nfs:
+            server: kasumi
+            path: /data/Media/
+
