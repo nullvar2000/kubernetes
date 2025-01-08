@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfd-helm-chart
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: core
+  destination:
+    namespace: node-feature-discovery
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: node-feature-discovery
+      repoURL: 'https://kubernetes-sigs.github.io/node-feature-discovery/charts'
+      targetRevision: 0.17.0
+      helm:
+        releaseName: nfd
+        valueFiles:
+          - $values/argocd/core/nfd/helm/values.yaml
+    - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated: {}
