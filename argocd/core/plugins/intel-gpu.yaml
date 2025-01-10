@@ -14,5 +14,7 @@ spec:
     repoURL: https://github.com/intel/intel-device-plugins-for-kubernetes.git
     targetRevision: release-0.31
     path: deployments/gpu_plugin/overlays/nfd_labeled_nodes
-  # syncPolicy:
+  syncPolicy:
     # automated: {}
+    syncOptions:
+      - CreateNamespace=true
