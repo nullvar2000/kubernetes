@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfd-intel-gpu-rules
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: core
+  destination:
+    namespace: node-feature-discovery
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: https://github.com/intel/intel-device-plugins-for-kubernetes.git
+    targetRevision: release-0.31
+    path: deployments/nfd/overlays/node-feature-rules
+  # syncPolicy:
+    # automated: {}
