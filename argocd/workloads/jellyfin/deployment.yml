@@ -35,7 +35,9 @@ spec:
               readOnly: True
             - mountPath: /config
               name: config
-          resources: {}
+          resources: 
+            limits:
+              gpu.intel.com/i915: '1'
       restartPolicy: Always
       volumes:
         - name: media
