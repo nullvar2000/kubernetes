@@ -14,5 +14,5 @@ spec:
     repoURL: https://github.com/intel/intel-device-plugins-for-kubernetes.git
     targetRevision: release-0.31
     path: deployments/nfd/overlays/node-feature-rules
-  # syncPolicy:
-    # automated: {}
+  syncPolicy:
+    automated: {}
