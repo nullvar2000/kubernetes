@@ -15,6 +15,4 @@ spec:
     targetRevision: release-0.31
     path: deployments/gpu_plugin/overlays/nfd_labeled_nodes
   syncPolicy:
-    # automated: {}
-    syncOptions:
-      - CreateNamespace=true
+    automated: {}
