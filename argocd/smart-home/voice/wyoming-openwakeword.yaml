@@ -34,7 +34,7 @@ spec:
       containers:
       - name: wyoming-openwakeword
         image: rhasspy/wyoming-openwakeword:1.10.0
-        args: ["--pre-load-model", "ok_nabu"]
+        args: ["--preload-model", "ok_nabu"]
         ports:
         - containerPort: 10400
         volumeMounts:
