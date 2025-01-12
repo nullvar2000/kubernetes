@@ -5,9 +5,9 @@ metadata:
   name: amd-gpu-plugin
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  # labels:
-    # pod-security.kubernetes.io/enforce: privileged
-    # pod-security.kubernetes.io/warn: baseline
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: baseline
 ---
 apiVersion: apps/v1
 kind: DaemonSet
