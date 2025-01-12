@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: whisper-data
+  namespace: homeassistant
+  labels:
+    app: whisper
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wyoming-whisper
+  namespace: homeassistant
+  labels:
+    app: whisper
+spec:
+  selector:
+    matchLabels:
+      app: whisper
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whisper
+    spec:
+      containers:
+      - name: wyoming-whisper
+        image: rhasspy/wyoming-whisper:2.4.0
+        args: ["--model", "tiny-int8", "--language", "en"]
+        ports:
+        - containerPort: 10300
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        resources:  {}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: whisper-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  whisper
+  namespace: homeassistant
+spec:
+  selector:
+    app:  whisper
+  type: LoadBalancer
+  ports:
+    - port:  10300
+      protocol: TCP 
+      targetPort: 10300
