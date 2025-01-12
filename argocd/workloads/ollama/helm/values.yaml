@@ -1,15 +1,3 @@
-nameOverride: ""
-
-ollama:
-  enabled: true
-  models:
-    - llama2
-  persistentVolume:
-    enabled: true
-    storageClass: "nfs-client"
-
-replicaCount: 1
-
 ingress:
   enabled: true
   class: "nginx"
