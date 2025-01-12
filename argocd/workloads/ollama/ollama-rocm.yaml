@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama-rocm
+  namespace: ollama
+spec:
+  selector:
+    matchLabels:
+      name: ollama-rocm
+  template:
+    metadata:
+      labels:
+        name: ollama-rocm
+    spec:
+      # nodeSelector:
+      #   node-role.kubernetes.io/gpu: amd
+      tolerations:
+        - key: node-role.kubernetes.io/gpu
+          operator: Exists
+      containers:
+        - name: ollama-rocm
+          image: ollama/ollama:0.5.5-rocm
+          imagePullPolicy: Always
+          resources: 
+            limits:
+              amd.com/gpu: '1'
+          ports: 
+            - containerPort: 11434
+              protocol: TCP
+          env:
+            - name: HSA_OVERRIDE_GFX_VERSION
+              value: 9.0.0
+      restartPolicy: Always
