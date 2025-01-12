@@ -30,6 +30,8 @@ spec:
           env:
             - name: HSA_OVERRIDE_GFX_VERSION
               value: 9.0.0
+            - name: OLLAMA_HOST
+              value: 0.0.0.0
           volumeMounts:
             - mountPath: /root/.ollama
               name: ollama-models
