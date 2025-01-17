@@ -50,3 +50,8 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
+      ignoreDifferences:
+        - jsonPointers:
+            - /data
+            - /stringData
+          kind: Secret
