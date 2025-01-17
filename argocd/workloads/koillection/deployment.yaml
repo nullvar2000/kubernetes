@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koillection
+  namespace: koillection
+  labels:
+    app: koillection
+spec:
+  selector:
+    matchLabels:
+      app: koillection
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: koillection
+    spec:
+      containers:
+        - name: koillection
+          image: koillection/koillection:1.6.2
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: koillection-config
+            - secretRef:
+                name: koillection-secrets
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /uploads
+              name: koillection-uploads
+              readOnly: False
+          resources: {}
+      restartPolicy: Always
+      volumes:
+        - name: koillection-uploads
+          persistentVolumeClaim:
+            claimName: koillection-uploads
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+  namespace: koillection
+  labels:
+    app: postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+        - image: bitnami/postgresql:16.6.0-debian-12-r2
+          name: postgresql
+          env:
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: koillection-secrets
+                  key: DB_NAME
+            - name: POSTGRESQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: koillection-secrets
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: koillection-secrets
+                  key: DB_PASSWORD
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /bitnami/postgresql
+              name: postgresql-data
+      restartPolicy: Always
+      volumes:
+        - name: postgresql-data
+          persistentVolumeClaim:
+            claimName: postgresql-data
