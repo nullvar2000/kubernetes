@@ -20,7 +20,7 @@ metadata:
   name: postgresql-data
   namespace: koillection
   labels:
-    app: koillection
+    app: postgresql
 spec:
   storageClassName: longhorn
   accessModes:
