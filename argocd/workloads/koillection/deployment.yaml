@@ -65,12 +65,14 @@ spec:
                 secretKeyRef:
                   name: koillection-secrets
                   key: DB_NAME
+            - name: ALLOW_EMPTY_PASSWORD
+              value: 'no'
             - name: POSTGRESQL_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: koillection-secrets
                   key: DB_USER
-            - name: POSTGRES_PASSWORD
+            - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: koillection-secrets
