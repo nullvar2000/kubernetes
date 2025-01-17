@@ -50,6 +50,7 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
+          - RespectIgnoreDifferences=true
       ignoreDifferences:
         - jsonPointers:
             - /data
