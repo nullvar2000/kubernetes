@@ -22,9 +22,9 @@ metadata:
   labels:
     app: koillection
 spec:
-  storageClassName: openebs-jiva-csi-default
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 4Gi
