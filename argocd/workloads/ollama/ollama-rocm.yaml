@@ -12,14 +12,12 @@ spec:
       labels:
         name: ollama-rocm
     spec:
-      # nodeSelector:
-      #   node-role.kubernetes.io/gpu: amd
       tolerations:
         - key: node-role.kubernetes.io/gpu
           operator: Exists
       containers:
         - name: ollama-rocm
-          image: ollama/ollama:0.5.5-rocm
+          image: ollama/ollama:0.5.7-rocm
           imagePullPolicy: Always
           resources: 
             limits:
@@ -30,8 +28,6 @@ spec:
           env:
             - name: HSA_OVERRIDE_GFX_VERSION
               value: 9.0.0
-            - name: OLLAMA_HOST
-              value: 0.0.0.0
           volumeMounts:
             - mountPath: /root/.ollama
               name: ollama-models
