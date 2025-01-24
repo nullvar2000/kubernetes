@@ -56,6 +56,6 @@ spec:
     app:  openwakeword
   type: LoadBalancer
   ports:
-    - port:  10200
+    - port:  10400
       protocol: TCP 
-      targetPort: 10200
+      targetPort: 10400
