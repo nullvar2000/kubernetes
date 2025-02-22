@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nvidia-gpu-plugin
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: baseline
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nvidia-gpu-plugin
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: core
+  destination:
+    namespace: nvidia-gpu-plugin
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: nvidia-device-plugin
+      repoURL: 'https://nvidia.github.io/k8s-device-plugin'
+      targetRevision: 0.17.0
+      helm:
+        releaseName: nvdp
+        valueFiles:
+          - $values/argocd/core/plugins/helm/nvidia-values.yaml
+    - repoURL: 'https://github.com/nullvar2000/kubernetes.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true 
