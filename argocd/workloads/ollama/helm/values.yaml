@@ -7,7 +7,7 @@ pipelines:
 ingress:
   enabled: true
   class: "nginx"
-  host: "ollama.legion.lan"
+  host: "open-webui.legion.lan"
   tls: false
 persistence:
   enabled: true
