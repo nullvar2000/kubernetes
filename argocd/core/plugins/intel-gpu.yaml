@@ -23,7 +23,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     repoURL: https://github.com/intel/intel-device-plugins-for-kubernetes.git
-    targetRevision: release-0.31
+    targetRevision: release-0.32
     path: deployments/gpu_plugin/overlays/nfd_labeled_nodes
   syncPolicy:
     automated: {}
