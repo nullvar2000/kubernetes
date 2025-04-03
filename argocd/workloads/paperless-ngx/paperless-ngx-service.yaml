@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  paperless-ngx
+spec:
+  selector:
+    app:  paperless-ngx
+  type: ClusterIP
+  ports:
+    - name: paperless-ngx
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
