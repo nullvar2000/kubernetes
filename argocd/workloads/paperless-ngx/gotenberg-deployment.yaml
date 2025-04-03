@@ -23,7 +23,7 @@ spec:
               protocol: TCP
           command:
             - "gotenberg"
-            - --chromium-disable-javascript"
+            # - --chromium-disable-javascript"
             - "--chromium-allow-list=file:///tmp/.*"
           resources: {}
       restartPolicy: Always
