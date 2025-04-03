@@ -22,6 +22,22 @@ spec:
           envFrom:
             - configMapRef:
                 name: paperless-ngx-config
+          env: 
+            - name: PAPERLESS_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  name: posgres-secrets
+                  key: DB_NAME
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: posgres-secrets
+                  key: DB_USER
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: posgres-secrets
+                  key: DB_PASSWORD
           ports:
             - containerPort: 8000
               protocol: TCP
