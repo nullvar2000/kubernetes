@@ -26,12 +26,30 @@ spec:
             - containerPort: 8000
               protocol: TCP
           volumeMounts:
-            - mountPath: /uploads
-              name: paperless-ngx-uploads
+            - mountPath: /usr/src/paperless/data
+              name: paperless-ngx-data
+              readOnly: False
+            - mountPath: /usr/src/paperless/media
+              name: paperless-ngx-media
+              readOnly: False
+            - mountPath: /usr/src/paperless/export
+              name: paperless-ngx-export
+              readOnly: False
+            - mountPath: /usr/src/paperless/consume
+              name: paperless-ngx-consume
               readOnly: False
           resources: {}
       restartPolicy: Always
       volumes:
-        - name: paperless-ngx-uploads
+        - name: paperless-ngx-data
           persistentVolumeClaim:
-            claimName: paperless-ngx-uploads
+            claimName: paperless-ngx-data
+        - name: paperless-ngx-media
+          persistentVolumeClaim:
+            claimName: paperless-ngx-media
+        - name: paperless-ngx-export
+          persistentVolumeClaim:
+            claimName: paperless-ngx-export
+        - name: paperless-ngx-consume
+          persistentVolumeClaim:
+            claimName: paperless-ngx-consume
