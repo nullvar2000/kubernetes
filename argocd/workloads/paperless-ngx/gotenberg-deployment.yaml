@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotenberg
+  labels:
+    app: gotenberg
+spec:
+  selector:
+    matchLabels:
+      app: gotenberg
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gotenberg
+    spec:
+      containers:
+        - name: gotenberg
+          image: gotenberg/gotenberg:8.19
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          command:
+            - "gotenberg"
+            - --chromium-disable-javascript=true"
+            - "--chromium-allow-list=file:///tmp/.*"
+          resources: {}
+      restartPolicy: Always
