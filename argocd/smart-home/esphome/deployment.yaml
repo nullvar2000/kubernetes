@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: esphome
-        image: esphome/esphome:2025.3.1
+        image: esphome/esphome:2025.4.0
         env:
         - name: ESPHOME_DASHBOARD_USE_PING
           value: "true"
