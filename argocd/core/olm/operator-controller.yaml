@@ -14,5 +14,4 @@ spec:
     repoURL: https://github.com/operator-framework/operator-controller.git
     targetRevision: release-v1.2
     path: config/overlays/cert-manager/
-  syncPolicy:
-    automated: {}
+  syncPolicy: {}
