@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - operator-controller.yaml
+  - default-catalogs.yaml
   # - https://github.com/operator-framework/operator-controller/releases/download/v1.2.0/operator-controller.yaml
-  - https://github.com/operator-framework/operator-controller/releases/download/v1.2.0/default-catalogs.yaml
+  # - https://github.com/operator-framework/operator-controller/releases/download/v1.2.0/default-catalogs.yaml
