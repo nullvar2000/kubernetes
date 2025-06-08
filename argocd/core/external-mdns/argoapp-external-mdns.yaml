@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-mdns
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: core
+  source:
+    repoURL: https://github.com/blake/external-mdns.git
+    path: manifests
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-mdns
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+  ignoreDifferences:
+    - kind: Secret
+      jsonPointers:
+        - /data
+        - /stringData
