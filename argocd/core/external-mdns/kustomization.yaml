@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - namespace-external-mdns.yaml
   - argoapp-external-mdns.yaml
-  - rbac.yaml
+  - rbac-external-mdns.yaml
