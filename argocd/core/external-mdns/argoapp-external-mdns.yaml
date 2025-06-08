@@ -10,7 +10,7 @@ spec:
   project: core
   source:
     repoURL: https://github.com/blake/external-mdns.git
-    path: manifests/rbac
+    path: manifests
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc

@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
   - namespace-external-mdns.yaml
   - argoapp-external-mdns.yaml
+  # include rbac, but not in default ns
+  - https://raw.githubusercontent.com/blake/external-mdns/refs/heads/master/manifests/rbac/cluster-role.yaml
+  - https://raw.githubusercontent.com/blake/external-mdns/refs/heads/master/manifests/rbac/cluster-role-binding.yaml
