@@ -12,10 +12,18 @@ spec:
       port: 8095
       protocol: TCP
       targetPort: 8095
+    - name: http-oauth
+      port: 8097
+      protocol: TCP
+      targetPort: 8097
     - name: snapcast-player
       port : 1704
       protocol: TCP
       targetPort: 1704
+    - name: snapcast-web
+      port : 1780
+      protocol: TCP
+      targetPort: 1780
     - name: snapcast-control
       port : 1705
       protocol: TCP
