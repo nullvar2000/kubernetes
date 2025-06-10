@@ -29,7 +29,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: music-assistant-data
+            claimName: musicassistant-data
         - name: media
           nfs:
             server: kasumi
