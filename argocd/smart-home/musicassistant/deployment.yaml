@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: music-assistant
+  name: musicassistant
   namespace: homeassistant
   labels:
-    app: music-assistant
+    app: musicassistant
 spec:
   selector:
     matchLabels:
-      app: music-assistant
+      app: musicassistant
   replicas: 1
   template:
     metadata:
       labels:
-        app: music-assistant
+        app: musicassistant
     spec:
       containers:
-        - name: music-assistant
+        - name: musicassistant
           image: ghcr.io/music-assistant/server:2.5.1
           ports:
             - containerPort: 8095
