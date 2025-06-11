@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: replacement-test
+  namespace: wallos
+data:
+  password: ""
