@@ -30,8 +30,8 @@ spec:
     - git:
         repoURL: 'https://github.com/nullvar2000/kubernetes.git'
         revision: HEAD
-        # directories:
-        #   - path: argocd/workloads/*
+        directories:
+          - path: argocd/workloads/*
   template:
     metadata:
       name: '{{.path.basename}}'
@@ -41,8 +41,8 @@ spec:
         repoURL: 'https://github.com/nullvar2000/kubernetes.git'
         targetRevision: HEAD
         path: '{{.path.path}}'
-        directory:
-          exclude: 'helm/values.yaml'
+        # directory:
+        #   exclude: 'helm/values.yaml'
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{.path.basename}}'
