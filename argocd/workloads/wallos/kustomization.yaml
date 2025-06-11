@@ -10,6 +10,7 @@ replacements:
   - source:
       kind: Secret
       name: replacement-test
+      namespace: argocd
       fieldPath: data.password
     targets:
       - select:
