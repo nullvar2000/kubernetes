@@ -9,7 +9,7 @@ resources:
 replacements:
   - source:
       kind: Secret
-      name: replacement-test
+      name: replacements
       namespace: argocd
       fieldPath: data.password
     targets:
