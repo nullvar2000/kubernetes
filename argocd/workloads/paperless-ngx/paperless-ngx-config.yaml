@@ -13,4 +13,4 @@ data:
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
   PAPERLESS_TIKA_ENDPOINT: http://tika:9998
   PAPERLESS_CONSUMER_POLLING: "60"
-  PAPERLESS_URL: https://paperless.legion.lan
+  PAPERLESS_URL: https://paperless.kingperch.xyz
