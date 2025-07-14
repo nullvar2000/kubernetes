@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: wyoming-whisper
-        image: rhasspy/wyoming-whisper:2.4.0
+        image: rhasspy/wyoming-whisper:2.5.0
         args: ["--model", "tiny-int8", "--language", "en"]
         ports:
         - containerPort: 10300
