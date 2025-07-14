@@ -16,21 +16,20 @@ spec:
         app: homeassistant
     spec:
       containers:
-      - name: homeassistant
-        image: homeassistant/home-assistant:2025.7.2
-        ports:
-        - containerPort: 8123
-        volumeMounts:
-        - mountPath: /config
-          name: config
-        - mountPath: /media
-          name: media
-        resources:  {}
+        - name: homeassistant
+          image: homeassistant/home-assistant:2025.7.2
+          ports:
+            - containerPort: 8123
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /media
+              name: media
+          resources:  {}
       volumes:
-      - name: config
-        persistentVolumeClaim:
-          claimName: homeassistant-config
-      - name: media
-        persistentVolumeClaim:
-          claimName: homeassistant-media
-
+        - name: config
+          persistentVolumeClaim:
+            claimName: homeassistant-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: homeassistant-media
