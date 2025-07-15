@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: wallos
-          image: bellamy/wallos:2.51.0
+          image: bellamy/wallos:3.3.0
           imagePullPolicy: Always
           env:
             - name: TZ
