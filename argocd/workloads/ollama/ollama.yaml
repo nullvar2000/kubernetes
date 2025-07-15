@@ -17,7 +17,7 @@ spec:
           operator: Exists
       containers:
         - name: ollama
-          image: ollama/ollama:0.6.5
+          image: ollama/ollama:0.9.6
           imagePullPolicy: Always
           resources: 
             limits:
