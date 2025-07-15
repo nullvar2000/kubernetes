@@ -3,18 +3,6 @@ kind: Kustomization
 resources:
   - configmap.yaml
   - deployment.yaml
-  - ingress.yaml
   - persistentvolumeclaim.yaml
   - service.yaml
-replacements:
-  - source:
-      kind: Secret
-      name: replacements
-      namespace: argocd
-      fieldPath: data.password
-    targets:
-      - select:
-          kind: ConfigMap
-          name: replacement-test
-        fieldPaths:
-          - data.password
+
