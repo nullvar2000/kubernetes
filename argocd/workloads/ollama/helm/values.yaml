@@ -5,10 +5,8 @@ pipelines:
   enabled: true
 
 ingress:
-  enabled: true
-  class: "nginx"
-  host: "open-webui.legion.lan"
-  tls: false
+  enabled: false
+
 persistence:
   enabled: true
   size: 2Gi
