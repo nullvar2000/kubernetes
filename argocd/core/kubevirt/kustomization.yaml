@@ -8,3 +8,4 @@ resources:
   - cdi.yaml
   - kubevirt.yaml
   - namespace.yaml
+  - operatorgroup.yaml
