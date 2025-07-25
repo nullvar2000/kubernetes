@@ -2,6 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  # operator
+  - https://operatorhub.io/install/community-kubevirt-hyperconverged.yaml
+  # custom resources
   - cdi.yaml
   - kubevirt.yaml
   - namespace.yaml
