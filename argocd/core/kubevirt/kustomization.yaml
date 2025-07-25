@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cdi.yaml
   - kubevirt.yaml
+  - namespace.yaml
