@@ -3,6 +3,4 @@ kind: OperatorGroup
 metadata:
   name: kubevirt
   namespace: kubevirt
-spec:
-  targetNamespaces:
-    - virtualmachines
+spec: {}
