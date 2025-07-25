@@ -2,14 +2,18 @@
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: kubevirt-hyperconverged
   labels:
     kubevirt.io: ""
     pod-security.kubernetes.io/enforce: "privileged"
-  name: kubevirt-hyperconverged
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: virtualmachines
   labels:
     kubevirt.io: ""
-  name: virtualmachines
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"

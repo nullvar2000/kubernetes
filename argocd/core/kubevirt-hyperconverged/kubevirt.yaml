@@ -3,6 +3,8 @@ apiVersion: kubevirt.io/v1
 kind: KubeVirt
 metadata:
   name: kubevirt
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   certificateRotateStrategy: {}
   configuration:
