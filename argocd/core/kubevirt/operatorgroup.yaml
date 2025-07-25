@@ -5,5 +5,4 @@ metadata:
   namespace: kubevirt
 spec:
   targetNamespaces:
-    - kubevirt
     - virtualmachines

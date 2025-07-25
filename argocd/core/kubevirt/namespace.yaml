@@ -6,3 +6,10 @@ metadata:
     kubevirt.io: ""
     pod-security.kubernetes.io/enforce: "privileged"
   name: kubevirt
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubevirt.io: ""
+  name: virtualmachines
