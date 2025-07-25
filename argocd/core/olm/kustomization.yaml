@@ -7,4 +7,3 @@ resources:
 
   # operators
   - https://operatorhub.io/install/ovms-operator.yaml
-  - https://operatorhub.io/install/community-kubevirt-hyperconverged.yaml
