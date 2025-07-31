@@ -11,6 +11,9 @@ spec:
     developerConfiguration:
       featureGates: 
         - ExpandDisks
+        - LiveMigration
   customizeComponents: {}
   imagePullPolicy: IfNotPresent
-  workloadUpdateStrategy: {}
+  workloadUpdateStrategy:
+    workloadUpdateMethods:
+      - LiveMigrate
