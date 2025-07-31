@@ -7,3 +7,6 @@ resources:
   - namespace.yaml
   - operatorgroup.yaml
   - subscription.yaml
+
+  # kubevirt-manager
+  - https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/refs/heads/main/kubernetes/bundled.yaml
