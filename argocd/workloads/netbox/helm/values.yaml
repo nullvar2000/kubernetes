@@ -1,0 +1,9 @@
+timezone: "America/New_York"
+
+persistence:
+  enabled: true
+  storageClass: longhorn
+  size: 10Gi
+
+metrics:
+  enabled: false
