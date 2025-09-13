@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: heimdall
-        image: linuxserver/heimdall:2.6.3
+        image: linuxserver/heimdall:2.7.5
         env:
         - name: TZ
           value: America/New_York

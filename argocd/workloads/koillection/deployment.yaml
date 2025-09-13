@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: koillection
-          image: koillection/koillection:1.6.12
+          image: koillection/koillection:1.7.0
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
