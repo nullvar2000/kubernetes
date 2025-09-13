@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncthing
+  labels:
+    app: syncthing
+spec:
+  selector:
+    matchLabels:
+      app: syncthing
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: syncthing
+    spec:
+      containers:
+        - name: syncthing
+          image: docker.io/syncthing/syncthing:2.0.9
+          ports:
+            - name: web-ui
+              containerPort: 8384
+              protocol: TCP
+            - name: tcp-xfers
+              containerPort: 22000
+              protocol: TCP
+            - name: quic-xfers
+              containerPort: 22000
+              protocol: UDP
+            - name: local-discovery
+              containerPort: 21027
+              protocol: UDP
+          livenessProbe:
+            httpGet:
+              path: /rest/noauth/health
+              port: web-ui
+            initialDelaySeconds: 30
+            periodSeconds: 60
+          volumeMounts:
+            - mountPath: /var/syncthing
+              name: syncthing-data
+              readOnly: False
+          resources: {}
+      restartPolicy: Always
+      volumes:
+        - name: syncthing-data
+          persistentVolumeClaim:
+            claimName: syncthing-data
