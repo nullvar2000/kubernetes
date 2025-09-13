@@ -4,9 +4,7 @@ global:
       operator: Exists
       effect: PreferNoSchedule
 ingress:
-  enabled: true
-  ingressClassName: nginx
-  host: longhorn.legion.lan
+  enabled: false
 persistence:
   defaultClass: false
   defaultNodeSelector:
