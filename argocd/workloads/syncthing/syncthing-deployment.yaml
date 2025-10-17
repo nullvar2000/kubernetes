@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: syncthing
-          image: docker.io/syncthing/syncthing:2.0.9
+          image: docker.io/syncthing/syncthing:2.0.10
           ports:
             - name: web-ui
               containerPort: 8384
