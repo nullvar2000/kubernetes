@@ -17,8 +17,8 @@ spec:
           operator: Exists
       containers:
         - name: ollama
-          image: ollama/ollama:0.12.6
-          imagePullPolicy: Always
+          image: ollama/ollama:0.12.10
+          imagePullPolicy: IfNotPresent
           resources: 
             limits:
               nvidia.com/gpu: '1'
