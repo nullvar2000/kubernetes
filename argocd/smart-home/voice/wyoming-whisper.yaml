@@ -31,6 +31,7 @@ spec:
       labels:
         app: whisper
     spec:
+      nodeName: talos-w01
       containers:
       - name: wyoming-whisper
         image: rhasspy/wyoming-whisper:2.5.0
