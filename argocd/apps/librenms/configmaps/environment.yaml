@@ -1,8 +1,0 @@
-kind: ConfigMap
-metadata:
-  name: environment
-  namespace: librenms
-apiVersion: v1
-data:
-  TZ: "America/New_York"
-
