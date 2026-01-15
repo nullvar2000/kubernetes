@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcpo
+  namespace: mcp
+  labels:
+    app: mcpo
+spec:
+  selector:
+    matchLabels:
+      app: mcpo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mcpo
+    spec:
+      containers:
+        - name: mcpo
+          image: ghcr.io/open-webui/mcpo:git-1fe1228
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          args:
+            - --config
+            - /app/config.json
+            - --api-key 
+            - passw0Rd
+          resources: {}
+          volumeMounts:
+            - name: mcpo-config
+              mountPath: /app/config.json
+              subPath: config.json
+            - name: mcpo-data
+              mountPath: /app/data
+      volumes:
+        - name: mcpo-config
+          configMap:
+            name: mcpo-config
+        - name: mcpo-data
+          persistentVolumeClaim:
+            claimName: mcpo-data
+      restartPolicy: Always
