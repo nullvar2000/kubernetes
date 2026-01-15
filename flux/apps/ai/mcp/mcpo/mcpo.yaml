@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mcpo
-  namespace: mcp
   labels:
     app: mcpo
 spec:
