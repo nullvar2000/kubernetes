@@ -4,6 +4,8 @@ kind: Kustomization
 namespace: ollama
 
 resources:
+  - imageupdateautomation.yaml
+  - namespace.yaml
   - ollama.yaml
   - pvc.yaml
   - service.yaml
