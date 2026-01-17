@@ -1,17 +1,25 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: ollama
   namespace: ollama
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       name: ollama
+  serviceName: ollama
   template:
     metadata:
       labels:
         name: ollama
     spec:
+      automountServiceAccountToken: false
       tolerations:
         - key: node-role.kubernetes.io/gpu
           operator: Exists
@@ -19,6 +27,12 @@ spec:
         - name: ollama
           image: ollama/ollama:0.13.5
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 11434
+            initialDelaySeconds: 15
+            periodSeconds: 20
           resources: 
             limits:
               nvidia.com/gpu: '1'
