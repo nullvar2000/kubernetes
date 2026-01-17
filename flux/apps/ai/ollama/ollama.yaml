@@ -25,7 +25,7 @@ spec:
           operator: Exists
       containers:
         - name: ollama
-          image: ollama/ollama:0.13.5 # {"$imagepolicy": "flux-system:ollama-policy"}
+          image: docker.io/ollama/ollama:0.14.2 # {"$imagepolicy": "flux-system:ollama-policy"}
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
@@ -33,10 +33,10 @@ spec:
               port: 11434
             initialDelaySeconds: 15
             periodSeconds: 20
-          resources: 
+          resources:
             limits:
               nvidia.com/gpu: '1'
-          ports: 
+          ports:
             - containerPort: 11434
               protocol: TCP
           volumeMounts:
