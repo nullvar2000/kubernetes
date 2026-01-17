@@ -25,7 +25,7 @@ spec:
           operator: Exists
       containers:
         - name: ollama
-          image: ollama/ollama:0.13.5
+          image: ollama/ollama:0.13.5 # {"$imagepolicy": "ollama:ollama-policy"}
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
