@@ -1,0 +1,35 @@
+FROM registry.fedoraproject.org/fedora-toolbox:43
+
+ARG KUBECTL_VERSION=v1.34.2
+ARG TALOSCTL_VERSION=v1.11.6
+ARG HELM_VERSION=v4.0.5
+# No v on flux version
+ARG FLUX_VERSION=2.7.5
+ARG SOPS_VERSION=v3.11.0
+
+RUN dnf update -y && dnf install -y podman
+
+RUN echo "Installing kubectl..." && \
+    curl -s -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    ln -s /usr/local/bin/kubectl /usr/local/bin/k
+
+
+RUN echo "Installing talosctl..." && \
+    curl -s -LO "https://github.com/siderolabs/talos/releases/download/${TALOSCTL_VERSION}/talosctl-linux-amd64" && \
+    install -o root -g root -m 0755 talosctl-linux-amd64 /usr/local/bin/talosctl && \
+    ln -s /usr/local/bin/talosctl /usr/local/bin/t
+
+RUN echo "Installing helm..." && \ 
+    curl -s -LO "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz" && \ 
+    tar -xzf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
+    install -o root -g root -m 0755 linux-amd64/helm /usr/local/bin/helm
+
+RUN echo "Installing flux..." && \ 
+    curl -s -LO "https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz" && \ 
+    tar -xzf flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
+    install -o root -g root -m 0755 flux /usr/local/bin/flux
+
+RUN echo "Installing sops..." && \
+    curl -s -LO "https://github.com/getsops/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64" && \
+    install -o root -g root -m 0755 sops-${SOPS_VERSION}.linux.amd64 /usr/local/bin/sops
