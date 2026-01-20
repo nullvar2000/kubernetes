@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallos
+  namespace: wallos
+  labels:
+    app: wallos
+spec:
+  selector:
+    matchLabels:
+      app: wallos
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wallos
+    spec:
+      containers:
+        - name: wallos
+          image: bellamy/wallos:4.4.1 # {"$imagepolicy": "flux-system:wallos-policy"}
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: ${GLOBAL_TZ}
+          ports:
+            - containerPort: 8282
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/www/html/db
+              name: wallos-db
+            - mountPath: /var/www/html/images/uploads/logos
+              name: wallos-logos
+          resources: {}
+      restartPolicy: Always
+      volumes:
+        - name: wallos-db
+          persistentVolumeClaim:
+            claimName: wallos-db
+        - name: wallos-logos
+          persistentVolumeClaim:
+            claimName: wallos-logos
