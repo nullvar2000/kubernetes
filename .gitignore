@@ -3,3 +3,4 @@ extra/
 archive/
 **/*secrets.yaml
 **/*secret.yaml
+**/*.disabled
