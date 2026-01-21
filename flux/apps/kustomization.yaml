@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - ai
   - wallos
-  # - apps-secrets.yaml
+  - jellyfin
+  - apps-secrets.sops.yaml
