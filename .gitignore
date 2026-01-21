@@ -1,3 +1,5 @@
 extra/
 /secrets/
 archive/
+**/*secrets.yaml
+**/*secret.yaml
