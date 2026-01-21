@@ -13,3 +13,23 @@ kubectl -n argocd apply -f https://raw.githubusercontent.com/nullvar2000/kuberne
 # sops
 [Flux SOPS Guide](https://fluxcd.io/flux/guides/mozilla-sops/)
 
+Create keys:
+```
+age-keygen -o $HOME/.sops/key.txt
+```
+
+One time cluster setup:
+```
+kubectl -n flux-system create secret generic sops-age \
+  --from-file=age.agekey=$HOME/.sops/key.txt
+```
+
+encrypt:
+```
+sops -e clusters/home/global-secrets.yaml > clusters/home/global-secrets.sops.yaml
+```
+
+decrypt:
+```
+sops -d clusters/home/global-secrets.sops.yaml
+```
