@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ai
+  - heimdall
   - jellyfin
   - kanboard
   - wallos

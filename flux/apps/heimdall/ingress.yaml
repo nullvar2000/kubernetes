@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: heimdall
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: heimdall.${GLOBAL_DOMAIN}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: heimdall
+            port:
+              number: 80
+  tls:
+    - hosts:
+        - heimdall.${GLOBAL_DOMAIN}
+      secretName: heimdall-tls
