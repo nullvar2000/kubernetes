@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ai
-  - wallos
   - jellyfin
+  - kanboard
+  - wallos
   - apps-secrets.sops.yaml
