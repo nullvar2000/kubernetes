@@ -3,12 +3,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: wallos
-  namespace: wallos
+  name: kanboard
+  namespace: kanboard
 spec:
-  secretName: wallos-tls
+  secretName: kanboard-tls
   issuerRef:
     name: letsencrypt-dns01-issuer
     kind: ClusterIssuer
   dnsNames:
-    - wallos.${GLOBAL_DOMAIN}
+    - kanboard.${GLOBAL_DOMAIN}
