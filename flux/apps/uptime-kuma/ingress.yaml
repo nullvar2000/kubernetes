@@ -2,17 +2,20 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: uptime-kuma
-  namespace: uptime-kuma
 spec:
   ingressClassName: nginx
   rules:
-  - host: uptime-kuma.legion.lan
+  - host: uptime-kuma.${GLOBAL_DOMAIN}
     http:
       paths:
-      - path: /
-        pathType: Prefix
+      - pathType: Prefix
+        path: "/"
         backend:
           service:
             name: uptime-kuma
             port:
-              number: 3001
+              number: 80
+  tls:
+    - hosts:
+        - uptime-kuma.${GLOBAL_DOMAIN}
+      secretName: uptime-kuma-tls

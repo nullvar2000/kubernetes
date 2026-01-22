@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: uptime-kuma
-  namespace: uptime-kuma
   labels:
     app: uptime-kuma
 spec:
@@ -17,7 +16,7 @@ spec:
     spec:
       containers:
       - name: uptime-kuma
-        image: elestio/uptime-kuma:1.23.13
+        image: ghcr.io/louislam/uptime-kuma:2.0.2 # {"$imagepolicy": "flux-system:uptime-kuma-policy"}
         ports:
         - containerPort: 3001
         volumeMounts:
