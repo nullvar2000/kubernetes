@@ -14,7 +14,7 @@ spec:
           service:
             name: uptime-kuma
             port:
-              number: 80
+              number: 3001
   tls:
     - hosts:
         - uptime-kuma.${GLOBAL_DOMAIN}
