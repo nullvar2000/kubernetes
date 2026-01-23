@@ -19,8 +19,20 @@ spec:
     pipelines:
       enabled: true
 
+    tika: 
+      enabled: true
+    
+    managedCertificate:
+      enables: true
+      name: open-webui
+      domains:
+        - open-webui.${GLOBAL_DOMAIN}
+    
     ingress:
-      enabled: false
+      enabled: true
+      class: nginx
+      host: open-webui.${GLOBAL_DOMAIN}
+      tls: true
 
     persistence:
       enabled: true
@@ -28,3 +40,25 @@ spec:
       accessModes:
         - ReadWriteOnce
       storageClass: "longhorn"
+
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: http
+      failureThreshold: 1
+      periodSeconds: 10
+
+    readinessProbe:
+      httpGet:
+        path: /health/db
+        port: http
+      failureThreshold: 1
+      periodSeconds: 10
+
+    startupProbe:
+      httpGet:
+        path: /health
+        port: http
+      initialDelaySeconds: 30
+      periodSeconds: 5
+      failureThreshold: 20
