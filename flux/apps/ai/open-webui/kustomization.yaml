@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: open-webui
 
 resources:
+  - helm-release.yaml
   - helm-repo.yaml
   - namespace.yaml
