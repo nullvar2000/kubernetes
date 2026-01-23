@@ -23,7 +23,7 @@ spec:
       enabled: true
     
     managedCertificate:
-      enables: true
+      enabled: true
       name: open-webui
       domains:
         - open-webui.${GLOBAL_DOMAIN}
