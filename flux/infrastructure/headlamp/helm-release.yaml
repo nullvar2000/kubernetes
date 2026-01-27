@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: headlamp
+spec:
+  interval: 1h
+  releaseName: headlamp
+  chart:
+    spec:
+      chart: headlamp
+      version: 0.39.0
+      sourceRef:
+        kind: HelmRepository
+        name: headlamp
+  values:
+    config:
+      inCluster: true
+      enableHelm: true
+    persistentVolumeClaim:
+      enabled: true
+      size: 8Gi
+      storageClassName: longhorn
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - host: headlamp.${GLOBAL_DOMAIN}
+          paths:
+            - path: "/"
+      tls:
+        - secretName: headlamp-tls
+          hosts:
+            - headlamp.${GLOBAL_DOMAIN}
+      
