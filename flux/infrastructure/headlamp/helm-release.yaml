@@ -23,15 +23,4 @@ spec:
       accessModes: 
         - ReadWriteOnce
     ingress:
-      enabled: true
-      ingressClassName: nginx
-      hosts:
-        - host: headlamp.${GLOBAL_DOMAIN}
-          paths:
-            - path: "/"
-              pathType: Prefix
-      tls:
-        - secretName: headlamp-tls
-          hosts:
-            - headlamp.${GLOBAL_DOMAIN}
-      
+      enabled: false
