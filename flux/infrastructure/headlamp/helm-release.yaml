@@ -21,7 +21,7 @@ spec:
       size: 8Gi
       storageClassName: longhorn
       accessModes: 
-        - RWO
+        - ReadWriteOnce
     ingress:
       enabled: true
       ingressClassName: nginx
