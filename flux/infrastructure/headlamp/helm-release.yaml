@@ -20,6 +20,8 @@ spec:
       enabled: true
       size: 8Gi
       storageClassName: longhorn
+      accessModes: 
+        - RWO
     ingress:
       enabled: true
       ingressClassName: nginx
@@ -27,6 +29,7 @@ spec:
         - host: headlamp.${GLOBAL_DOMAIN}
           paths:
             - path: "/"
+              pathType: Prefix
       tls:
         - secretName: headlamp-tls
           hosts:
