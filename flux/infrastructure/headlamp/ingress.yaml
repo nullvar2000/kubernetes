@@ -14,7 +14,7 @@ spec:
           service:
             name: headlamp
             port:
-              number: 11434
+              number: 80
   tls:
     - hosts:
         - headlamp.${GLOBAL_DOMAIN}
