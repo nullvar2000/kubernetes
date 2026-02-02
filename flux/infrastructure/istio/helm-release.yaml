@@ -42,7 +42,7 @@ spec:
   interval: 1h
   dependsOn:
     - name: istiod
-  releaseName: istiod
+  releaseName: istio-cni
   chart:
     spec:
       chart: istio-cni
