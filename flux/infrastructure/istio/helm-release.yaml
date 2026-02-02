@@ -45,7 +45,7 @@ spec:
   releaseName: istio-cni
   chart:
     spec:
-      chart: istio-cni
+      chart: cni
       version: 1.28.3
       sourceRef:
         kind: HelmRepository
@@ -64,7 +64,7 @@ spec:
   releaseName: istio-ztunnel
   chart:
     spec:
-      chart: istio-ztunnel
+      chart: ztunnel
       version: 1.28.3
       sourceRef:
         kind: HelmRepository
