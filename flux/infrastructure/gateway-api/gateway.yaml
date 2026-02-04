@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: gateway-api
+spec:
+  gatewayClassName: istio
+  infrastructure:
+    labels:
+      app: istio-gateway
+  listeners:
+    - name: https
+      hostname: "*.${GLOBAL_DOMAIN}"
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: wildcard-tls
+      allowedRoutes:
+        namespaces:
+          from: All
