@@ -16,7 +16,7 @@ spec:
     config:
       inCluster: true
       enableHelm: true
-    pluginsManage:
+    pluginsManager:
       enabled: true
     persistentVolumeClaim:
       enabled: true
