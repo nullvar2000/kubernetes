@@ -5,4 +5,4 @@ metadata:
   namespace: cert-manager
 type: Opaque
 stringData:
-  api-key: nope!
+  api-key: ${CERT_MANAGER_DNS_API_TOKEN}
