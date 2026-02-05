@@ -16,6 +16,8 @@ spec:
     config:
       inCluster: true
       enableHelm: true
+    pluginsManage:
+      enabled: true
     persistentVolumeClaim:
       enabled: true
       size: 8Gi
