@@ -6,3 +6,4 @@ resources:
   - gateway-api
   - headlamp
   - istio
+  - infrastructure-secrets.sops.yaml
