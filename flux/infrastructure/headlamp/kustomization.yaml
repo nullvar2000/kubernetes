@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
-  - cert.yaml
   - helm-release.yaml
   - helm-repo.yaml
-  - ingress.yaml
+  - httproute.yaml
