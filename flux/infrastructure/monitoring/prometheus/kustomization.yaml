@@ -9,8 +9,10 @@ resources:
   - helm-release.yaml
   - helm-repo.yaml
   - namespace.yaml
-  
+
 configMapGenerator:
   - name: helm-values
     files:
       - files/values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
