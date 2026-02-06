@@ -4,10 +4,10 @@ metadata:
   name: kube-prometheus-stack
 spec:
   interval: 1h
-  releaseName: prometheus
+  releaseName: kube-prometheus-stack
   chart:
     spec:
-      chart: prometheus
+      chart: kube-prometheus-stack
       version: 81.5.0
       sourceRef:
         kind: HelmRepository
