@@ -1,0 +1,45 @@
+crds:
+  enabled: true
+  upgradeJob:
+    enabled: false
+
+alertmanager:
+  enabled: true
+  route:
+    main:
+      enabled: true
+      apiVersion: gateway.networking.k8s.io/v1
+      kind: HTTPRoute
+      hostnames:
+        - alertmanager.${GLOBAL_DOMAIN}
+      parentRefs:
+        - name: gateway-api
+          namespace: istio-gateway
+      httpsRedirect: false
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: ${MONITORING_PROMETHEUS_GRAFANA_ADMIN_PASSWORD}
+
+prometheus:
+  enabled: true
+  route:
+    main:
+      enabled: true
+      apiVersion: gateway.networking.k8s.io/v1
+      kind: HTTPRoute
+      hostnames: 
+        - prometheus.${GLOBAL_DOMAIN}
+      parentRefs:
+        - name: gateway-api
+          namespace: istio-gateway
+      httpsRedirect: false
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
