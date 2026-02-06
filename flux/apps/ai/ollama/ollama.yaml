@@ -25,7 +25,7 @@ spec:
           operator: Exists
       containers:
         - name: ollama
-          image: docker.io/ollama/ollama:0.15.4 # {"$imagepolicy": "flux-system:ollama-policy"}
+          image: docker.io/ollama/ollama:0.15.5 # {"$imagepolicy": "flux-system:ollama-policy"}
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
