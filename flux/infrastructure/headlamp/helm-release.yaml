@@ -18,7 +18,7 @@ spec:
       enableHelm: true
     pluginsManager:
       enabled: true
-      configContent:
+      configContent: |
         plugins:
           - name: headlamp_cert-manager
             source: https://github.com/headlamp-k8s/plugins/releases/download/cert-manager-0.1.0/headlamp-k8s-cert-manager-0.1.0.tar.gz
