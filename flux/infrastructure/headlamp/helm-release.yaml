@@ -16,6 +16,7 @@ spec:
     config:
       inCluster: true
       enableHelm: true
+      watchPlugins: true
     pluginsManager:
       enabled: true
       configContent: |
@@ -26,6 +27,8 @@ spec:
         installOptions:
           parallel: true
           maxConcurrent: 2
+      baseImage: node:lts-alpine
+      version: latest
     persistentVolumeClaim:
       enabled: true
       size: 8Gi
