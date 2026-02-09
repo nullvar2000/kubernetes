@@ -18,6 +18,14 @@ spec:
       enableHelm: true
     pluginsManager:
       enabled: true
+      configContent:
+        plugins:
+          - name: headlamp_cert-manager
+            source: https://github.com/headlamp-k8s/plugins/releases/download/cert-manager-0.1.0/headlamp-k8s-cert-manager-0.1.0.tar.gz
+            version: 0.1.0
+        installOptions:
+          parallel: true
+          maxConcurrent: 2
     persistentVolumeClaim:
       enabled: true
       size: 8Gi
