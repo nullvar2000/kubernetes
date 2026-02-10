@@ -1,4 +1,3 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: heimdall
@@ -9,9 +8,4 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - service.yaml
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: flux-system
-resources:
-  - imageupdateautomation.yaml
+  - imageupdateautomation
