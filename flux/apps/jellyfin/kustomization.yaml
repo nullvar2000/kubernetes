@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - cert.yaml
   - deployment.yaml
-  - imageupdateautomation.yaml
+  # - imageupdateautomation.yaml
   - ingress.yaml
   - namespace.yaml
   - pvc.yaml
