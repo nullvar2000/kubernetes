@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: docker.io/postgres/postgres:17.7-trixie # {"$imagepolicy": "flux-system:postgres-policy"}
+          image: docker.io/library/postgres:17.7-trixie # {"$imagepolicy": "flux-system:postgres-policy"}
           env:
             - name: POSTGRES_LOG_STATEMENT
               value: "all"
