@@ -48,14 +48,14 @@ spec:
             - name: KC_CACHE_EMBEDDED_NETWORK_BIND_ADDRESS
               value: '$(POD_IP)'
             - name: 'KC_DB_URL_DATABASE'
-              value: 'keycloak'
-            - name: 'KC_DB_URL_HOST'
-              value: 'postgres'
-            - name: 'KC_DB'
               valueFrom:
                 secretKeyRef:
                   key: POSTGRES_DB
                   name: postgres-secrets
+            - name: 'KC_DB_URL_HOST'
+              value: 'postgres'
+            - name: 'KC_DB'
+              value: 'postgres'
             - name: 'KC_DB_PASSWORD'
               valueFrom:
                 secretKeyRef:
