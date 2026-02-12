@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: docker.io/postgres/postgres:17.7-trixie # {"$imagepolicy": "flux-system:postgres-policy"}
+          env:
+            - name: POSTGRES_LOG_STATEMENT
+              value: "all"
+          envFrom:
+            - secretRef:
+                name: postgres-secrets
+          ports:
+            - name: postgres
+              containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          resources: 
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "4Gi"
+              cpu: "500m"
+      readinessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        timeoutSeconds: 15
+        failureThreshold: 5
+      livenessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 3
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data
