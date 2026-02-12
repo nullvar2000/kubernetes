@@ -20,6 +20,8 @@ spec:
           env:
             - name: POSTGRES_LOG_STATEMENT
               value: "all"
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           envFrom:
             - secretRef:
                 name: postgres-secrets
