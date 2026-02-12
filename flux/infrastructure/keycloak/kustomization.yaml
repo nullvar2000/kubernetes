@@ -9,6 +9,6 @@ resources:
   - postgres-secrets.sops.yaml
   - postgres-deployment.yaml
   - postgres-service.yaml
-  - keycloak-secrets.yaml
+  - keycloak-secrets.sops.yaml
   - keycloak-statefulset.yaml
   - keycloak-service.yaml
