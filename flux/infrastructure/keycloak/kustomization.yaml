@@ -6,9 +6,9 @@ namespace: keycloak
 resources:
   - namespace.yaml
   - postgres-pvc.yaml
-  - postgres-secrets.sops.yaml
+  - postgres-secrets.clear.yaml
   - postgres-deployment.yaml
   - postgres-service.yaml
-  - keycloak-secrets.sops.yaml
+  - keycloak-secrets.clear.yaml
   - keycloak-statefulset.yaml
   - keycloak-service.yaml
