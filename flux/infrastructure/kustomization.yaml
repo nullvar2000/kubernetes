@@ -6,6 +6,6 @@ resources:
   - gateway-api
   - headlamp
   - istio
-  # - keycloak
+  - keycloak
   - monitoring
   - infrastructure-secrets.sops.yaml
