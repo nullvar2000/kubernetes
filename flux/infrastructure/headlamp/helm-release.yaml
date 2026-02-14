@@ -20,7 +20,7 @@ spec:
       oidc:
         clientID: ${KEYCLOAK_HEADLAMP_CLIENT_ID}
         clientSecret: ${KEYCLOAK_HEADLAMP_CLIENT_SECRET}
-        issuerURL: keycloak.${GLOBAL_DOMAIN}/realms/${KEYCLOAK_REALM}
+        issuerURL: https://keycloak.${GLOBAL_DOMAIN}/realms/${KEYCLOAK_REALM}
         scopes: ${KEYCLOAK_HEADLAMP_SCOPES}
     pluginsManager:
       enabled: true
