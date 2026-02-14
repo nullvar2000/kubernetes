@@ -71,6 +71,6 @@ spec:
         providerUrl: https://keycloak.${GLOBAL_DOMAIN}/realms/${GLOBAL_KEYCLOAK_REALM}/.well-known/openid-configuration
         scopes: ${AI_OPENWEBUI_OIDC_SCOPES}
       roleManagement:
-        rolesClaim: "roles"
+        rolesClaim: 'resource_access.${client_id}.roles'
         allowedRoles: "user"
         adminRoles: "admin"
