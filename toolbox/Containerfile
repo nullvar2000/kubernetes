@@ -8,8 +8,6 @@ ARG FLUX_VERSION=2.7.5
 ARG SOPS_VERSION=v3.11.0
 ARG AGE_VERSION=v1.3.1
 
-RUN dnf update -y && dnf install -y podman
-
 RUN echo "Installing kubectl..." && \
     curl -s -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
@@ -39,3 +37,18 @@ RUN echo "Installing age..." && \
     curl -s -LO "https://github.com/FiloSottile/age/releases/download/${AGE_VERSION}/age-${AGE_VERSION}-linux-amd64.tar.gz" && \ 
     tar -xzf age-${AGE_VERSION}-linux-amd64.tar.gz && \
     install -o root -g root -m 0755 age/age* /usr/local/bin/
+
+RUN wget https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg && \
+    rpm --import pub.gpg && \
+    sudo tee -a /etc/yum.repos.d/vscodium.repo << 'EOF'
+[gitlab.com_paulcarroty_vscodium_repo]
+name=gitlab.com_paulcarroty_vscodium_repo
+baseurl=https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+metadata_expire=1h
+EOF
+
+RUN dnf update -y && dnf install -y podman fastfetch codium
