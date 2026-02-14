@@ -12,3 +12,4 @@ resources:
   - keycloak-secrets.clear.yaml
   - keycloak-statefulset.yaml
   - keycloak-service.yaml
+  - httproute.yaml
