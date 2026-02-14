@@ -62,9 +62,9 @@ spec:
 
     sso:
       enabled: true
+      enableSignup: true
       oidc:
         enabled: true
-        enableSignup: true
         clientId: ${AI_OPENWEBUI_OIDC_CLIENT_ID}
         clientSecret: ${AI_OPENWEBUI_OIDC_CLIENT_SECRET}
         providerUrl: https://keycloak.${GLOBAL_DOMAIN}/realms/${GLOBAL_KEYCLOAK_REALM}/.well-known/openid-configuration
