@@ -59,3 +59,12 @@ spec:
       initialDelaySeconds: 30
       periodSeconds: 5
       failureThreshold: 20
+
+    sso:
+      enabled: true
+      oidc:
+        enabled: true
+        clientId: ${AI_OPENWEBUI_OIDC_CLIENT_ID}
+        clientSecret: ${AI_OPENWEBUI_OIDC_CLIENT_SECRET}
+        providerUrl: https://keycloak.${GLOBAL_DOMAIN}/realms/${GLOBAL_KEYCLOAK_REALM}
+        scopes: ${AI_OPENWEBUI_OIDC_SCOPES}
