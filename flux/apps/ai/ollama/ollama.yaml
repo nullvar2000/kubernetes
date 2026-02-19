@@ -27,6 +27,9 @@ spec:
         - name: ollama
           image: docker.io/ollama/ollama:0.16.2 # {"$imagepolicy": "flux-system:ollama-policy"}
           imagePullPolicy: IfNotPresent
+          env:
+            - name: OLLAMA_CONTEXT_LENGTH
+              value: '32000'
           livenessProbe:
             httpGet:
               path: /
