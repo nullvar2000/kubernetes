@@ -6,6 +6,7 @@ resources:
   - heimdall
   - jellyfin
   - kanboard
+  - smart-home
   - uptime-kuma
   - wallos
   - apps-secrets.sops.yaml

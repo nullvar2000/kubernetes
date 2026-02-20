@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: piper
+  namespace: flux-system
+spec:
+  image: docker.io/rhasspy/wyoming-piper
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: piper-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: piper
+  policy:
+    semver:
+      range: ">=1.6.3"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: piper-image-update
+  namespace: flux-system
+spec:
+  interval: 6h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-piper-image-update
+  update:
+    path: ./flux/apps/smart-home/wyoming/piper

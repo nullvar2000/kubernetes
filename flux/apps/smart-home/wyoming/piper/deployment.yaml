@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: piper
+  namespace: homeassistant
+  labels:
+    app: piper
+spec:
+  selector:
+    matchLabels:
+      app: piper
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: piper
+    spec:
+      containers:
+      - name: piper
+        image: rhasspy/wyoming-piper:1.6.3 # {"$imagepolicy": "flux-system:piper-policy"}
+        args: ["--voice", "en-gb-southern_english_female-low"]
+        ports:
+        - containerPort: 10200
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        resources:  {}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: piper-data

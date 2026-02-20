@@ -1,19 +1,3 @@
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: whisper-data
-  namespace: homeassistant
-  labels:
-    app: whisper
-spec:
-  storageClassName: nfs-client
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,7 +17,7 @@ spec:
     spec:
       containers:
       - name: wyoming-whisper
-        image: rhasspy/wyoming-whisper:2.5.0
+        image: rhasspy/wyoming-whisper:2.5.0 # {"$imagepolicy": "flux-system:whisper-policy"}
         args: ["--model", "tiny-int8", "--language", "en"]
         ports:
         - containerPort: 10300
@@ -45,17 +29,3 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: whisper-data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name:  whisper
-  namespace: homeassistant
-spec:
-  selector:
-    app:  whisper
-  type: LoadBalancer
-  ports:
-    - port:  10300
-      protocol: TCP 
-      targetPort: 10300
