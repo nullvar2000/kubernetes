@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: piper
+  name: wyoming-piper
   namespace: homeassistant
   labels:
     app: piper
@@ -16,7 +16,7 @@ spec:
         app: piper
     spec:
       containers:
-      - name: piper
+      - name: wyoming-piper
         image: docker.io/rhasspy/wyoming-piper:2.2.2 # {"$imagepolicy": "flux-system:piper-policy"}
         args: ["--voice", "en-gb-southern_english_female-low"]
         ports:
