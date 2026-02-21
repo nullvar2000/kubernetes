@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: musicassistant
+  name: music-assistant
   namespace: homeassistant
   labels:
-    app: musicassistant
+    app: music-assistant
 spec:
   selector:
     matchLabels:
-      app: musicassistant
+      app: music-assistant
   replicas: 1
   template:
     metadata:
       labels:
-        app: musicassistant
+        app: music-assistant
     spec:
       containers:
-        - name: musicassistant
-          image: ghcr.io/music-assistant/server:2.5.8
+        - name: music-assistant
+          image: ghcr.io/music-assistant/server:2.5.8 # {"$imagepolicy": "flux-system:music-assistant-policy"}
           ports:
             - containerPort: 8095
           volumeMounts:
@@ -29,9 +29,8 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: musicassistant-data
+            claimName: music-assistant-data
         - name: media
           nfs:
             server: kasumi
             path: /data/Media/
-

@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: musicassistant-data
+  name: music-assistant-data
   namespace: homeassistant
   labels:
-    app: musicassistant
+    app: music-assistant
 spec:
   storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 16Gi
