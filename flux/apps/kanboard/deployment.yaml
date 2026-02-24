@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +17,7 @@ spec:
     spec:
       containers:
         - name: kanboard
-          image: docker.io/kanboard/kanboard:v1.2.47 # {"$imagepolicy": "flux-system:kanboard-policy"}
+          image: docker.io/kanboard/kanboard:v1.2.50 # {"$imagepolicy": "flux-system:kanboard-policy"}
           ports:
             - name: web-ui
               containerPort: 80
