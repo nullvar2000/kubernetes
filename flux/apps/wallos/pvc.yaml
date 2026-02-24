@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wallos-db
+  namespace: wallos
   labels:
     app: wallos
 spec:
@@ -16,6 +17,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wallos-logos
+  namespace: wallos
   labels:
     app: wallos
 spec:
