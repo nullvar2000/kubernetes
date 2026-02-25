@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - gitrepo.yaml
   - gpu-plugin.yaml
+  - namespace.yaml
   - nfd-rules.yaml
