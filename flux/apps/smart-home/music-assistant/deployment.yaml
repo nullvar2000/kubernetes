@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: music-assistant
-          image: ghcr.io/music-assistant/server:2.7.9 # {"$imagepolicy": "flux-system:music-assistant-policy"}
+          image: ghcr.io/music-assistant/server:2.7.10 # {"$imagepolicy": "flux-system:music-assistant-policy"}
           ports:
             - containerPort: 8095
           volumeMounts:
