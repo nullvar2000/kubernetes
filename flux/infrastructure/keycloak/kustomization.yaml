@@ -13,3 +13,4 @@ resources:
   - keycloak-statefulset.yaml
   - keycloak-service.yaml
   - httproute.yaml
+  - rolebindings.yaml
