@@ -6,4 +6,4 @@ resources:
   - https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.34.0/olm.yaml
 
   # operators
-  - https://operatorhub.io/install/ovms-operator.yaml
+  # - https://operatorhub.io/install/ovms-operator.yaml
