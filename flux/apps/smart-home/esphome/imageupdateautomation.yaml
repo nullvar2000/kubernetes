@@ -5,7 +5,7 @@ metadata:
   name: esphome
   namespace: flux-system
 spec:
-  image: ghcr.io/esphome/server
+  image: docker.io/esphome/esphome
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
