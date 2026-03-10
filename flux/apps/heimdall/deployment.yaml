@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: heimdall
-        image: docker.io/linuxserver/heimdall:2021.11.28 # {"$imagepolicy": "flux-system:heimdall-policy"}
+        image: docker.io/linuxserver/heimdall:2.7.6 # {"$imagepolicy": "flux-system:heimdall-policy"}
         env:
         - name: TZ
           value: ${GLOBAL_TZ}
