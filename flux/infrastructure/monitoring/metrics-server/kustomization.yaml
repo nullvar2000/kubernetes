@@ -2,5 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  # https://docs.siderolabs.com/kubernetes-guides/monitoring-and-observability/deploy-metrics-server#install-after-bootstrap
   - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/refs/heads/release-0.10/deploy/standalone-install.yaml
   - https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.1/components.yaml
