@@ -1,7 +1,7 @@
 FROM registry.fedoraproject.org/fedora-toolbox:43
 
 ARG KUBECTL_VERSION=v1.34.2
-ARG TALOSCTL_VERSION=v1.11.6
+ARG TALOSCTL_VERSION=v1.12.4
 ARG HELM_VERSION=v4.0.5
 # No v on flux version
 ARG FLUX_VERSION=2.7.5
@@ -51,4 +51,4 @@ gpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
 metadata_expire=1h
 EOF
 
-RUN dnf update -y && dnf install -y podman fastfetch codium
+RUN dnf update -y && dnf install -y podman fastfetch codium jq yq vim bind-utils
