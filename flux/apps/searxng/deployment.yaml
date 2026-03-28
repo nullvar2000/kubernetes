@@ -32,7 +32,7 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 60
           volumeMounts:
-            - name: searxng-config
+            - name: searxng-settings
               mountPath: /etc/searxng/settings.yaml
               subPath: settings.yaml
               readOnly: True
