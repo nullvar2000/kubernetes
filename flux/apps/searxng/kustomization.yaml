@@ -10,5 +10,6 @@ resources:
 
 configMapGenerator:
   - name: searxng-settings
+    namespace: searxng
     files:
       - files/settings.yaml
