@@ -18,6 +18,9 @@ spec:
       containers:
         - name: searxng
           image: ghcr.io/searxng/searxng:2026.3.27-265858ee2 # {"$imagepolicy": "flux-system:searxng-policy"}
+          env:
+            - name: SEARXNG_SECRET
+              value: ${SEARXNG_SECRET}
           ports:
             - name: http
               containerPort: 8080
@@ -29,11 +32,12 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 60
           volumeMounts:
-            - mountPath: /etc/searxng
-              name: searxng-config
-              readOnly: False
-            - mountPath: /var/cache/searxng
-              name: searxng-cache
+            - name: searxng-config
+              mountPath: /etc/searxng/settings.yaml
+              subPath: settings.yaml
+              readOnly: True
+            - name: searxng-cache
+              mountPath: /var/cache/searxng
               readOnly: False
           resources:
             requests:
@@ -44,7 +48,8 @@ spec:
               memory: 2G
       restartPolicy: Always
       volumes:
-        - name: searxng-config
-          emptyDir: {}
+        - name: searxng-settings
+          configMap:
+            name: searxng-settings
         - name: searxng-cache
           emptyDir: {}

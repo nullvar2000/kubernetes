@@ -7,4 +7,8 @@ resources:
   - imageupdateautomation.yaml
   - namespace.yaml
   - service.yaml
-  
+
+configMapGenerator:
+  - name: searxng-settings
+    files:
+      - files/settings.yaml
