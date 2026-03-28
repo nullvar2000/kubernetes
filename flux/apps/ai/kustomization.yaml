@@ -5,3 +5,4 @@ resources:
   - mcp
   - ollama
   - open-webui
+  - vane

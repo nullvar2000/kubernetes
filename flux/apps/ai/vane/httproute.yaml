@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: vane
+  namespace: vane
+spec:
+  parentRefs:
+  - name: gateway-api
+    namespace: istio-gateway
+  hostnames:
+    - vane.${GLOBAL_DOMAIN}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: vane
+      port: 3000

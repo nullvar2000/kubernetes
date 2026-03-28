@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vane
+  namespace: vane
+  labels:
+    app: vane
+spec:
+  selector:
+    matchLabels:
+      app: vane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vane
+    spec:
+      containers:
+        - name: vane
+          image: docker.io/itzcrazykns1337/vane@sha256:fa44be0d3aa1e234e6464741bd6924c9a7a950351f214a71f6d6d9d741df5db3 # {"$imagepolicy": "flux-system:vane-policy"}
+          env:
+            - name: SEARXNG_API_URL
+              value: searxng.${GLOBAL_DOMAIN}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 60
+          volumeMounts:
+            - name: vane-data
+              mountPath: /home/vane/data
+              readOnly: True
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128M
+            limits:
+              cpu: 1000m
+              memory: 2G
+      restartPolicy: Always
+      volumes:
+        - name: vane-data
+          emptyDir: {}
