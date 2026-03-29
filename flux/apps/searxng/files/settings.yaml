@@ -2311,7 +2311,7 @@ engines:
     engine: wolframalpha_noapi
     timeout: 6.0
     categories: general
-    disabled: true
+    disabled: false
 
   - name: wolframalpha_api
     # You can use the engine using the official stable API, but you need an API
