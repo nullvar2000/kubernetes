@@ -34,7 +34,7 @@ spec:
           volumeMounts:
             - name: vane-data
               mountPath: /home/vane/data
-              readOnly: True
+              readOnly: false
           resources:
             requests:
               cpu: 200m
