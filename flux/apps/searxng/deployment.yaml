@@ -33,8 +33,8 @@ spec:
             periodSeconds: 60
           volumeMounts:
             - name: searxng-settings
-              mountPath: /etc/searxng/settings.yaml
-              subPath: settings.yaml
+              mountPath: /etc/searxng/settings.yml
+              subPath: settings.yml
               readOnly: True
             - name: searxng-cache
               mountPath: /var/cache/searxng
