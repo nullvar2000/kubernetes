@@ -1,20 +1,26 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: vane
   namespace: vane
   labels:
     app: vane
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
   selector:
     matchLabels:
       app: vane
   replicas: 1
+  revisionHistoryLimit: 3
   template:
     metadata:
       labels:
         app: vane
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: vane
           image: docker.io/itzcrazykns1337/vane@sha256:fa44be0d3aa1e234e6464741bd6924c9a7a950351f214a71f6d6d9d741df5db3 # {"$imagepolicy": "flux-system:vane-policy"}
@@ -25,12 +31,6 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-        #  livenessProbe:
-          #  httpGet:
-       #       path: /
-      #        port: http
-        #    initialDelaySeconds: 30
-       #     periodSeconds: 60
           volumeMounts:
             - name: vane-data
               mountPath: /home/vane/data
@@ -45,4 +45,5 @@ spec:
       restartPolicy: Always
       volumes:
         - name: vane-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: vane-data
