@@ -43,13 +43,13 @@ spec:
               cpu: 1000m
               memory: 2G
       restartPolicy: Always
-      volumeClaimTemplate:
-        - metadata: 
-            name: vane-data
-          spec:
-            accessModes:
-              - ReadWriteOnce
-            resources:
-              requests:
-                storage: 10Gi
-            storageClassName: longhorn
+  volumeClaimTemplate:
+    - metadata: 
+        name: vane-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: longhorn
