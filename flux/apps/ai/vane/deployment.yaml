@@ -20,7 +20,7 @@ spec:
           image: docker.io/itzcrazykns1337/vane@sha256:fa44be0d3aa1e234e6464741bd6924c9a7a950351f214a71f6d6d9d741df5db3 # {"$imagepolicy": "flux-system:vane-policy"}
           env:
             - name: SEARXNG_API_URL
-              value: searxng.${GLOBAL_DOMAIN}
+              value: http://searxng.searxng.svc.cluster.local:8080
           ports:
             - name: http
               containerPort: 3000
