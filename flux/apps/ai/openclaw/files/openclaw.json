@@ -1,0 +1,53 @@
+{
+  "gateway": {
+    "mode": "remote",
+    "bind": "lan",
+    "port": 18789,
+    "auth": {
+        "mode": "token"
+    },
+    "controlUi": {
+        "enabled": true
+    }
+  },
+  "models": {
+    "providers": {
+      "ollama": {
+        "baseUrl": "http://ollama.ollama.svc.cluster.local:11434",
+        "api": "ollama",
+        "models": [
+          {
+            "id": "gpt-oss:20b",
+            "name": "GPT-OSS 20B",
+            "reasoning": false,
+            "input": ["text"]
+          },
+          {
+            "id": "qwen3:14b",
+            "name": "Qwen3 14B",
+            "reasoning": true,
+            "input": ["text"]
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace",
+      "model": {
+        "primary": "ollama/qwen3:14b"
+      }
+    },
+    "list": [
+      {
+        "id": "default",
+        "name": "OpenClaw Assistant",
+        "workspace": "~/.openclaw/workspace"
+      }
+    ]
+  },
+  "cron": { 
+    "enabled": false 
+  }
+}
