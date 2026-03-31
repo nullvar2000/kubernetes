@@ -100,7 +100,7 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
           volumeMounts:
-            - name: openclaw-home
+            - name: openclaw-data
               mountPath: /home/node/.openclaw
       restartPolicy: Always
       volumes:
