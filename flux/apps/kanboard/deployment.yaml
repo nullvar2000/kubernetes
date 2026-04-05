@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: kanboard
-          image: docker.io/kanboard/kanboard:v1.2.51 # {"$imagepolicy": "flux-system:kanboard-policy"}
+          image: docker.io/kanboard/kanboard:v1.2.52 # {"$imagepolicy": "flux-system:kanboard-policy"}
           ports:
             - name: web-ui
               containerPort: 80
