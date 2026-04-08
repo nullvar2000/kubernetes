@@ -1,20 +1,27 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: syncthing
   namespace: syncthing
   labels:
     app: syncthing
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: syncthing
-  replicas: 1
+  serviceName: syncthing
   template:
     metadata:
       labels:
         app: syncthing
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: syncthing
           image: docker.io/syncthing/syncthing:2.0.16 # {"$imagepolicy": "flux-system:syncthing-policy"}
