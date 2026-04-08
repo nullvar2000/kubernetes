@@ -1,15 +1,21 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: esphome
   namespace: homeassistant
   labels:
     app: esphome
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: esphome
-  replicas: 1
+  serviceName: esphome
   template:
     metadata:
       labels:
