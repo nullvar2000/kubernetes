@@ -18,7 +18,7 @@ spec:
     name: searxng
   policy:
     semver:
-      range: ">=2026.3.0"
+      range: ">=2026.3.0-0"
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
