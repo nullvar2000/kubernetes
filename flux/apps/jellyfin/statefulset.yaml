@@ -1,20 +1,27 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: jellyfin
   namespace: jellyfin
   labels:
     app: jellyfin
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: jellyfin
-  replicas: 1
+  serviceName: jellyfin
   template:
     metadata:
       labels:
         app: jellyfin
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: jellyfin
           image: docker.io/jellyfin/jellyfin:10.11.8 # {"$imagepolicy": "flux-system:jellyfin-policy"}
