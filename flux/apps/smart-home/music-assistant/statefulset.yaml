@@ -1,20 +1,27 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: music-assistant
   namespace: homeassistant
   labels:
     app: music-assistant
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: music-assistant
-  replicas: 1
+  serviceName: music-assistant
   template:
     metadata:
       labels:
         app: music-assistant
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: music-assistant
           image: ghcr.io/music-assistant/server:2.8.3 # {"$imagepolicy": "flux-system:music-assistant-policy"}
@@ -26,6 +33,7 @@ spec:
             - mountPath: /media
               name: media
           resources: {}
+      restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
