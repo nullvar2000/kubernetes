@@ -6,6 +6,7 @@ resources:
   - heimdall
   - jellyfin
   - kanboard
+  - paperless-ngx
   - smart-home
   - searxng
   - syncthing
