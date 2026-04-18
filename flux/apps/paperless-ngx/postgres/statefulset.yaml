@@ -56,13 +56,13 @@ spec:
               cpu: 1000m
               memory: 1Gi
       restartPolicy: Always
-      volumeClaimTemplates:
-        - metadata:
-            name: postgres-data
-          spec:
-            accessModes: 
-              - "ReadWriteOnce"
-            storageClassName: longhorn
-            resources:
-              requests:
-                storage: 20Gi
+    volumeClaimTemplates:
+      - metadata:
+          name: postgres-data
+        spec:
+          accessModes: 
+            - "ReadWriteOnce"
+          storageClassName: longhorn
+          resources:
+            requests:
+              storage: 20Gi
