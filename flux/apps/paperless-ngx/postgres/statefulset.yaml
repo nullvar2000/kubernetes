@@ -45,9 +45,9 @@ spec:
                   name: posgres
                   key: DB_PASSWORD
           volumeMounts:
-            - mountPath: /var/lib/postgresql
-              name: postgres-data
-              readOnly: False
+            - name: postgres-data
+              mountPath: /var/lib/postgresql
+              readOnly: false
           resources:
             requests:
               cpu: 100m
@@ -56,13 +56,13 @@ spec:
               cpu: 1000m
               memory: 1Gi
       restartPolicy: Always
-    volumeClaimTemplates:
-      - metadata:
-          name: postgres-data
-        spec:
-          accessModes: 
-            - "ReadWriteOnce"
-          storageClassName: longhorn
-          resources:
-            requests:
-              storage: 20Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: longhorn
