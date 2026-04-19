@@ -18,7 +18,7 @@ spec:
     name: postgres
   policy:
     semver:
-      range: ">=16.13-alpine"
+      range: "^16.13-alpine"
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
@@ -30,7 +30,7 @@ spec:
     name: postgres
   policy:
     semver:
-      range: ">=17.9-alpine"
+      range: "^17.9-alpine"
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
@@ -42,4 +42,4 @@ spec:
     name: postgres
   policy:
     semver:
-      range: ">=18.3-alpine"
+      range: "^18.3-alpine"
