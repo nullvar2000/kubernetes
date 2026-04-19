@@ -42,4 +42,4 @@ spec:
     push:
       branch: fluxcd-keycloak-image-update
   update:
-    path: ./flux/apps/keycloak
+    path: ./flux/infrastructure/keycloak
