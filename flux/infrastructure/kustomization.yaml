@@ -6,6 +6,7 @@ resources:
   - cert-manager
   - gateway-api
   - headlamp
+  - image-common
   - intel-plugins
   - istio
   - keycloak

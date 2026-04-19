@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: postgres
+  namespace: flux-system
+spec:
+  image: docker.io/library/postgres
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: postgres-16-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: postgres
+  policy:
+    semver:
+      range: ">=16.13-alpine"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: postgres-17-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: postgres
+  policy:
+    semver:
+      range: ">=17.9-alpine"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: postgres-18-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: postgres
+  policy:
+    semver:
+      range: ">=18.3-alpine"
