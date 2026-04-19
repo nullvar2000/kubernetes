@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: keycloak
+  labels:
+    app: postgres
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: docker.io/library/postgres:17.9-alpine3.23 # {"$imagepolicy": "flux-system:postgres-17-policy"}}
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRES_LOG_STATEMENT
+              value: "all"
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - secretRef:
+                name: postgres-secrets
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          resources: 
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "4Gi"
+              cpu: "500m"
+      restartPolicy: Always
+      readinessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        timeoutSeconds: 15
+        failureThreshold: 5
+      livenessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 3
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data

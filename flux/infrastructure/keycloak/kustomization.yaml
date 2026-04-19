@@ -5,7 +5,7 @@ resources:
   - namespace.yaml
   - postgres-pvc.yaml
   - postgres-secrets.clear.yaml
-  - postgres-deployment.yaml
+  - postgres-statefulset.yaml
   - postgres-service.yaml
   - keycloak-secrets.clear.yaml
   - keycloak-statefulset.yaml
