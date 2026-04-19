@@ -12,5 +12,6 @@ resources:
   - keycloak-secrets.clear.yaml
   - keycloak-statefulset.yaml
   - keycloak-service.yaml
+  - keycloak-imageupdateautomation.yaml
   - httproute.yaml
   - rolebindings.yaml
