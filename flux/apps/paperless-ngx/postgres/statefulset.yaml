@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: docker.io/library/postgres:16.13-alpine
+          image: docker.io/library/postgres:16.13-alpine # {"$imagepolicy": "flux-system:postgres-16-policy"}
           ports:
             - containerPort: 5432
               protocol: TCP
@@ -50,12 +50,41 @@ spec:
               readOnly: false
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              memory: "64Mi"
+              cpu: "250m"
             limits:
-              cpu: 1000m
-              memory: 1Gi
+              memory: "4Gi"
+              cpu: "500m"
       restartPolicy: Always
+      readinessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        timeoutSeconds: 15
+        failureThreshold: 5
+      livenessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 3
+      
   volumeClaimTemplates:
     - metadata:
         name: postgres-data
