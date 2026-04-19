@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
+  namespace: keycloak
   labels:
     app: postgres
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: docker.io/library/postgres:17.7-trixie # {"$imagepolicy": "flux-system:postgres-policy"}
+          image: docker.io/library/postgres:17.7-trixie # {"$imagepolicy": "flux-system:postgres-17-policy"}
           env:
             - name: POSTGRES_LOG_STATEMENT
               value: "all"
