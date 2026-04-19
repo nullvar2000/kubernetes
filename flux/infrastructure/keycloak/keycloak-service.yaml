@@ -19,9 +19,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: keycloak-discovery
+  namespace: keycloak
   labels:
     app: keycloak
-  name: keycloak-discovery
 spec:
   selector:
     app: keycloak
