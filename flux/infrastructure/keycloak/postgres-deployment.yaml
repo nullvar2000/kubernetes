@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: docker.io/library/postgres:17.7-trixie # {"$imagepolicy": "flux-system:postgres-17-policy"}
+          image: docker.io/library/postgres:17.9-alpine3.23 # {"$imagepolicy": "flux-system:postgres-17-policy"}
           env:
             - name: POSTGRES_LOG_STATEMENT
               value: "all"
@@ -32,7 +32,7 @@ spec:
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
-          resources: 
+          resources:
             requests:
               memory: "64Mi"
               cpu: "250m"
