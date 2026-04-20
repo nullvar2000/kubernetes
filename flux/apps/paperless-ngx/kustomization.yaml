@@ -8,6 +8,8 @@ resources:
   - postgres/imageupdateautomation.yaml
   - postgres/service.yaml
   - postgres/statefulset.yaml
+  - redis/deployment.yaml
+  - redis/service.yaml
   - paperless-ngx/imageupdateautomation.yaml
   - paperless-ngx/pvc.yaml
   - paperless-ngx/service.yaml
