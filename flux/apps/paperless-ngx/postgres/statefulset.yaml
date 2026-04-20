@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: docker.io/library/postgres:16.13-alpine # {"$imagepolicy": "flux-system:postgres-16-policy"}
+          image: docker.io/library/postgres:16.13-alpine # {"$imagepolicy": "flux-system:postgres-18-policy"}
           ports:
             - containerPort: 5432
               protocol: TCP
