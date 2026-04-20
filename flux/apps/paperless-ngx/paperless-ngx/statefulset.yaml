@@ -70,6 +70,16 @@ spec:
       restartPolicy: Always
       readinessProbe: {}
       livenessProbe: {}
+      volumes:
+        - name: paperless-ngx-media
+          persistentVolumeClaim:
+            claimName: paperless-ngx-media
+        - name: paperless-ngx-export
+          persistentVolumeClaim:
+            claimName: paperless-ngx-export
+        - name: paperless-ngx-consume
+          persistentVolumeClaim:
+            claimName: paperless-ngx-consume
   volumeClaimTemplates:
     - metadata:
         name: paperless-ngx-data
