@@ -1,0 +1,82 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: paperless-ngx
+  namespace: paperless-ngx
+  labels:
+    app: paperless-ngx
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: paperless-ngx
+  serviceName: paperless-ngx
+  template:
+    metadata:
+      labels:
+        app: paperless-ngx
+    spec:
+      containers:
+        - name: paperless-ngx
+          image: ghcr.io/paperless-ngx/paperless-ngx:2.18.4 # {"$imagepolicy": "flux-system:paperless-ngx-policy"}
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: paperless-ngx-config
+          env:
+            - name: PAPERLESS_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  name: posgres-secrets
+                  key: DB_NAME
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: posgres-secrets
+                  key: DB_USER
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: posgres-secrets
+                  key: DB_PASSWORD
+          volumeMounts:
+            - mountPath: /usr/src/paperless/data
+              name: paperless-ngx-data
+              readOnly: False
+            - mountPath: /usr/src/paperless/media
+              name: paperless-ngx-media
+              readOnly: False
+            - mountPath: /usr/src/paperless/export
+              name: paperless-ngx-export
+              readOnly: False
+            - mountPath: /usr/src/paperless/consume
+              name: paperless-ngx-consume
+              readOnly: False
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 200m
+            limits:
+              memory: 4Gi
+              cpu: 500m
+      restartPolicy: Always
+      readinessProbe: {}
+      livenessProbe: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: paperless-ngx-data
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: longhorn
