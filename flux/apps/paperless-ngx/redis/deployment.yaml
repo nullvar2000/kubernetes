@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +17,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: redis:8.6.0 # {"$imagepolicy": "flux-system:redis-policy"}
+          image: docker.io/library/redis:8.6.2 # {"$imagepolicy": "flux-system:redis-policy"}
           ports:
             - containerPort: 6379
               protocol: TCP
