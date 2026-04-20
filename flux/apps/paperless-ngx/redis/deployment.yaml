@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: redis:8.6.0
+          image: redis:8.6.0 # {"$imagepolicy": "flux-system:redis-policy"}
           ports:
             - containerPort: 6379
               protocol: TCP
