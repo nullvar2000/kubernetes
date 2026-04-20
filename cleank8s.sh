@@ -11,7 +11,7 @@ while IFS= read -r POD; do
     STATUS=$(echo $POD | awk '{$1=""; $2=""; print}' | tr -d ' ')
 
     # Check if the status is "Error" or "ContainerStatusUnknown"
-    if [[ "$STATUS" == *"Error"* || "$STATUS" == *"ContainerStatusUnknown"* || "$STATUS" == *"Failed"* ]]; then
+    if [[ "$STATUS" == *"Error"* || "$STATUS" == *"ContainerStatusUnknown"* || "$STATUS" == *"Failed"* || "$STATUS" == *"Unknown"* ]]; then
         echo "Deleting pod: $POD_NAME"
         kubectl delete pod -n $NAMESPACE $POD_NAME 
     fi
