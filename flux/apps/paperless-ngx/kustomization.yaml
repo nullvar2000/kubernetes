@@ -9,3 +9,12 @@ resources:
   - postgres/imageupdateautomation.yaml
   - postgres/service.yaml
   - postgres/statefulset.yaml
+  # - paperless-ngx/imageupdateautomation.yaml
+  # - paperless-ngx/pvc.yaml
+  # - paperless-ngx/service.yaml
+  # - paperless-ngx/statefulset.yaml
+
+configMapGenerator:
+  - name: paperless-ngx-config
+    files:
+      - files/paperless-ngx-config
