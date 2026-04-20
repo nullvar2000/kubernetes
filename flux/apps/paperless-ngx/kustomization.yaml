@@ -18,4 +18,4 @@ configMapGenerator:
   - name: paperless-ngx-config
     namespace: paperless-ngx
     envs:
-      - files/paperless-ngx-config
+      - files/paperless-ngx-config.env
