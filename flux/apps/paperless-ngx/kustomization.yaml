@@ -17,5 +17,5 @@ resources:
 configMapGenerator:
   - name: paperless-ngx-config
     namespace: paperless-ngx
-    files:
+    envs:
       - files/paperless-ngx-config
