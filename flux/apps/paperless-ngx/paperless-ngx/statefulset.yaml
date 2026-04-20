@@ -35,17 +35,17 @@ spec:
             - name: PAPERLESS_DBNAME
               valueFrom:
                 secretKeyRef:
-                  name: posgres-secrets
+                  name: postgres
                   key: DB_NAME
             - name: PAPERLESS_DBUSER
               valueFrom:
                 secretKeyRef:
-                  name: posgres-secrets
+                  name: postgres
                   key: DB_USER
             - name: PAPERLESS_DBPASS
               valueFrom:
                 secretKeyRef:
-                  name: posgres-secrets
+                  name: postgres
                   key: DB_PASSWORD
           volumeMounts:
             - mountPath: /usr/src/paperless/data
