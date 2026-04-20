@@ -1,0 +1,21 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: redis
+  namespace: flux-system
+spec:
+  image: docker.io/library/redis
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: redis-16-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: redis
+  policy:
+    semver:
+      range: ">=8.6.0"
