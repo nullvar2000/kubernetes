@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: esphome
-        image: docker.io/esphome/esphome:2026.4.0 # {"$imagepolicy": "flux-system:esphome-policy"}
+        image: docker.io/esphome/esphome:2026.4.1 # {"$imagepolicy": "flux-system:esphome-policy"}
         env:
         - name: ESPHOME_DASHBOARD_USE_PING
           value: "true"
