@@ -6,13 +6,10 @@ metadata:
 spec:
   interval: 30m
   releaseName: local-path-provisioner
-  chart:
-    spec:
-      chart: local-path-provisioner
-      sourceRef:
-        kind: GitRepository
-        name: local-path-provisioner
-        namespace: flux-system
+  chartRef:
+    kind: HelmChart
+    name: local-path-provisioner
+    namespace: flux-system
   values:
     storageClass:
       name: local-path
