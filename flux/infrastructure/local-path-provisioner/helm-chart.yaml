@@ -2,12 +2,11 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmChart
 metadata:
   name: local-path-provisioner
-  namespace: local-path-provisioner
+  namespace: flux-system
 spec:
   chart: ./deploy/chart/local-path-provisioner
   sourceRef:
     kind: GitRepository
     name: local-path-provisioner
-    namespace: flux-system
   interval: 1h
   reconcileStrategy: Revision
