@@ -4,12 +4,11 @@ metadata:
   name: local-path-provisioner
   namespace: local-path-provisioner
 spec:
-  interval: 1h
+  interval: 30m
   releaseName: local-path-provisioner
-  reconcileStrategy: ChartVersion
   chart:
     spec:
-      chart: ./deploy/chart/local-path-provisioner
+      chart: local-path-provisioner
       sourceRef:
         kind: GitRepository
         name: local-path-provisioner
