@@ -10,5 +10,6 @@ resources:
   - intel-plugins
   - istio
   - keycloak
+  - local-path-provisioner
   - monitoring
   - infrastructure-secrets.sops.yaml
