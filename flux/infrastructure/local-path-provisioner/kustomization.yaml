@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - git-repo.yaml
+  - helm-chart.yaml
   # - helm-release.yaml
   - namespace.yaml
