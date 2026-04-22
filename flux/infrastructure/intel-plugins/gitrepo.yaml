@@ -4,7 +4,7 @@ metadata:
   name: intel-plugins
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 15m
   ref:
-    tag: release-0.35
+    branch: release-0.35
   url: https://github.com/intel/intel-device-plugins-for-kubernetes.git
