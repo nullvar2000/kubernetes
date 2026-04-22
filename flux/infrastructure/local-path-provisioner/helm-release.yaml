@@ -6,13 +6,14 @@ metadata:
 spec:
   interval: 1h
   releaseName: local-path-provisioner
+  reconcileStrategy: ChartVersion
   chart:
     spec:
-      chart: local-path-provisioner
-      version: 'v0.0.35'
+      chart: ./deploy/chart/local-path-provisioner
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: local-path-provisioner
+        namespace: flux-system
   values:
     storageClass:
       name: local-path
