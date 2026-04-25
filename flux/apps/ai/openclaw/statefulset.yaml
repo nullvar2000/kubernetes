@@ -4,7 +4,7 @@ metadata:
   name: gateway
   namespace: openclaw
   labels:
-    app: openclaw
+    app: openclaw-gateway
 spec:
   persistentVolumeClaimRetentionPolicy:
     whenDeleted: Retain
@@ -12,13 +12,13 @@ spec:
   podManagementPolicy: OrderedReady
   selector:
     matchLabels:
-      app: openclaw
+      app: openclaw-gateway
   replicas: 1
   revisionHistoryLimit: 3
   template:
     metadata:
       labels:
-        app: openclaw
+        app: openclaw-gateway
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -57,7 +57,7 @@ spec:
               mountPath: /config
       containers:
         - name: gateway
-          image: ghcr.io/openclaw/openclaw:2026.3.31-slim # {"$imagepolicy": "flux-system:openclaw-policy"}
+          image: ghcr.io/openclaw/openclaw:2026.4.23-slim # {"$imagepolicy": "flux-system:openclaw-policy"}
           command:
             - node
             - /app/dist/index.js
@@ -70,6 +70,9 @@ spec:
               value: /home/node/.openclaw
             - name: NODE_ENV
               value: production
+          envFrom:
+            - secretRef:
+                name: openclaw-secrets
           ports:
             - name: gateway
               containerPort: 18789
@@ -100,20 +103,10 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
           volumeMounts:
-            - name: openclaw-data
+            - name: openclaw-home
               mountPath: /home/node/.openclaw
       restartPolicy: Always
       volumes:
-        - name: init-config
+        - name: openclaw-home
           configMap:
-            name: init-config
-  volumeClaimTemplates:
-    - metadata: 
-        name: openclaw-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 32Gi
-        storageClassName: longhorn
+            name: openclaw-home

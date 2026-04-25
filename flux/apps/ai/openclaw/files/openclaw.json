@@ -4,40 +4,15 @@
     "bind": "loopback",
     "port": 18789,
     "auth": {
-        "mode": "token"
+      "mode": "token"
     },
     "controlUi": {
-        "enabled": true
-    }
-  },
-  "models": {
-    "providers": {
-      "ollama": {
-        "baseUrl": "http://ollama.ollama.svc.cluster.local:11434",
-        "api": "ollama",
-        "models": [
-          {
-            "id": "gpt-oss:20b",
-            "name": "GPT-OSS 20B",
-            "reasoning": false,
-            "input": ["text"]
-          },
-          {
-            "id": "qwen3:14b",
-            "name": "Qwen3 14B",
-            "reasoning": true,
-            "input": ["text"]
-          }
-        ]
-      }
+      "enabled": true
     }
   },
   "agents": {
     "defaults": {
-      "workspace": "~/.openclaw/workspace",
-      "model": {
-        "primary": "ollama/qwen3:14b"
-      }
+      "workspace": "~/.openclaw/workspace"
     },
     "list": [
       {
@@ -47,7 +22,7 @@
       }
     ]
   },
-  "cron": { 
-    "enabled": false 
+  "cron": {
+    "enabled": false
   }
 }
