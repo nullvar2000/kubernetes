@@ -38,7 +38,7 @@ spec:
             periodSeconds: 20
           resources:
             limits:
-              nvidia.com/gpu: '1'
+              nvidia.com/gpu: '2'
           ports:
             - containerPort: 11434
               protocol: TCP
@@ -50,4 +50,4 @@ spec:
       volumes:
         - name: ollama-models
           persistentVolumeClaim:
-            claimName: ollama-models
+            claimName: local-models
