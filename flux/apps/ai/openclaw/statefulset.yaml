@@ -107,6 +107,9 @@ spec:
               mountPath: /home/node/.openclaw
       restartPolicy: Always
       volumes:
-        - name: openclaw-home
+        - name: init-config
           configMap:
-            name: openclaw-home
+            name: init-config
+        - name: openclaw-home
+          persistentVolumeClaim:
+            claimName: openclaw-home
