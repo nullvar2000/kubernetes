@@ -12,4 +12,5 @@ resources:
   - keycloak
   - local-path-provisioner
   - monitoring
+  - rustfs
   - infrastructure-secrets.sops.yaml

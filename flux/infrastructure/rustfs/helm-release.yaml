@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rustfs
+  namespace: rustfs
+spec:
+  interval: 30m
+  releaseName: rustfs
+  chartRef:
+    kind: HelmChart
+    name: rustfs
+    namespace: flux-system
+  values:
+    mode:
+      standalone:
+        enabled: true
+      distributed:
+        enabled: false
+    secret:
+      rustfs:
+        access_key: ${RUSTFS_ACCESS_KEY}
+        secret_key: ${RUSTFS_SECRET_KEY}
+    ingress:
+      enabled: false
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 4Gi
+    storageclass:
+      name: longhorn
+      dataStorageSize: 16Gi

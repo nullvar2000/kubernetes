@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: rustfs
+  namespace: flux-system
+spec:
+  chart: ./helm/rustfs
+  sourceRef:
+    kind: GitRepository
+    name: rustfs
+  interval: 1h
+  reconcileStrategy: Revision
