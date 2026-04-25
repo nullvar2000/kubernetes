@@ -51,7 +51,7 @@ spec:
               memory: 64Mi
               cpu: 100m
           volumeMounts:
-            - name: openclaw-data
+            - name: openclaw-home
               mountPath: /home/node/.openclaw
             - name: init-config
               mountPath: /config
