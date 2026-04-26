@@ -44,3 +44,19 @@ spec:
       replicaCount: 1
       ingress:
         enabled: false
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: v1
+              kind: Deployment
+              name: mattermost
+            patch: |
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: mattermost
+                        env:
+                          - name: MM_FILESETTINGS_AMAZONS3SSL
+                            value: 'false'
