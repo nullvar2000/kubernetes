@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: patch-values
-  namespace: mattermost
-data:
-  values.yaml: |
-    env:
-      MM_FILESETTINGS_AMAZONS3SSL: "false"

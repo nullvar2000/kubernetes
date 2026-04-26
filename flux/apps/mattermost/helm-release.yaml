@@ -13,9 +13,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: mattermost
-  valuesFrom:
-    - kind: ConfigMap
-      name: patch-values
   values:
     global:
       siteUrl: https://mattermost.${GLOBAL_DOMAIN}
