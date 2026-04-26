@@ -24,7 +24,7 @@ spec:
             key: CONNECTION_STRING
         fileStore:
           driver: "amazons3"
-          url: http://rustfs-svc.rustfs.svc.cluster.local:9000
+          url: rustfs-svc.rustfs.svc.cluster.local:9000
           bucket: "mattermost-uploads"
           region: "us-east-1"
           sslEnabled: false
