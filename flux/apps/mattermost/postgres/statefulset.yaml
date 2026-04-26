@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: rustfs
+  labels:
+    app: postgres
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: docker.io/library/postgres:18.3-alpine3.23 # {"$imagepolicy": "flux-system:postgres-18-policy"}
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: DB_NAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: DB_PASSWORD
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql
+              readOnly: false
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "4Gi"
+              cpu: "500m"
+      restartPolicy: Always
+      readinessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        timeoutSeconds: 15
+        failureThreshold: 5
+      livenessProbe:
+        exec:
+          command:
+            - "pg_isready"
+            - "-U"
+            - "$(POSTGRES_USER)"
+            - "-d"
+            - "$(POSTGRES_DB)"
+            - "-h"
+            - "localhost"
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 3
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: longhorn
