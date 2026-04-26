@@ -7,5 +7,6 @@ resources:
   - postgres/statefulset.yaml
   - helm-release.yaml
   - helm-repo.yaml
+  - httproute.yaml
   - namespace.yaml
   - secrets.clear.yaml
