@@ -5,6 +5,6 @@ resources:
   - postgres/imageupdateautomation.yaml
   - postgres/service.yaml
   - postgres/statefulset.yaml
-  # - helm-release.yaml
+  - helm-release.yaml
   - helm-repo.yaml
   - namespace.yaml
