@@ -9,4 +9,5 @@ resources:
   - helm-repo.yaml
   - httproute.yaml
   - namespace.yaml
+  - patch-values.yaml
   - secrets.clear.yaml
