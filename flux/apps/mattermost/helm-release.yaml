@@ -27,7 +27,6 @@ spec:
           url: rustfs-svc.rustfs.svc.cluster.local:9000
           bucket: "mattermost-uploads"
           region: "us-east-1"
-          sslEnabled: false
           existingSecret:
             name: "s3-credentials"
             accessKeyIdKey: ACCESS_KEY
