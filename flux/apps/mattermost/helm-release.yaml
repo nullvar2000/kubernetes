@@ -51,7 +51,7 @@ spec:
               version: v1
               kind: Deployment
               name: mattermost
-            patch: |
+            patch: |-
               spec:
                 template:
                   spec:
