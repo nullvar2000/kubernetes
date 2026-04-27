@@ -5,7 +5,7 @@ metadata:
   name: vscode
   namespace: flux-system
 spec:
-  image: lscr.io/linuxserver/vscode
+  image: lscr.io/linuxserver/code-server
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
@@ -18,4 +18,4 @@ spec:
     name: vscode
   policy:
     semver:
-      range: ">=1.116.0"
+      range: ">=4.116.0"
