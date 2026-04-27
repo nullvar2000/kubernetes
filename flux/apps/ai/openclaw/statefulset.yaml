@@ -87,6 +87,34 @@ spec:
           volumeMounts:
             - name: openclaw-home
               mountPath: /home/node/.openclaw
+        - name: vscode
+          image: lscr.io/linuxserver/vscode:1.116.0 # {"$imagepolicy": "flux-system:vscode-policy"}
+          env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: America/New_York
+          ports:
+            - name: gateway
+              containerPort: 3000
+              protocol: TCP
+            - name: gateway2
+              containerPort: 3001
+              protocol: TCP
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+              cpu: "1"
+          volumeMounts:
+            - name: openclaw-home
+              mountPath: /projects
+            - name: vscode-config
+              mountPath: /config
       restartPolicy: Always
       volumes:
         - name: init-config
@@ -95,3 +123,6 @@ spec:
         - name: openclaw-home
           persistentVolumeClaim:
             claimName: openclaw-home
+        - name: vscode-config
+          persistentVolumeClaim:
+            claimName: vscode-config
