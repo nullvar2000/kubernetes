@@ -1,0 +1,21 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vscode
+  namespace: flux-system
+spec:
+  image: lscr.io/linuxserver/vscode
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vscode-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: vscode
+  policy:
+    semver:
+      range: ">=1.116.0"
