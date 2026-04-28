@@ -20,7 +20,7 @@ metadata:
   namespace: openclaw
 spec:
   selector:
-    app:  code-server
+    app:  openclaw-gateway
   type: ClusterIP
   ports:
     - name: https
