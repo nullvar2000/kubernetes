@@ -88,7 +88,7 @@ spec:
             - name: openclaw-home
               mountPath: /home/node/.openclaw
         - name: code-server
-          image: docker.io/linuxserver/code-server:1.117.0 # {"$imagepolicy": "flux-system:code-server-policy"}
+          image: docker.io/linuxserver/code-server:4.117.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           env:
             - name: PUID
               value: '1000'
