@@ -87,8 +87,8 @@ spec:
           volumeMounts:
             - name: openclaw-home
               mountPath: /home/node/.openclaw
-        - name: vscode
-          image: lscr.io/linuxserver/vscode:1.116.0 # {"$imagepolicy": "flux-system:vscode-policy"}
+        - name: code-server
+          image: lscr.io/linuxserver/code-server:1.116.0 # {"$imagepolicy": "flux-system:vscode-policy"}
           env:
             - name: PUID
               value: '1000'
@@ -96,12 +96,14 @@ spec:
               value: '1000'
             - name: TZ
               value: America/New_York
+            - name: DEFAULT_WORKSPACE
+              value: '/projects'
+          envFrom:
+            - secretRef:
+                name: code-server-auth
           ports:
-            - name: gateway
-              containerPort: 3000
-              protocol: TCP
-            - name: gateway2
-              containerPort: 3001
+            - name: https
+              containerPort: 8443
               protocol: TCP
           resources:
             requests:
