@@ -98,9 +98,6 @@ spec:
               value: America/New_York
             - name: DEFAULT_WORKSPACE
               value: '/projects'
-          envFrom:
-            - secretRef:
-                name: code-server-auth
           ports:
             - name: https
               containerPort: 8443
