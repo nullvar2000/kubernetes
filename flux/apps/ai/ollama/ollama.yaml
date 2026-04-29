@@ -29,7 +29,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: OLLAMA_CONTEXT_LENGTH
-              value: '8192'
+              value: '16384'
           livenessProbe:
             httpGet:
               path: /
