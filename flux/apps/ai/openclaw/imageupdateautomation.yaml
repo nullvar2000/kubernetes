@@ -42,4 +42,4 @@ spec:
     push:
       branch: fluxcd-openclaw-image-update
   update:
-    path: ./flux/apps/openclaw
+    path: ./flux/apps/ai/openclaw
