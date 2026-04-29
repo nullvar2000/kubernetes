@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - httproute.yaml
-  # - imageupdateautomation.yaml
+  - imageupdateautomation.yaml
   - namespace.yaml
   - pvc.yaml
   - secrets.clear.yaml
