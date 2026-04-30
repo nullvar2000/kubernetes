@@ -57,7 +57,7 @@ spec:
               mountPath: /config
       containers:
         - name: gateway
-          image: ghcr.io/openclaw/openclaw:2026.4.26 # {"$imagepolicy": "flux-system:openclaw-policy"}
+          image: ghcr.io/openclaw/openclaw:2026.4.29-beta.1-slim-arm64 # {"$imagepolicy": "flux-system:openclaw-policy"}
           command:
             - node
             - /app/dist/index.js
