@@ -22,6 +22,8 @@ spec:
     spec:
       automountServiceAccountToken: false
       securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
         fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
@@ -87,6 +89,8 @@ spec:
           volumeMounts:
             - name: openclaw-home
               mountPath: /home/node/.openclaw
+            - name: export-share
+              mountPath: /export
         - name: code-server
           image: docker.io/linuxserver/code-server:4.117.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           env:
@@ -108,7 +112,7 @@ spec:
               cpu: 250m
             limits:
               memory: 2Gi
-              cpu: "1"
+              cpu: "2"
           volumeMounts:
             - name: openclaw-home
               mountPath: /projects
@@ -125,3 +129,6 @@ spec:
         - name: vscode-config
           persistentVolumeClaim:
             claimName: vscode-config
+        - name: export-share
+          peristentVolumeClaim:
+            claimName: export-share
