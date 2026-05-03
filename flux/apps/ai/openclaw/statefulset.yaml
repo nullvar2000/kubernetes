@@ -116,6 +116,8 @@ spec:
           volumeMounts:
             - name: openclaw-home
               mountPath: /projects
+            - name: export-share
+              mountPath: /export
             - name: vscode-config
               mountPath: /config
       restartPolicy: Always
