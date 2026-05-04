@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hermes-agent
+  namespace: hermes
+  labels:
+    app: hermes-agent
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  selector:
+    matchLabels:
+      app: hermes-agent
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        app: hermes-agent
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: agent
+          image: docker.io/nousresearch/hermes-agent:v2026.4.30 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
+          command:
+            - gateway
+            - run
+          # envFrom:
+          #   - secretRef:
+          #       name: hermes-secrets
+          ports:
+            - name: hermes-agent
+              containerPort: 8642
+              protocol: TCP
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+              cpu: "1"
+          volumeMounts:
+            - name: hermes-agent-data
+              mountPath: /opt/data
+        - name: code-server
+          image: docker.io/linuxserver/code-server:4.117.0 # {"$imagepolicy": "flux-system:code-server-policy"}
+          env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: America/New_York
+            - name: DEFAULT_WORKSPACE
+              value: '/projects'
+          ports:
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+              cpu: "2"
+          volumeMounts:
+            - name: hermes-agent-data
+              mountPath: /projects
+      restartPolicy: Always
+      volumes:
+        - name: hermes-agent-data
+          persistentVolumeClaim:
+            claimName: hermes-data
+        - name: vscode-config
+          persistentVolumeClaim:
+            claimName: vscode-config
