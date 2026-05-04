@@ -79,7 +79,7 @@ spec:
       volumes:
         - name: hermes-agent-data
           persistentVolumeClaim:
-            claimName: hermes-data
+            claimName: hermes-agent-data
         - name: vscode-config
           persistentVolumeClaim:
             claimName: vscode-config
