@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: hermes-agent
-  namespace: hermes
+  namespace: hermes-agent
   labels:
     app: hermes-agent
 spec:
