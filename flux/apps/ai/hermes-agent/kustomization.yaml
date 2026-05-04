@@ -7,5 +7,5 @@ resources:
   - namespace.yaml
   - pvc.yaml
   # - secrets.clear.yaml
-  # - service.yaml
+  - service.yaml
   - statefulset.yaml
