@@ -12,3 +12,16 @@ spec:
   resources:
     requests:
       storage: 32Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vscode-config
+  namespace: openclaw
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
