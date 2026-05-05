@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: hermes-agent
+  namespace: flux-system
+spec:
+  image: docker.io/nousresearch/hermes-agent
+  interval: 6h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: hermes-agent-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: hermes-agent
+  policy:
+    semver:
+      range: ">=v2026.4.30"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: hermes-agent-image-update
+  namespace: flux-system
+spec:
+  interval: 12h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-hermes-agent-image-update
+  update:
+    path: ./flux/apps/ai/hermes-agent
