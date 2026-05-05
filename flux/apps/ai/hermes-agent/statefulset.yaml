@@ -50,11 +50,48 @@ spec:
               cpu: 100m
             limits:
               memory: 2Gi
+              cpu: 1500m
+          volumeMounts:
+            - name: hermes-agent-data
+              mountPath: /opt/data
+            - name: shm
+              mountPath: /dev/shm
+        - name: dashboard
+          image: nousresearch/hermes-agent:v2026.4.30 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
+          command:
+            - hermes
+          args:
+            - dashboard
+            - '--host'
+            - 0.0.0.0
+            - '--insecure'
+          env:
+            - name: HOME
+              value: /opt/data
+            - name: PATH
+              value: /opt/hermes/.venv/bin:/opt/data/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            - name: GATEWAY_HEALTH_URL
+              value: http://hermes.hermes-agent.svc.cluster.local:8642
+          ports:
+            - name: hermes-dashboard
+              containerPort: 9119
+              protocol: TCP
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
               cpu: 500m
           volumeMounts:
             - name: hermes-agent-data
               mountPath: /opt/data
       restartPolicy: Always
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
   volumeClaimTemplates:
     - metadata: 
         name: hermes-agent-data
