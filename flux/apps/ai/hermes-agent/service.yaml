@@ -1,18 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  hermes-agent
+  name:  hermes-dashboard
   namespace: hermes-agent
 spec:
   selector:
     app:  hermes-agent
   type: ClusterIP
   ports:
-    - name: hermes-agent
-      port: 8642
+    - name: hermes-dashboard
+      port: 9119
       protocol: TCP
-      targetPort: 8642
-    - name: code-server
-      port: 8443
-      protocol: TCP
-      targetPort: 8443
+      targetPort: 9119
