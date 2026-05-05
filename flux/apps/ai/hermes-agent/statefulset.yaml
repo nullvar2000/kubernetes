@@ -73,7 +73,7 @@ spec:
             - name: GATEWAY_HEALTH_URL
               value: http://hermes.hermes-agent.svc.cluster.local:8642
           ports:
-            - name: hermes-dashboard
+            - name: dashboard
               containerPort: 9119
               protocol: TCP
           resources:
