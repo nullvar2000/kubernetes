@@ -59,7 +59,7 @@ spec:
               mountPath: /config
       containers:
         - name: gateway
-          image: ghcr.io/openclaw/openclaw:2026.5.5-beta.1-slim-amd64 # {"$imagepolicy": "flux-system:openclaw-policy"}
+          image: ghcr.io/openclaw/openclaw:2026.5.6 # {"$imagepolicy": "flux-system:openclaw-policy"}
           command:
             - node
             - /app/dist/index.js
@@ -92,7 +92,7 @@ spec:
             - name: export-share
               mountPath: /export
         - name: code-server
-          image: docker.io/linuxserver/code-server:4.117.0 # {"$imagepolicy": "flux-system:code-server-policy"}
+          image: docker.io/linuxserver/code-server:4.118.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           env:
             - name: PUID
               value: '1000'
