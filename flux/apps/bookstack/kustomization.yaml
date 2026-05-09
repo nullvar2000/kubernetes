@@ -13,3 +13,4 @@ resources:
   - bookstack/pvc.yaml
   - bookstack/service.yaml
   - bookstack/statefulset.yaml
+  - bookstack/imageupdateautomation.yaml
