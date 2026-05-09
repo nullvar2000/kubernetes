@@ -25,39 +25,30 @@ spec:
         - name: bookstack
           image: lscr.io/linuxserver/bookstack:26.03.4 # {"$imagepolicy": "flux-system:bookstack-policy"}
           ports:
-            - containerPort: 8080
+            - containerPort: 6875
               protocol: TCP
           envFrom:
             - configMapRef:
                 name: bookstack-config
           env:
-            - name: DB_HOST
-              value: "mariadb"
-            - name: DB_PORT
-              value: "3306"
-            - name: DB_USER
+            - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: postgres
-                  key: DB_USER
-            - name: DB_PASS
+                  name: mariadb
+                  key: MARIADB_USER
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres
-                  key: DB_PASSWORD
-            - name: DB_NAME
+                  name: mariadb
+                  key: MARIADB_PASSWORD
+            - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: postgres
-                  key: DB_NAME
-            - name: APP_URL
-              value: "https://${GLOBAL_DOMAIN_BASE}" # Adjust to your domain, e.g., https://wiki.yourdomain.com
+                  name: mariadb
+                  key: MARIADB_DATABASE
           volumeMounts:
-            - name: bookstack-data
-              mountPath: /app/bookstack/storage
-              readOnly: False
-            - name: bookstack-custom
-              mountPath: /app/bookstack/public/custom
+            - name: bookstack-config
+              mountPath: /config
               readOnly: False
           resources:
             requests:
@@ -83,13 +74,7 @@ spec:
         periodSeconds: 10
         timeoutSeconds: 5
         failureThreshold: 3
-  volumeClaimTemplates:
-    - metadata:
-        name: bookstack-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 5Gi
-        storageClassName: longhorn
+      volumes:
+        - name: bookstack-config
+          persistentVolumeClaim:
+            claimName: bookstack-config

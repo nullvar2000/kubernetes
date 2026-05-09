@@ -7,7 +7,8 @@ spec:
   selector:
     app: bookstack
   ports:
-    - port: 8080
-      targetPort: 8080
+    - name: http
+      port: 6875
+      targetPort: 6875
       protocol: TCP
   type: ClusterIP
