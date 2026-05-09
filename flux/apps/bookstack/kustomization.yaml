@@ -3,11 +3,13 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  # - secrets.clear.yaml
-  # - httproute.yaml
-  # - bookstack/statefulset.yaml
-  # - bookstack/service.yaml
+  - secrets.clear.yaml
   - mariadb/pvc.yaml
   - mariadb/statefulset.yaml
   - mariadb/service.yaml
   - mariadb/imageupdateautomation.yaml
+  - bookstack/configmap.yaml
+  - bookstack/httproute.yaml
+  - bookstack/pvc.yaml
+  - bookstack/service.yaml
+  - bookstack/statefulset.yaml
