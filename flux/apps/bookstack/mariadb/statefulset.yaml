@@ -42,27 +42,27 @@ spec:
             limits:
               memory: 4Gi
               cpu: 500m
-          readinessProbe:
-            exec:
-              command:
-                - "sh"
-                - "-c"
-                - "mysqladmin ping -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 5
-          livenessProbe:
-            exec:
-              command:
-                - "sh"
-                - "-c"
-                - "mysqladmin ping -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
       restartPolicy: Always
+      readinessProbe:
+        exec:
+          command:
+            - "sh"
+            - "-c"
+            - "mysqladmin ping -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 5
+      livenessProbe:
+        exec:
+          command:
+            - "sh"
+            - "-c"
+            - "mysqladmin ping -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 3
       volumes:
         - name: mariadb-data
           persistentVolumeClaim:
