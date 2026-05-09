@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: searxng
-          image: ghcr.io/searxng/searxng:2026.5.6-d501b0420 # {"$imagepolicy": "flux-system:searxng-policy"}
+          image: ghcr.io/searxng/searxng:2026.5.8-d8ab61a9e # {"$imagepolicy": "flux-system:searxng-policy"}
           env:
             - name: SEARXNG_SECRET
               value: ${SEARXNG_SECRET}
