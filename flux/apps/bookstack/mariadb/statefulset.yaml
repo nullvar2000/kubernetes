@@ -21,9 +21,10 @@ spec:
       labels:
         app: mariadb
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: mariadb
-          image: docker.io/library/mariadb:11.7.2-jammy # {"$imagepolicy": "flux-system:mariadb-11-policy"}
+          image: docker.io/library/mariadb:12.2.2-ubi10 # {"$imagepolicy": "flux-system:mariadb-12-policy"}
           ports:
             - containerPort: 3306
               protocol: TCP
@@ -79,13 +80,8 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 3
-  volumeClaimTemplates:
-    - metadata:
-        name: mariadb-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 5Gi
-        storageClassName: longhorn
+      restartPolicy: Always
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-data
