@@ -1,0 +1,28 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: mariadb-11-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: mariadb
+  policy:
+    semver:
+      range: 11.0.0
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: bookstack-mariadb-update
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 60m
+  checkout:
+    branch: main
+  push:
+    branch: main
+  update:
+    path: ./flux/apps/bookstack
