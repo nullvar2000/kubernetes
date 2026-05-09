@@ -28,27 +28,9 @@ spec:
           ports:
             - containerPort: 3306
               protocol: TCP
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: DB_PASSWORD
-            - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: DB_NAME
-            - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: DB_USER
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: DB_PASSWORD
+          envFrom:
+            - secretRef:
+                name: mariadb
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
