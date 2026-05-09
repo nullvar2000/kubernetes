@@ -51,6 +51,8 @@ spec:
                 secretKeyRef:
                   name: bookstack
                   key: APP_KEY
+            - name: APP_DEBUG
+              value: true
           volumeMounts:
             - name: bookstack-config
               mountPath: /config
