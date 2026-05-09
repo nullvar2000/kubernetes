@@ -50,7 +50,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - "mysqladmin ping -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
+            - "mariadb-admin ping -u $MARIADB_USER -p$MARIADB_PASSWORD"
         initialDelaySeconds: 60
         periodSeconds: 30
         timeoutSeconds: 5
@@ -60,7 +60,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - "mysqladmin ping -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
+            - "mariadb-admin ping -u $MARIADB_USER -p$MARIADB_PASSWORD"
         initialDelaySeconds: 30
         periodSeconds: 10
         timeoutSeconds: 5
