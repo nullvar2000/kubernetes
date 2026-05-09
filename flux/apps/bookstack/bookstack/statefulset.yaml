@@ -46,6 +46,11 @@ spec:
                 secretKeyRef:
                   name: mariadb
                   key: MARIADB_DATABASE
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bookstack
+                  key: APP_KEY
           volumeMounts:
             - name: bookstack-config
               mountPath: /config
