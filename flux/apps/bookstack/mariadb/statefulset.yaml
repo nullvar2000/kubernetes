@@ -26,7 +26,7 @@ spec:
         fsGroup: 999
       containers:
         - name: mariadb
-          image: docker.io/library/mariadb:12.2.2-ubi10 # {"$imagepolicy": "flux-system:mariadb-12-policy"}
+          image: docker.io/library/mariadb:12.3.1-ubi10-rc # {"$imagepolicy": "flux-system:mariadb-12-policy"}
           ports:
             - containerPort: 3306
               protocol: TCP
