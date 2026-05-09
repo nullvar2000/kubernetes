@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ai
+  - bookstack
   - heimdall
   - jellyfin
   - kanboard
