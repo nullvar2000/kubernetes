@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - code-server.yaml
+  - mariadb.yaml
   - postgres.yaml
   - redis.yaml

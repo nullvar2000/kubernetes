@@ -1,0 +1,21 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: mariadb
+  namespace: flux-system
+spec:
+  image: docker.io/library/mariadb
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: mariadb-12-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: mariadb
+  policy:
+    semver:
+      range: "^12.2.2-ubi10"
