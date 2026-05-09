@@ -25,6 +25,9 @@ spec:
       containers:
         - name: mariadb
           image: docker.io/library/mariadb:12.2.2-ubi10 # {"$imagepolicy": "flux-system:mariadb-12-policy"}
+          command:
+            - sleep
+            - 1h
           ports:
             - containerPort: 3306
               protocol: TCP
