@@ -52,7 +52,7 @@ spec:
                   name: bookstack
                   key: APP_KEY
             - name: APP_DEBUG
-              value: true
+              value: 'true'
           volumeMounts:
             - name: bookstack-config
               mountPath: /config
