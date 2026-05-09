@@ -7,7 +7,7 @@ data:
   PUID: '1000'
   PGID: '1000'
   TZ: ${GLOBAL_TZ}
-  APP_URL: wiki.${GLOBAL_DOMAIN}
+  APP_URL: http://wiki.${GLOBAL_DOMAIN}
   DB_HOST: mariadb
   DB_PORT: '3306'
   QUEUE_CONNECTION: ''
