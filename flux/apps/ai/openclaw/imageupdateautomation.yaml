@@ -18,7 +18,7 @@ spec:
     name: openclaw
   policy:
     semver:
-      range: ">=2026.4.23-slim"
+      range: ">=2026.4.23-slim-amd64"
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
