@@ -3,12 +3,14 @@ kind: Service
 metadata:
   name: bookstack
   namespace: bookstack
+  labels:
+    app: bookstack
 spec:
   selector:
     app: bookstack
   ports:
     - name: http
       port: 6875
-      targetPort: 6875
+      targetPort: 8080
       protocol: TCP
   type: ClusterIP
