@@ -15,6 +15,7 @@ spec:
       app: hermes-agent
   replicas: 2
   revisionHistoryLimit: 3
+  serviceName: agent
   template:
     metadata:
       labels:
@@ -35,14 +36,18 @@ spec:
           args:
             - gateway
             - run
-          env:
-            - name: HOME
-              value: /opt/data
-            - name: PATH
-              value: /opt/hermes/.venv/bin:/opt/data/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          envFrom:
+            - configMapRef:
+                name: agent-env
           ports:
-            - name: hermes-agent
+            - name: api-server
               containerPort: 8642
+              protocol: TCP
+            - name: dashboard
+              containerPort: 9119
+              protocol: TCP
+            - name: webhook
+              containerPort: 8644
               protocol: TCP
           resources:
             requests:
@@ -56,63 +61,6 @@ spec:
               mountPath: /opt/data
             - name: shm
               mountPath: /dev/shm
-        - name: dashboard
-          image: docker.io/nousresearch/hermes-agent:v2026.5.16 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
-          command:
-            - hermes
-          args:
-            - dashboard
-            - '--host'
-            - 0.0.0.0
-            - '--insecure'
-          env:
-            - name: HOME
-              value: /opt/data
-            - name: PATH
-              value: /opt/hermes/.venv/bin:/opt/data/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-            - name: GATEWAY_HEALTH_URL
-              value: http://hermes.hermes-agent.svc.cluster.local:8642
-          ports:
-            - name: dashboard
-              containerPort: 9119
-              protocol: TCP
-          resources:
-            requests:
-              memory: 64Mi
-              cpu: 100m
-            limits:
-              memory: 512Mi
-              cpu: 500m
-          volumeMounts:
-            - name: hermes-agent-data
-              mountPath: /opt/data
-        - name: code-server
-          image: docker.io/linuxserver/code-server:4.118.0 # {"$imagepolicy": "flux-system:code-server-policy"}
-          env:
-            - name: PUID
-              value: '1000'
-            - name: PGID
-              value: '1000'
-            - name: TZ
-              value: America/New_York
-            - name: DEFAULT_WORKSPACE
-              value: '/projects'
-          ports:
-            - name: https
-              containerPort: 8443
-              protocol: TCP
-          resources:
-            requests:
-              memory: 512Mi
-              cpu: 250m
-            limits:
-              memory: 2Gi
-              cpu: "2"
-          volumeMounts:
-            - name: hermes-agent-data
-              mountPath: /projects
-            - name: vscode-config
-              mountPath: /config
       restartPolicy: Always
       volumes:
         - name: shm
@@ -128,13 +76,4 @@ spec:
         resources:
           requests:
             storage: 16Gi
-        storageClassName: longhorn
-    - metadata:
-        name: vscode-config
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 4Gi
         storageClassName: longhorn

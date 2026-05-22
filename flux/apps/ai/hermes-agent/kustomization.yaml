@@ -7,3 +7,10 @@ resources:
   - namespace.yaml
   - service.yaml
   - statefulset.yaml
+
+configMapGenerator:
+  - name: agent-env
+    namespace: hermes-agent
+    envs:
+      - files/agent.env
+      
