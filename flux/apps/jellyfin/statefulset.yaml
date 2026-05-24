@@ -24,7 +24,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: jellyfin
-          image: docker.io/jellyfin/jellyfin:10.11.8 # {"$imagepolicy": "flux-system:jellyfin-policy"}
+          image: docker.io/jellyfin/jellyfin:10.11.9 # {"$imagepolicy": "flux-system:jellyfin-policy"}
           imagePullPolicy: Always
           ports:
             - containerPort: 8096
