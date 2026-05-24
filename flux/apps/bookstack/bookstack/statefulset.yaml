@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: bookstack
-          image: docker.io/solidnerd/bookstack:26.3.4 # {"$imagepolicy": "flux-system:bookstack-policy"}
+          image: docker.io/solidnerd/bookstack:26.3.5 # {"$imagepolicy": "flux-system:bookstack-policy"}
           ports:
             - containerPort: 6875
               protocol: TCP
