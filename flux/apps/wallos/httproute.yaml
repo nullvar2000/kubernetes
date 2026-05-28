@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: wallos
+  namespace: wallos
+spec:
+  parentRefs:
+  - name: gateway-api
+    namespace: istio-gateway
+  hostnames:
+    - wallos.${GLOBAL_DOMAIN}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: wallos
+      port: 80
