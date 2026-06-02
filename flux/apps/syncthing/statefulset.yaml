@@ -24,7 +24,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: syncthing
-          image: docker.io/syncthing/syncthing:2.1.0 # {"$imagepolicy": "flux-system:syncthing-policy"}
+          image: docker.io/syncthing/syncthing:2.1.1 # {"$imagepolicy": "flux-system:syncthing-policy"}
           ports:
             - name: web-ui
               containerPort: 8384
