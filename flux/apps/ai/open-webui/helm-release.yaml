@@ -26,10 +26,18 @@ spec:
       enabled: false
     
     ingress:
+      enabled: false
+
+    route:
       enabled: true
-      class: nginx
-      host: open-webui.${GLOBAL_DOMAIN}
-      tls: true
+      parentRefs:
+        - name: gateway-api
+          namespace: istio-gateway
+      hostnames:
+        - open-webui.${GLOBAL_DOMAIN}
+      backendRefs:
+        - name: open-webui
+          port: 80
 
     persistence:
       enabled: true
