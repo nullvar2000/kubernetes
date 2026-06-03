@@ -5,8 +5,7 @@ kind: Kustomization
 namespace: ollama
 
 resources:
-  - cert.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yaml
   - ollama.yaml
   - pvc.yaml
