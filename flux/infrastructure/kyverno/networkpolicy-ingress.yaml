@@ -1,0 +1,31 @@
+# NetworkPolicy for Kyverno ingress — admission webhooks + Prometheus only
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kyverno-ingress
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/part-of: kyverno
+    app.kubernetes.io/managed-by: flux
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: kyverno
+  policyTypes:
+    - Ingress
+  ingress:
+    # 1. Admission webhook callbacks from kube-apiserver (control-plane nodes)
+    - from:
+        - ipBlock:
+            cidr: 192.168.30.0/24
+      ports:
+        - protocol: TCP
+          port: 443
+    # 2. Prometheus metrics scraping
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - protocol: TCP
+          port: 8000

@@ -1,0 +1,26 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: deny-latest-tag
+  annotations:
+    policies.kyverno.io/title: Deny Latest Tag
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Requires all containers to specify an explicit image tag
+      other than ':latest'. Immutable infrastructure mandate.
+spec:
+  background: true
+  rules:
+    - name: validate-image-tag
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: "Using ':latest' tag is prohibited. Specify an explicit version."
+        pattern:
+          spec:
+            containers:
+              - image: "!*:latest"

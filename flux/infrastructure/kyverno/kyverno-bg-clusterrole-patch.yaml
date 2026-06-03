@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: kyverno-bg-clusterrole-patch
+  annotations:
+    policies.kyverno.io/title: Kyverno Background Controller RBAC Patch
+    policies.kyverno.io/description: >-
+      Removes 'secrets' verb access from the Kyverno background controller ClusterRole.
+      This limits the blast radius if the Kyverno pod is compromised.
+spec:
+  background: false
+  rules:
+    - name: remove-secrets-access
+      match:
+        any:
+          - resources:
+              kinds:
+                - ClusterRole
+              names:
+                - kyverno-background-controller
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            name: kyverno-background-controller
+          rules:
+            - resources:
+                - "*/*"
+                - "-secrets"

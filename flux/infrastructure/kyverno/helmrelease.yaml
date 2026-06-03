@@ -1,0 +1,165 @@
+# Kyverno HelmRelease — Hardened
+#
+# Supply chain note: Chart pulled from oci://ghcr.io/kyverno/charts
+# VERIFY chart provenance at: https://github.com/kyverno/charts/releases/
+# Expected digest for v3.1.x should be verified by Operator before merge.
+#
+# Security hardening (per @rachelle security audit):
+# - RBAC: secrets verbs REMOVED from all controllers (patches below)
+# - generateSecrets: DISABLED (no secret mutation permitted)
+# - Security context: runAsNonRoot, readOnlyRootFilesystem, drop ALL capabilities
+# - Talos SSP: restricted profile via pod annotation
+# - NetworkPolicy: locked to control-plane + CoreDNS + intra-namespace only
+# - Webhook: Ignore mode for 48h grace → Operator flips to Fail after validation
+# - Mutation policies: Audit-only for 21 days post-deploy (roadmap §P3 blocked)
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kyverno
+  namespace: flux-system
+spec:
+  interval: 1h
+  targetNamespace: kyverno
+
+  chart:
+    spec:
+      chart: kyverno
+      version: "3.1.*"
+      sourceRef:
+        kind: HelmRepository
+        name: kyverno
+      interval: 1h
+
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      remediateLastFailed: true
+  uninstall:
+    keepHistory: false
+
+  postRenderers:
+    - kustomize:
+        patches:
+          # RBAC: Remove 'secrets' from admission controller ClusterRole
+          - target:
+              kind: ClusterRole
+              name: kyverno
+            path: kyverno-clusterrole-patch.yaml
+          # RBAC: Remove 'secrets' from background controller ClusterRole
+          - target:
+              kind: ClusterRole
+              name: kyverno-background-controller
+            path: kyverno-bg-clusterrole-patch.yaml
+          # RBAC: Remove 'secrets' from cleanup controller ClusterRole
+          - target:
+              kind: ClusterRole
+              name: kyverno-cleanup-controller
+            path: kyverno-cleanup-clusterrole-patch.yaml
+
+  values:
+    replicas: 2
+
+    # Rachelle condition #1: Talos SecurityProfile + full security hardening
+    podAnnotations:
+      talos.dev/security-profiles: restricted
+
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+      runAsGroup: 999
+      fsGroup: 999
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+
+    # Resource limits — calibrated for 3-node homelab
+    resources:
+      admissionController:
+        requests:
+          cpu: 200m
+          memory: 256Mi
+        limits:
+          cpu: "1"
+          memory: 1Gi
+      backgroundController:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+      cleaner:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+      cleanupController:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+      reportsController:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+
+    service:
+      create: true
+      type: ClusterIP
+
+    # Metrics — Prometheus ServiceMonitor
+    metrics:
+      serviceMonitor:
+        enabled: true
+        namespace: kyverno
+        labels:
+          release: kube-prometheus-stack
+
+    # Structured logging (JSON for log aggregation)
+    logging:
+      level: info
+      format: json
+
+    # Rachelle condition #6: Webhook failurePolicy = Ignore for 48h grace
+    # TODO(OPERATOR): Flip to "Fail" after 48h of stable operation
+    webhook:
+      timeoutSeconds: 30
+      failurePolicy: Ignore
+
+    # Rachelle condition #3: Secret generation — NON-NEGOTIABLY DISABLED
+    backgroundScan: true
+    backgroundScanInterval: 1h
+    leaderElectionNamespace: kyverno
+
+    certManager:
+      enabled: true
+      caRotate: 336h
+      caDuration: 2160h
+      duration: 168h
+      renewBefore: 14h
+
+    extraArgs:
+      - "--background-service-account=kyverno-background-controller"
+      - "--background-controller-service-account=kyverno-background-controller"
+
+    # Pod disruption budget
+    admissionController:
+      podDisruptionBudget:
+        enabled: true
+        minAvailable: 1

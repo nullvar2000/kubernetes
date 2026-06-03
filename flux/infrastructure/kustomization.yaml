@@ -13,4 +13,6 @@ resources:
   - local-path-provisioner
   - monitoring
   - rustfs
+  - kyverno
+  - kyverno-policies/overlays/prod
   - infrastructure-secrets.sops.yaml

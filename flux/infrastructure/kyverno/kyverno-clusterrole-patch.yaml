@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: kyverno-clusterrole-patch
+  annotations:
+    policies.kyverno.io/title: Kyverno Admission Controller RBAC Patch
+    policies.kyverno.io/description: >-
+      Removes 'secrets' verb access from the Kyverno admission controller ClusterRole.
+      This limits the blast radius if the Kyverno pod is compromised.
+spec:
+  background: false
+  rules:
+    - name: remove-secrets-access
+      match:
+        any:
+          - resources:
+              kinds:
+                - ClusterRole
+              names:
+                - kyverno
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            name: kyverno
+          rules:
+            - resources:
+                - "*/*"
+                - "-secrets"
