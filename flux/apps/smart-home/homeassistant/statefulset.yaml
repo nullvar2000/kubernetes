@@ -1,15 +1,21 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: homeassistant
   namespace: homeassistant
   labels:
     app: homeassistant
 spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: homeassistant
-  replicas: 1
+  serviceName: homeassistant
   template:
     metadata:
       labels:
@@ -17,15 +23,22 @@ spec:
     spec:
       containers:
         - name: homeassistant
-          image: homeassistant/home-assistant:2025.12.3
+          image: homeassistant/home-assistant:2025.12.3 # {"$imagepolicy": "flux-system:bookstack-policy"}
           ports:
             - containerPort: 8123
+              protocol: TCP
           volumeMounts:
             - mountPath: /config
               name: config
             - mountPath: /media
               name: media
-          resources:  {}
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 250m
+            limits:
+              memory: 8Gi
+              cpu: 1000m
       hostNetwork: true
       volumes:
         - name: config
