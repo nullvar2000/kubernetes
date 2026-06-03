@@ -5,6 +5,6 @@ resources:
   - namespace.yaml
   # - httproute.yaml
   # - imageupdateautomation.yaml
-  # - pvc.yaml
+  - pvc.yaml
   - service.yaml
-  # - statefulset.yaml
+  - statefulset.yaml
