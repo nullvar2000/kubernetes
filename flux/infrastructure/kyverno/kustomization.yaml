@@ -5,6 +5,7 @@ namespace: kyverno
 
 resources:
   - namespace.yaml
-  - helmrepository.yaml
-  - networkpolicy-egress.yaml
-  - networkpolicy-ingress.yaml
+  - helm-repo.yaml
+  # - helm-release.yaml
+  # - networkpolicy-egress.yaml
+  # - networkpolicy-ingress.yaml
