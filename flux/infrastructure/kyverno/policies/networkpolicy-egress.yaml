@@ -1,0 +1,47 @@
+# NetworkPolicy for Kyverno egress — locked down per @rachelle security audit
+# Egress: control-plane API + CoreDNS + intra-namespace peers only
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kyverno-egress
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/part-of: kyverno
+    app.kubernetes.io/managed-by: flux
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: kyverno
+  policyTypes:
+    - Egress
+  egress:
+    # 1. API server access (Kubernetes API service clusterIP)
+    - to:
+        - ipBlock:
+            cidr: 10.96.0.1/32
+      ports:
+        - protocol: TCP
+          port: 443
+    # 2. DNS resolution
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # 3. Intra-namespace peer communication (leader election, webhook callbacks)
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/part-of: kyverno
+      ports:
+        - protocol: TCP
+          port: 9443
+        - protocol: TCP
+          port: 443

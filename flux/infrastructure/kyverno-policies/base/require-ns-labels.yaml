@@ -1,0 +1,26 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-namespace-labels
+  annotations:
+    policies.kyverno.io/title: Require Namespace Labels
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/description: >-
+      All namespaces must have an 'environment' label (e.g., 'prod', 'staging',
+      'homelab') for cost tracking and policy scoping.
+spec:
+  background: true
+  rules:
+    - name: validate-namespace-labels
+      match:
+        any:
+          - resources:
+              kinds:
+                - Namespace
+      validate:
+        message: "Label 'environment' is required on all namespaces."
+        pattern:
+          metadata:
+            labels:
+              environment: "?*"
