@@ -5,5 +5,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: oci://ghcr.io/kyverno/charts
-  type: oci
+  url: https://kyverno.github.io/kyverno/
