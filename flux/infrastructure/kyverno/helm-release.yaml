@@ -21,8 +21,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  targetNamespace: kyverno
-
+  releaseName: kyverno
   chart:
     spec:
       chart: kyverno
@@ -30,19 +29,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kyverno
-      interval: 1h
-
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      remediateLastFailed: true
-  uninstall:
-    keepHistory: false
 
   postRenderers:
     - kustomize:
@@ -51,17 +37,17 @@ spec:
           - target:
               kind: ClusterRole
               name: kyverno
-            path: kyverno-clusterrole-patch.yaml
+            path: patches/kyverno-clusterrole-patch.yaml
           # RBAC: Remove 'secrets' from background controller ClusterRole
           - target:
               kind: ClusterRole
               name: kyverno-background-controller
-            path: kyverno-bg-clusterrole-patch.yaml
+            path: patches/kyverno-bg-clusterrole-patch.yaml
           # RBAC: Remove 'secrets' from cleanup controller ClusterRole
           - target:
               kind: ClusterRole
               name: kyverno-cleanup-controller
-            path: kyverno-cleanup-clusterrole-patch.yaml
+            path: patches/kyverno-cleanup-clusterrole-patch.yaml
 
   values:
     replicas: 2
