@@ -5,4 +5,4 @@ metadata:
   labels:
     app.kubernetes.io/name: kyverno
     app.kubernetes.io/managed-by: flux
-    environment: prod
+    environment: home
