@@ -14,5 +14,5 @@ resources:
   - monitoring
   - rustfs
   - kyverno
-  - kyverno-policies/overlays/prod
+  # - kyverno-policies/overlays/prod
   - infrastructure-secrets.sops.yaml
