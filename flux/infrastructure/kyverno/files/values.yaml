@@ -1,0 +1,25 @@
+# Grafana auto-import via the GrafanaOperator CRDs (you mentioned you have this)
+grafana:
+  enabled: true
+  namespace: monitoring
+
+prometheusRule:
+  enabled: true
+  spec: [] # Need to fill this out
+
+admissionController:
+  replicas: 2
+  serviceMonitor:
+    enabled: true
+
+backgroundController:
+  serviceMonitor:
+    enabled: true
+
+cleanupController:
+  serviceMonitor:
+    enabled: true
+
+reportsController:
+  serviceMonitor:
+    enabled: true

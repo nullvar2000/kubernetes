@@ -6,6 +6,13 @@ namespace: kyverno
 resources:
   - namespace.yaml
   - helm-repo.yaml
-  # - helm-release.yaml
+  - helm-release.yaml
   # - networkpolicy-egress.yaml
   # - networkpolicy-ingress.yaml
+
+configMapGenerator:
+  - name: helm-values
+    files:
+      - files/values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
