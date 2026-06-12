@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       app: hermes-agent
-  replicas: 5
+  replicas: 0
   revisionHistoryLimit: 3
   serviceName: agent
   template:
