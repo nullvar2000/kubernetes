@@ -1,0 +1,53 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: require-resources
+  annotations:
+    policies.kyverno.io/title: Require Resource Limits
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      Requires all containers to declare CPU and memory requests
+      and limits. Prevents resource starvation on the cluster.
+spec:
+  evaluation:
+    admission:
+      enabled: true
+    background:
+      enabled: true
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
+  validationActions:
+    - Audit
+  validations:
+    - expression: >-
+        object.spec.containers.all(c, 
+          has(c.resources) && 
+          has(c.resources.requests) && 
+          has(c.resources.requests.cpu) && 
+          has(c.resources.requests.memory) && 
+          has(c.resources.limits) && 
+          has(c.resources.limits.cpu) && 
+          has(c.resources.limits.memory)
+        ) && (
+          !has(object.spec.initContainers) || 
+          object.spec.initContainers.all(c, 
+            has(c.resources) && 
+            has(c.resources.requests) && 
+            has(c.resources.requests.cpu) && 
+            has(c.resources.requests.memory) && 
+            has(c.resources.limits) && 
+            has(c.resources.limits.cpu) && 
+            has(c.resources.limits.memory)
+          )
+        )
+      message: "CPU and memory resource requests and limits are required."
