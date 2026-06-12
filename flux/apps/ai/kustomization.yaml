@@ -6,5 +6,4 @@ resources:
   - mcp
   - ollama
   - open-webui
-  # - openclaw
   - vane
