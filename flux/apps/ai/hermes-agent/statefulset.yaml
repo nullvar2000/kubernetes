@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       app: hermes-agent
-  replicas: 5
+  replicas: 1
   revisionHistoryLimit: 3
   serviceName: agent
   template:
@@ -61,6 +61,30 @@ spec:
               mountPath: /opt/data
             - name: shm
               mountPath: /dev/shm
+        - name: code-server
+          image: docker.io/linuxserver/code-server:4.124.2 # {"$imagepolicy": "flux-system:code-server-policy"}
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+          env:
+            - name: PUID
+              value: '1000'
+            - name: GUID
+              value: '1000'
+            - name: TZ
+              value: ${GLOBAL_TZ}
+          volumeMounts:
+            - name: code-server-config
+              mountPath: /config
+            - name: hermes-agent-data
+              mountPath: /opt/data
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+              cpu: 500m
       restartPolicy: Always
       volumes:
         - name: shm
@@ -70,6 +94,15 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: hermes-agent-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 16Gi
+        storageClassName: longhorn
+    - metadata:
+        name: code-server-config
       spec:
         accessModes:
           - ReadWriteOnce
