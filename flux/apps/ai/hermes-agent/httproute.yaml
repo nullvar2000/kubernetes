@@ -15,12 +15,12 @@ spec:
           type: PathPrefix
           value: /dashboard
       backendRefs:
-      - name: hermes-dashboard
+      - name: hermes-agent
         port: 9119
     - matches:
       - path:
           type: PathPrefix
           value: /code-server
       backendRefs:
-      - name: code-server
+      - name: hermes-agent
         port: 8443
