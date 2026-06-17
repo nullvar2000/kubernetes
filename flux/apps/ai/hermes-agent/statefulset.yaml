@@ -99,7 +99,7 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 16Gi
+            storage: 64Gi
         storageClassName: longhorn
     - metadata:
         name: code-server-config
