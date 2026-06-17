@@ -13,7 +13,14 @@ spec:
     - matches:
       - path:
           type: PathPrefix
-          value: /
+          value: /dashboard
       backendRefs:
       - name: hermes-dashboard
         port: 9119
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /code-server
+      backendRefs:
+      - name: code-server
+        port: 8443
