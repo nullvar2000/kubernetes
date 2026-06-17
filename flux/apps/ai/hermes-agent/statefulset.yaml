@@ -101,12 +101,12 @@ spec:
           requests:
             storage: 16Gi
         storageClassName: longhorn
-    - metadata:
-        name: code-server-config
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 16Gi
-        storageClassName: longhorn
+    # - metadata:
+    #     name: code-server-config
+    #   spec:
+    #     accessModes:
+    #       - ReadWriteOnce
+    #     resources:
+    #       requests:
+    #         storage: 16Gi
+    #     storageClassName: longhorn
