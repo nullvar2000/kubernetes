@@ -30,7 +30,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: agent
-          image: docker.io/nousresearch/hermes-agent:v2026.6.5 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
+          image: docker.io/nousresearch/hermes-agent:v2026.6.19 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
           command:
             - hermes
           args:
@@ -62,7 +62,7 @@ spec:
             - name: shm
               mountPath: /dev/shm
         - name: code-server
-          image: docker.io/linuxserver/code-server:4.124.2 # {"$imagepolicy": "flux-system:code-server-policy"}
+          image: docker.io/linuxserver/code-server:4.125.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           ports:
             - containerPort: 8443
               protocol: TCP
