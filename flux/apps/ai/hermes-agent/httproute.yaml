@@ -26,7 +26,7 @@ spec:
           urlRewrite:
             path:
               type: ReplacePrefixMatch
-              replaceFullPath: /
+              replacePrefixMatch: /
       backendRefs:
       - name: hermes-agent
         port: 8443
