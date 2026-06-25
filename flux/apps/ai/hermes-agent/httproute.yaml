@@ -11,16 +11,22 @@ spec:
     - hermes.${GLOBAL_DOMAIN}
   rules:
     - matches:
-      - path:
-          type: PathPrefix
-          value: /dashboard
+        - path:
+            type: PathPrefix
+            value: /dashboard
       backendRefs:
-      - name: hermes-agent
-        port: 9119
+        - name: hermes-agent
+          port: 9119
     - matches:
-      - path:
-          type: PathPrefix
-          value: /code-server
+        - path:
+            type: PathPrefix
+            value: /code-server
+      filters:
+        - type: URLRewrite
+          URLRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
       backendRefs:
       - name: hermes-agent
         port: 8443
