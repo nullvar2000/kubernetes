@@ -22,11 +22,10 @@ spec:
             type: PathPrefix
             value: /code-server
       filters:
-        - type: RequestRedirect
-          requestRedirect:
-            statusCode: 302
+        - type: URLRewrite
+          urlRewrite:
             path:
-              type: ReplaceFullPath
+              type: ReplacePrefixMatch
               replaceFullPath: /
       backendRefs:
       - name: hermes-agent
