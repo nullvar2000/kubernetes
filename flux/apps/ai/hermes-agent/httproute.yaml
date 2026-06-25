@@ -30,3 +30,5 @@ spec:
       backendRefs:
       - name: hermes-agent
         port: 8443
+      timeouts:
+        request: 0s

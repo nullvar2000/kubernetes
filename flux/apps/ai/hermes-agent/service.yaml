@@ -17,3 +17,4 @@ spec:
       port: 8443
       protocol: TCP
       targetPort: 8443
+      appProtocol: kubernetes.io/ws
