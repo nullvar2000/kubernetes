@@ -22,11 +22,12 @@ spec:
             type: PathPrefix
             value: /code-server
       filters:
-        - type: URLRewrite
-          URLRewrite:
+        - type: RequestRedirect
+          requestRedirect:
+            statusCode: 308
             path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /
+              type: ReplaceFullPath
+              replaceFullPath: /
       backendRefs:
       - name: hermes-agent
         port: 8443
