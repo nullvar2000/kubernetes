@@ -28,6 +28,27 @@ spec:
         fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
+      initContainers:
+        - name: camofox
+          image: ghcr.io/jo-inc/camofox-browser:1.11.2 # {"$imagepolicy": "flux-system:camofox-policy"}
+          envFrom:
+            - configMapRef:
+                name: camofox-config
+          ports:
+          - name: http
+            containerPort: 9377
+            protocol: TCP
+          - name: novnc
+            containerPort: 6080
+            protocol: TCP
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+            cpu: 500m
+          restartPolicy: Always
       containers:
         - name: agent
           image: docker.io/nousresearch/hermes-agent:v2026.6.19 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
