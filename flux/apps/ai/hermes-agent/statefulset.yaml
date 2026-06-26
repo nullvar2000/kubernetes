@@ -83,7 +83,7 @@ spec:
             - name: shm
               mountPath: /dev/shm
         - name: code-server
-          image: docker.io/linuxserver/code-server:4.125.0 # {"$imagepolicy": "flux-system:code-server-policy"}
+          image: docker.io/linuxserver/code-server:4.126.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           ports:
             - containerPort: 8443
               protocol: TCP
