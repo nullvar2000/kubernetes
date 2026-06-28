@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: mcp
 
 resources:
-  - namespace.yaml
-  - mcpo
-  - kubernetes-mcp-server
+  - oci-repository.yaml
+  - helm-release.yaml
+  - httproute.yaml
