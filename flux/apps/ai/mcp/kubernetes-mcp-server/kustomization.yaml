@@ -6,4 +6,3 @@ namespace: mcp
 resources:
   - oci-repository.yaml
   - helm-release.yaml
-  - httproute.yaml
