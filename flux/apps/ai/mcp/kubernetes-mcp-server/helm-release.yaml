@@ -22,9 +22,9 @@ spec:
       enabled: false
     rbac:
       extraClusterRoleBindings:
-        - name: kubernetes-mcp-server-cluster-admin
+        - name: kubernetes-mcp-server-view
           roleRef:
-            name: cluster-admin
+            name: view
             external: true
     httpRoute:
       enabled: true
