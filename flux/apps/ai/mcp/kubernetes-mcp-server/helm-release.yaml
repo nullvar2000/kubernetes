@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kubernetes-mcp-server
+  namespace: kubernetes-mcp-server
+spec:
+  interval: 1h
+  releaseName: kubernetes-mcp-server
+  chartRef:
+    kind: OCIRepository
+    name: kubernetes-mcp-server
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image: 
+      version: v0.0.63
+    ingress:
+      enabled: false
+    rbac:
+      extraClusterRoleBindings:
+        - name: kubernetes-mcp-server-view
+          roleRef:
+            name: view
+            external: true
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - name: gateway-api
+          namespace: istio-gateway
+          group: gateway.networking.k8s.io
+          kind: Gateway
+          sectionName: http
+      hostnames:
+        - kubernetes-mcp.${GLOBAL_DOMAIN}
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /
