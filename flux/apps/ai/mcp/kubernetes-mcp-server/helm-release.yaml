@@ -18,6 +18,8 @@ spec:
     remediation:
       retries: 3
   values:
+    image: 
+      version: v0.0.63
     ingress:
       enabled: false
     rbac:
