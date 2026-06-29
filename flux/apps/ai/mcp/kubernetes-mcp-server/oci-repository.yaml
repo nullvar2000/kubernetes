@@ -2,6 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
   name: kubernetes-mcp-server
+  namespace: kubernetes-mcp-server
 spec:
   interval: 1h
   ref:
