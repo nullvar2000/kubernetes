@@ -82,6 +82,9 @@ spec:
               mountPath: /opt/data
             - name: shm
               mountPath: /dev/shm
+            - name: kube-api-access
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
         - name: code-server
           image: docker.io/linuxserver/code-server:4.126.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           ports:
@@ -112,6 +115,12 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: "2Gi"
+        - name: kube-api-access
+          projected:
+            sources:
+              - serviceAccountToken:
+                    path: token
+                    expirationSeconds: 3600
   volumeClaimTemplates:
     - metadata:
         name: hermes-agent-data
