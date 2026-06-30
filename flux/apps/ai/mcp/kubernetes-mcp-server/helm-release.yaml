@@ -20,24 +20,3 @@ spec:
       version: v0.0.63
     ingress:
       enabled: false
-    rbac:
-      extraClusterRoleBindings:
-        - name: kubernetes-mcp-server-view
-          roleRef:
-            name: view
-            external: true
-    httpRoute:
-      enabled: true
-      parentRefs:
-        - name: gateway-api
-          namespace: istio-gateway
-          group: gateway.networking.k8s.io
-          kind: Gateway
-          sectionName: http
-      hostnames:
-        - kubernetes-mcp.${GLOBAL_DOMAIN}
-      rules:
-        - matches:
-            - path:
-                type: PathPrefix
-                value: /
