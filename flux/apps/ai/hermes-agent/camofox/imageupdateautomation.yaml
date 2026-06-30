@@ -42,4 +42,4 @@ spec:
     push:
       branch: fluxcd-camofox-image-update
   update:
-    path: ./flux/apps/ai/camofox
+    path: ./flux/apps/ai/hermes-agent
