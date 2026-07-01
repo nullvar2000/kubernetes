@@ -9,7 +9,6 @@ resources:
   - imageupdateautomation.yaml
   - service.yaml
   - statefulset.yaml
-  - kubernetes-mcp-server-access.yaml
 
 configMapGenerator:
   - name: agent-env
