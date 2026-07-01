@@ -20,3 +20,9 @@ spec:
       version: v0.0.63
     ingress:
       enabled: false
+    rbac:
+      extraClusterRoleBindings:
+        - name: kubernetes-mcp-server-view
+          roleRef:
+            name: view
+            external: true
