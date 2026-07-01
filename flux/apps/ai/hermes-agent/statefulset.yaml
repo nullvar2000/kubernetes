@@ -35,12 +35,12 @@ spec:
             - configMapRef:
                 name: camofox-config
           ports:
-          - name: http
-            containerPort: 9377
-            protocol: TCP
-          - name: novnc
-            containerPort: 6080
-            protocol: TCP
+            - name: http
+              containerPort: 9377
+              protocol: TCP
+            - name: novnc
+              containerPort: 6080
+              protocol: TCP
           resources:
             requests:
               memory: 128Mi
@@ -51,7 +51,7 @@ spec:
           restartPolicy: Always
       containers:
         - name: agent
-          image: docker.io/nousresearch/hermes-agent:v2026.6.19 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
+          image: docker.io/nousresearch/hermes-agent:v2026.7.1 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
           command:
             - hermes
           args:
@@ -119,18 +119,18 @@ spec:
           projected:
             sources:
               - serviceAccountToken:
-                    path: token
-                    expirationSeconds: 3600
-              - downwardAPI:                                                                                                                                                  
-                 items:                                                                                                                                                      
-                   - path: namespace                                                                                                                                         
-                     fieldRef:                                                                                                                                               
-                       fieldPath: metadata.namespace                                                                                                                         
-              - configMap:                                                                                                                                                    
-                  name: kube-root-ca.crt   # Talos creates this automatically                                                                                                 
-                  items:                                                                                                                                                      
-                    - key: ca.crt                                                                                                                                             
-                      path: ca.crt 
+                  path: token
+                  expirationSeconds: 3600
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef:
+                        fieldPath: metadata.namespace
+              - configMap:
+                  name: kube-root-ca.crt # Talos creates this automatically                                                                                                 
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
   volumeClaimTemplates:
     - metadata:
         name: hermes-agent-data
