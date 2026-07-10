@@ -88,9 +88,9 @@ spec:
               protocol: TCP
           env:
             - name: PUID
-              value: '1000'
+              value: '10000'
             - name: GUID
-              value: '1000'
+              value: '10000'
             - name: TZ
               value: ${GLOBAL_TZ}
             - name: DEFAULT_WORKSPACE
