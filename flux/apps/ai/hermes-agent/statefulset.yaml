@@ -97,6 +97,8 @@ spec:
               value: '1000'
             - name: TZ
               value: ${GLOBAL_TZ}
+            - name: DEFAULT_WORKSPACE
+              value: /opt/data
           volumeMounts:
             - name: code-server-config
               mountPath: /config
