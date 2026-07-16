@@ -13,3 +13,5 @@ configMapGenerator:
     namespace: metallb
     files:
       - files/values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
