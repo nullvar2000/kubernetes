@@ -10,5 +10,6 @@ resources:
 
 configMapGenerator:
   - name: helm-values
+    namespace: metallb
     files:
       - files/values.yaml
