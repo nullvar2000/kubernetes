@@ -11,6 +11,7 @@ resources:
   - istio
   - keycloak
   - local-path-provisioner
+  - metallb
   - monitoring
   - rustfs
   - kyverno
