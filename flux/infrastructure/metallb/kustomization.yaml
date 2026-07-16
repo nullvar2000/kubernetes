@@ -5,8 +5,8 @@ resources:
   - namespace.yaml
   - helm-repo.yaml
   - helm-release.yaml
-  # - ipaddresspool.yaml
-  # - l2advertisement.yaml
+  - ipaddresspool.yaml
+  - l2advertisement.yaml
 
 configMapGenerator:
   - name: helm-values
