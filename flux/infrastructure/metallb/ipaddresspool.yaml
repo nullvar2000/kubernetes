@@ -3,9 +3,6 @@ kind: IPAddressPool
 metadata:
   name: primary-pool
   namespace: metallb
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   addresses:
   - 192.168.30.130-192.168.30.200
