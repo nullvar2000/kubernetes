@@ -82,7 +82,7 @@ spec:
               mountPath: /var/run/secrets/kubernetes.io/serviceaccount
               readOnly: true
         - name: code-server
-          image: docker.io/linuxserver/code-server:4.128.0 # {"$imagepolicy": "flux-system:code-server-policy"}
+          image: docker.io/linuxserver/code-server:4.129.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           ports:
             - containerPort: 8443
               protocol: TCP
