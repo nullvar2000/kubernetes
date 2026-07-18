@@ -5,6 +5,15 @@ global:
       effect: PreferNoSchedule
 ingress:
   enabled: false
+httproute:
+  enabled: true
+  hostnames:
+    - longhorn.${GLOBAL_DOMAIN}
+  parentRefs:
+    - name: gateway-api
+      namespace: istio-gateway
+  path: /
+  pathType: PathPrefix
 persistence:
   defaultClass: false
   defaultNodeSelector:
