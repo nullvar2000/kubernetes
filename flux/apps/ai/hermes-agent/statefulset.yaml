@@ -28,7 +28,7 @@ spec:
           type: RuntimeDefault
       initContainers:
         - name: camofox
-          image: ghcr.io/jo-inc/camofox-browser:1.12.1 # {"$imagepolicy": "flux-system:camofox-policy"}
+          image: ghcr.io/jo-inc/camofox-browser:1.13.0 # {"$imagepolicy": "flux-system:camofox-policy"}
           envFrom:
             - configMapRef:
                 name: camofox-config
