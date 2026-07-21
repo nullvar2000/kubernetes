@@ -24,7 +24,7 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /v1/
               port: http
             initialDelaySeconds: 30
             periodSeconds: 60
