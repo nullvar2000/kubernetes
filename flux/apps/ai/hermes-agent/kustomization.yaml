@@ -5,6 +5,9 @@ resources:
   - namespace.yaml
   - camofox/imageupdateautomation.yaml
   - camofox/service.yaml
+  - fastcrw/imageupdateautomation.yaml
+  - fastcrw/deployment.yaml
+  - fastcrw/service.yaml
   - httproute.yaml
   - imageupdateautomation.yaml
   - service.yaml
