@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: homeassistant
-          image: docker.io/homeassistant/home-assistant:2026.7.2 # {"$imagepolicy": "flux-system:homeassistant-policy"}
+          image: docker.io/homeassistant/home-assistant:2026.7.3 # {"$imagepolicy": "flux-system:homeassistant-policy"}
           ports:
             - containerPort: 8123
               protocol: TCP
