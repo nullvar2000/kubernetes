@@ -12,6 +12,7 @@ resources:
   - redis/imageupdateautomation.yaml
   - redis/service.yaml
   - paperless-ngx/imageupdateautomation.yaml
+  - paperless-ngx/secres.clear.yaml
   - paperless-ngx/pvc.yaml
   - paperless-ngx/service.yaml
   - paperless-ngx/statefulset.yaml

@@ -30,6 +30,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: paperless-ngx-config
+            - secretRef:
+                name: paperless-ngx-secrets
           env:
             - name: PAPERLESS_DBNAME
               valueFrom:
