@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-server
+  namespace: llama-server
+  labels:
+    app: llama-server
+spec:
+  selector:
+    matchLabels:
+      app: llama-server
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: llama-server
+    spec:
+      tolerations:
+        - key: node-role.kubernetes.io/gpu
+          operator: Exists
+      containers:
+        - name: llama-server
+          image: ghcr.io/ggml-org/llama.cpp:server-cuda12-b10108 # {"$imagepolicy": "flux-system:llama-server-policy"}
+          args:
+            - --hf-repo
+            - ggml-org/gpt-oss-20b-GGUF
+            - --hf-file
+            - gpt-oss-20b-MXFP4.gguf
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
+            - --n-gpu-layers
+            - "-1"
+            - --cache-type-k
+            - q8_0
+            - --cache-type-v
+            - q8_0
+            - -ctx-size
+            - "65536"
+            - --parallel
+            - "4"
+            - --slot-allocation
+            - --grp-attn
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /models
+              name: llama-server-models
+              readOnly: false
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+              nvidia.com/gpu: '2'
+            limits:
+              cpu: '4'
+              memory: 48Gi
+              nvidia.com/gpu: '2'
+      restartPolicy: Always
+      volumes:
+        - name: llama-server-models
+          persistentVolumeClaim:
+            claimName: llama-server-models

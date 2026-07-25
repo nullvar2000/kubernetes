@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: llama-server
+  namespace: flux-system
+spec:
+  image: ghcr.io/ggml-org/llama.cpp
+  interval: 6h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: llama-server-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: llama-server
+  policy:
+    semver:
+      range: ">=server-cuda12-b10108"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: llama-server-image-update
+  namespace: flux-system
+spec:
+  interval: 12h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-llama-server-image-update
+  update:
+    path: ./flux/apps/ai/llama-server
