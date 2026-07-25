@@ -8,3 +8,9 @@ resources:
   - service.yaml
   - httproute.yaml
   - imageupdateautomation.yaml
+
+configMapGenerator:
+  - name: llama-server-env
+    namespace: llama-server
+    envs:
+      - files/llama-server.env

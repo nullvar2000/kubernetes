@@ -23,27 +23,9 @@ spec:
       containers:
         - name: llama-server
           image: ghcr.io/ggml-org/llama.cpp:server-cuda12-b10108 # {"$imagepolicy": "flux-system:llama-server-policy"}
-          args:
-            - --hf-repo
-            - ggml-org/gpt-oss-20b-GGUF
-            - --hf-file
-            - gpt-oss-20b-MXFP4.gguf
-            - --host
-            - 0.0.0.0
-            - --port
-            - "8080"
-            - --n-gpu-layers
-            - "-1"
-            - --cache-type-k
-            - q8_0
-            - --cache-type-v
-            - q8_0
-            - -ctx-size
-            - "65536"
-            - --parallel
-            - "4"
-            - --slot-allocation
-            - --grp-attn
+          envFrom:
+            - configMapRef:
+                name: llama-server-env
           imagePullPolicy: Always
           ports:
             - name: http
