@@ -32,7 +32,7 @@ spec:
               containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - mountPath: /models
+            - mountPath: /root/.cache
               name: llama-server-models
               readOnly: false
           resources:
