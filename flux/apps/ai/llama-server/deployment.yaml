@@ -32,9 +32,12 @@ spec:
               containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - mountPath: /root/.cache
-              name: llama-server-models
+            - name: llama-server-models
+              mountPath: /models
               readOnly: false
+            - name: models-preset
+              mountPath: /root/models-preset.ini
+              subPath: models-preset.ini
           resources:
             requests:
               cpu: 200m
@@ -49,3 +52,9 @@ spec:
         - name: llama-server-models
           persistentVolumeClaim:
             claimName: llama-server-models
+        - name: models-preset
+          configMap:
+            name: models-preset
+            items:
+              - key: models-preset.ini
+                path: models-preset.ini

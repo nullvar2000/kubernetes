@@ -14,3 +14,7 @@ configMapGenerator:
     namespace: llama-server
     envs:
       - files/llama-server.env
+  - name: models-preset
+    namespace: llama-server
+    envs:
+      - files/models-preset.ini
