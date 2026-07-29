@@ -5,6 +5,5 @@ resources:
   - hermes-agent
   - llama-server
   - mcp
-  - ollama
   - open-webui
   - vane
