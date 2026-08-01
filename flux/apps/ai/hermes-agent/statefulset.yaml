@@ -49,7 +49,7 @@ spec:
           restartPolicy: Always
       containers:
         - name: agent
-          image: docker.io/nousresearch/hermes-agent:v2026.7.20 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
+          image: docker.io/nousresearch/hermes-agent:v2026.7.30 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
           args:
             - gateway
             - run
@@ -82,7 +82,7 @@ spec:
               mountPath: /var/run/secrets/kubernetes.io/serviceaccount
               readOnly: true
         - name: code-server
-          image: docker.io/linuxserver/code-server:4.130.0 # {"$imagepolicy": "flux-system:code-server-policy"}
+          image: docker.io/linuxserver/code-server:4.131.0 # {"$imagepolicy": "flux-system:code-server-policy"}
           ports:
             - containerPort: 8443
               protocol: TCP
