@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: istio-gateway
 
 resources:
-  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
+  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.1/standard-install.yaml
   - cert.yaml
   - gateway.yaml
   - namespace.yaml
