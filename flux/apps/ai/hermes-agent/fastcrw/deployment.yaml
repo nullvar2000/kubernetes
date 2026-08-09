@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: crw
-          image: ghcr.io/us/crw:0.29.0 # {"$imagepolicy": "flux-system:crw-policy"}
+          image: ghcr.io/us/crw:0.30.0 # {"$imagepolicy": "flux-system:crw-policy"}
           ports:
             - name: http
               containerPort: 3000
