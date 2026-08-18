@@ -8,7 +8,7 @@ spec:
   releaseName: rocm-operator
   chart:
     spec:
-      chart: rocm-operator
+      chart: gpu-operator
       version: 'v1.5.*'
       sourceRef:
         kind: HelmRepository
