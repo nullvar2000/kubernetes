@@ -1,0 +1,8 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: rocm-operator
+  namespace: rocm-operator
+spec:
+  interval: 1h
+  url: https://rocm.github.io/gpu-operator
