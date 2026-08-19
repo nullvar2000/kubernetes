@@ -14,5 +14,9 @@ spec:
         kind: HelmRepository
         name: rocm-operator
   values:
+    deviceConfig:
+      spec:
+        driver:
+          enable: false
     prometheus:
       enable: true
