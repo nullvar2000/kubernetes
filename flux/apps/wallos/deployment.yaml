@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: wallos
-          image: docker.io/bellamy/wallos:5.4.4 # {"$imagepolicy": "flux-system:wallos-policy"}
+          image: docker.io/bellamy/wallos:5.4.5 # {"$imagepolicy": "flux-system:wallos-policy"}
           imagePullPolicy: Always
           env:
             - name: TZ
