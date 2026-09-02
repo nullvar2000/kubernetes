@@ -14,7 +14,7 @@ resources:
   - longhorn
   - metallb
   - monitoring
-  - rocm-operator
+  # - rocm-operator
   - rustfs
   - kyverno
   # - kyverno-policies/overlays/prod
