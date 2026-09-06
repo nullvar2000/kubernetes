@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - hermes-agent
+  - litellm
   - llama-server
   - mcp
   - open-webui

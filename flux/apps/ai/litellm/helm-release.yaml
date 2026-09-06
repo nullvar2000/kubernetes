@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: litellm
+  namespace: litellm
+spec:
+  interval: 30m
+  releaseName: litellm
+  chartRef:
+    kind: HelmChart
+    name: litellm
+    namespace: flux-system

@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: litellm
+  namespace: flux-system
+spec:
+  chart: ./helm/litellm
+  sourceRef:
+    kind: GitRepository
+    name: litellm
+  interval: 1h
+  reconcileStrategy: Revision
