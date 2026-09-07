@@ -1,18 +1,27 @@
+migrationJob:
+  image:
+    tag: v1.100.0
 database:
   writer:
     host: 'postgres'
     dbname: 'litellm'
 gateway:
+  image:
+    tag: v1.100.0
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
 backend:
+  image:
+    tag: v1.100.0
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
 ui:
+  image:
+    tag: v1.100.0
   resources:
     requests:
       cpu: 100m
