@@ -8,6 +8,7 @@ resources:
   - git-repo.yaml
   - helm-chart.yaml
   - helm-release.yaml
+  - httproute.yaml
   - namespace.yaml
   - secrets.clear.yaml
 
