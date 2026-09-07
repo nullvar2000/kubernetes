@@ -13,6 +13,7 @@ resources:
 
 configMapGenerator:
   - name: helm-values
+    namespace: litellm
     files:
       - files/values.yaml
     options:
