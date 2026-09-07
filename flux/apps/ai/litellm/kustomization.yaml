@@ -12,6 +12,5 @@ configMapGenerator:
   - name: helm-values
     files:
       - files/values.yaml
-generatorOptions:
-  disableNameSuffixHash: true
-  
+    options:
+      disableNameSuffixHash: true

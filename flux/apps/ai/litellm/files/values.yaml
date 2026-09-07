@@ -1,0 +1,19 @@
+database:
+  writer:
+    host: 'postgres'
+    dbname: 'litellm'
+gateway:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+backend:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+ui:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
