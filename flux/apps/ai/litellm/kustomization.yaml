@@ -6,3 +6,12 @@ resources:
   - helm-chart.yaml
   - helm-release.yaml
   - namespace.yaml
+  - secrets.clear.yaml
+
+configMapGenerator:
+  - name: helm-values
+    files:
+      - files/values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+  
