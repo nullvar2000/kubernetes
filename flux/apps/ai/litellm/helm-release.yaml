@@ -10,3 +10,6 @@ spec:
     kind: HelmChart
     name: litellm
     namespace: flux-system
+  valuesFrom:
+    - kind: ConfigMap
+      name: helm-values
