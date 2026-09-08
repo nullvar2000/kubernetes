@@ -15,5 +15,5 @@ spec:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: litellm-litellm-ui
+    - name: litellm
       port: 4000
