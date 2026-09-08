@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: litellm
+  namespace: litellm
+  labels:
+    app: litellm
+spec:
+  selector:
+    matchLabels:
+      app: litellm
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: litellm
+    spec:
+      containers:
+        - name: litellm
+          image: docker.litellm.ai/berriai/litellm:v1.100.0 # {"$imagepolicy": "flux-system:litellm-policy"}
+          envFrom:
+            - secretRef:
+                name: litellm-secrets
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 4000
+              protocol: TCP
+          volumeMounts:
+            - name: litellm-config-yaml
+              mountPath: /app/proxy_server_config.yaml
+              subPath: config.yaml
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            limits:
+              cpu: '2'
+              memory: 4Gi
+      restartPolicy: Always
+      volumes:
+        - name: litellm-config-yaml
+          configMap:
+            name: litellm-config-yaml
