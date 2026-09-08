@@ -23,7 +23,6 @@ spec:
           args:
             - --config
             - /app/config.yaml
-            - --detailed_debug
           envFrom:
             - secretRef:
                 name: litellm-secrets
