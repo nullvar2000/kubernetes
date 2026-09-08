@@ -2,10 +2,10 @@ model_list:
   - model_name: qwen3.8-27b
     litellm_params:
       model: openai/qwen3.8-27b
-      api_base: http://furnace.local:9931/v1
+      api_base: http://192.168.30.254:9931/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY
   - model_name: gemma4-26b
     litellm_params:
       model: openai/gemma4-26b
-      api_base: http://furnace.local:9932/v1
+      api_base: http://192.168.30.254:9932/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY      
