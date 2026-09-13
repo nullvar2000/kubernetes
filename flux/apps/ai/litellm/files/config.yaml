@@ -9,3 +9,21 @@ model_list:
       model: openai/gemma4-26b
       api_base: http://192.168.30.254:9932/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY      
+
+mcp_servers:
+  # filesystem:
+  #   transport: "stdio"
+  #   command: "npx"
+  #   args: ["-y", "@modelcontextprotocol/server-filesystem", "/home/youruser/shared-data"]
+  # fetch:
+  #   transport: "stdio"
+  #   command: "npx"
+  #   args: ["-y", "@modelcontextprotocol/server-fetch"]
+  # time:
+  #   transport: "stdio"
+  #   command: "npx"
+  #   args: ["-y", "@modelcontextprotocol/server-time"]
+  searxng:
+    transport: "stdio"
+    command: "uvx"
+    args: ["mcp-searxng", "--base-url", "https://searxng.${GLOBAL_DOMAIN}"]
