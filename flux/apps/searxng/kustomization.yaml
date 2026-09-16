@@ -6,7 +6,7 @@ resources:
   - httproute.yaml
   - imageupdateautomation.yaml
   - namespace.yaml
-  - secrets.yaml
+  - secrets.clear.yaml
   - service.yaml
 
 configMapGenerator:
