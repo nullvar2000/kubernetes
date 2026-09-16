@@ -14,3 +14,7 @@ configMapGenerator:
     namespace: searxng
     files:
       - files/settings.yml
+  - name: mcp-config
+    namespace: searxng
+    envs:
+      - files/mcp-config.env

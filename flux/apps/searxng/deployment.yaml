@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: searxng
-          image: ghcr.io/searxng/searxng:2026.9.14-ef05645f0 # {"$imagepolicy": "flux-system:searxng-policy"}
+          image: ghcr.io/searxng/searxng:2026.9.12-d4f00d15d # {"$imagepolicy": "flux-system:searxng-policy"}
           env:
             - name: SEARXNG_SECRET
               value: ${SEARXNG_SECRET}
@@ -48,6 +48,30 @@ spec:
             limits:
               cpu: 1000m
               memory: 2G
+        - name: mcp
+          image: docker.io/isokoliuk/mcp-searxng:2.3.0 # {"$imagepolicy": "flux-system:mcp-searxng-policy"}
+          envFrom:
+            - configMapRef:
+                name: mcp-config
+            - secretRef:
+                name: mcp-searxng-token
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 60
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128M
+            limits:
+              cpu: 500m
+              memory: 1G
       restartPolicy: Always
       volumes:
         - name: searxng-settings
