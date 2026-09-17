@@ -43,3 +43,48 @@ spec:
       branch: fluxcd-searxng-image-update
   update:
     path: ./flux/apps/searxng
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: mcp-searxng
+  namespace: flux-system
+spec:
+  image: docker.io/isokoliuk/mcp-searxng
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: mcp-searxng-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: mcp-searxng
+  policy:
+    semver:
+      range: ">=2.3.0"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: mcp-searxng-image-update
+  namespace: flux-system
+spec:
+  interval: 6h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-mcp-searxng-image-update
+  update:
+    path: ./flux/apps/searxng

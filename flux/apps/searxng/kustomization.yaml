@@ -6,6 +6,7 @@ resources:
   - httproute.yaml
   - imageupdateautomation.yaml
   - namespace.yaml
+  - secrets.clear.yaml
   - service.yaml
 
 configMapGenerator:
@@ -13,3 +14,7 @@ configMapGenerator:
     namespace: searxng
     files:
       - files/settings.yml
+  - name: mcp-config
+    namespace: searxng
+    envs:
+      - files/mcp-config.env
