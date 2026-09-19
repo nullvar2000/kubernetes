@@ -1,3 +1,10 @@
+litellm_settings:
+  user_url_validation: true
+  user_url_allowed_hosts:
+    - "api.example.com"
+    - "127.0.0.1"
+    - "127.0.0.1:8080"
+
 model_list:
   - model_name: qwen3.8-27b
     litellm_params:
@@ -11,19 +18,7 @@ model_list:
       api_key: os.environ/LLAMA_SERVER_API_KEY      
 
 mcp_servers:
-  # filesystem:
-  #   transport: "stdio"
-  #   command: "npx"
-  #   args: ["-y", "@modelcontextprotocol/server-filesystem", "/home/youruser/shared-data"]
-  # fetch:
-  #   transport: "stdio"
-  #   command: "npx"
-  #   args: ["-y", "@modelcontextprotocol/server-fetch"]
-  # time:
-  #   transport: "stdio"
-  #   command: "npx"
-  #   args: ["-y", "@modelcontextprotocol/server-time"]
-  searxng:
-    transport: "stdio"
-    command: "uvx"
-    args: ["mcp-searxng", "--base-url", "https://searxng.${GLOBAL_DOMAIN}"]
+  searxng_mcp:
+    url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
+    auth_type: "api_key"
+    auth_value: os.environ/SEARXNG_MCP_HTTP_AUTH_TOKEN
