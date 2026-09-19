@@ -13,8 +13,8 @@ model_list:
       api_base: http://192.168.30.254:9932/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY      
 
-mcp_servers:
-  searxng_mcp:
-    url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
-    auth_type: "api_key"
-    auth_value: os.environ/SEARXNG_MCP_HTTP_AUTH_TOKEN
+# mcp_servers:
+#   searxng_mcp:
+#     url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
+#     auth_type: "api_key"
+#     auth_value: os.environ/SEARXNG_MCP_HTTP_AUTH_TOKEN
