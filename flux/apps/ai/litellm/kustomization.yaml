@@ -3,6 +3,10 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - postgres/secrets.clear.yaml
+  - postgres/statefulset.yaml
+  - postgres/service.yaml
+  - postgres/imageupdateautomation.yaml
   - secrets.clear.yaml
   - deployment.yaml
   - service.yaml
