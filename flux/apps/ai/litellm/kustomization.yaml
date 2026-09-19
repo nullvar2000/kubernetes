@@ -17,4 +17,4 @@ configMapGenerator:
   - name: litellm-config-yaml
     namespace: litellm
     files:
-      - files/litellm/config.yaml
+      - litellm/files/config.yaml
