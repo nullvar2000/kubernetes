@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: litellm
+  namespace: flux-system
+spec:
+  image: ghcr.io/berriai/litellm
+  interval: 6h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: litellm-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: litellm
+  policy:
+    semver:
+      range: ">=v1.100.0"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: litellm-image-update
+  namespace: flux-system
+spec:
+  interval: 12h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-litellm-image-update
+  update:
+    path: ./flux/apps/ai/litellm
