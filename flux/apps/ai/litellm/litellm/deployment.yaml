@@ -20,9 +20,11 @@ spec:
       containers:
         - name: litellm
           image: ghcr.io/berriai/litellm:v1.101.0 # {"$imagepolicy": "flux-system:litellm-policy"}
-          args:
-            - --config
-            - /app/config.yaml
+          command:
+            - sleep 2h
+          # args:
+          #   - --config
+          #   - /app/config.yaml
           envFrom:
             - secretRef:
                 name: litellm
