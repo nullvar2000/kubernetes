@@ -76,7 +76,11 @@ spec:
     sso:
       enabled: true
       enableSignup: true
-      enableRoleManagement: false
+      enableRoleManagement: true
+      roleManagement:
+        rolesClaim: realm_access.roles
+        allowedRoles: kingperch-users,kingperch-viewers
+        adminRoles: kingperch-admins
       oidc:
         enabled: true
         clientId: ${AI_OPENWEBUI_OIDC_CLIENT_ID}
