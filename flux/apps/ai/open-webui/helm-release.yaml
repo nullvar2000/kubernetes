@@ -5,6 +5,7 @@ metadata:
 spec:
   interval: 1h
   releaseName: open-webui
+  timeout: 15m
   chart:
     spec:
       chart: open-webui
