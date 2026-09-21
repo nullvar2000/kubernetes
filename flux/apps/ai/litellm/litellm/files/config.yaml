@@ -30,3 +30,6 @@ mcp_servers:
     url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
     auth_type: "bearer_token"
     auth_value: os.environ/SEARXNG_MCP_HTTP_AUTH_TOKEN
+  kubernetes:
+    transport: "http"
+    url: "http://kubernetes-mcp-server.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
