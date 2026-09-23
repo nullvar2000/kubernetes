@@ -49,7 +49,7 @@ spec:
               cpu: 1000m
               memory: 2G
         - name: mcp
-          image: docker.io/isokoliuk/mcp-searxng:2.3.0 # {"$imagepolicy": "flux-system:mcp-searxng-policy"}
+          image: docker.io/isokoliuk/mcp-searxng:2.4.0 # {"$imagepolicy": "flux-system:mcp-searxng-policy"}
           envFrom:
             - configMapRef:
                 name: mcp-config
