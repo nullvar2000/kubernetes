@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: echomuse-controller
+  namespace: homeassistant
+spec:
+  parentRefs:
+  - name: gateway-api
+    namespace: istio-gateway
+  hostnames:
+    - echomuse.${GLOBAL_DOMAIN}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: echomuse-controller
+      port: 8768

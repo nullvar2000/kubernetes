@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: echomuse-controller
+  namespace: homeassistant
+spec:
+  selector:
+    app: echomuse-controller
+  type: LoadBalancer
+  ports:
+    - name: echomuse-controller
+      port: 8768
+      protocol: TCP 
+      targetPort: 8768

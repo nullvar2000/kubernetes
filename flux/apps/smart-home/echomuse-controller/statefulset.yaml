@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: echomuse-controller
+  namespace: homeassistant
+  labels:
+    app: echomuse-controller
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: echomuse-controller
+  serviceName: echomuse-controller
+  template:
+    metadata:
+      labels:
+        app: echomuse-controller
+    spec:
+      containers:
+      - name: echomuse-controller
+        image: ghcr.io/wilbowes/echomuse-controller:2.24.1 # {"$imagepolicy": "flux-system:echomuse-controller-policy"}
+        envFrom:
+          - configMapRef:
+              name: echomuse-controller-env
+        volumeMounts:
+        - mountPath: /app/data
+          name: echomuse-controller-data
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64M
+          limits:
+            cpu: 1000m
+            memory: 128M
+      volumes:
+      - name: echomuse-controller-data
+        persistentVolumeClaim:
+          claimName: echomuse-controller-config
