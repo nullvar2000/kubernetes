@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - daemonset.yaml
+
+configMapGenerator:
+  - name: avahi-daemon-conf
+    namespace: avahi-reflector
+    files:
+      - files/avahi-daemon.conf

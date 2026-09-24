@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - avahi-reflector
   - nfd.yaml
   - cert-manager
   - gateway-api

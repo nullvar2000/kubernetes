@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: avahi-reflector
+  namespace: avahi-reflector
+spec:
+  selector:
+    matchLabels:
+      app: avahi-reflector
+  template:
+    metadata:
+      labels:
+        app: avahi-reflector
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: avahi
+        image: ghcr.io/nullvar2000/avahi-reflector:latest
+        imagePullPolicy: Always
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        volumeMounts:
+        - name: avahi-daemon-conf
+          mountPath: /etc/avahi/avahi-daemon.conf
+          subPath: avahi-daemon.conf
+      volumes:
+      - name: avahi-daemon-conf
+        configMap:
+          name: avahi-daemon-conf
