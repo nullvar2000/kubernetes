@@ -40,4 +40,4 @@ spec:
       volumes:
       - name: echomuse-controller-data
         persistentVolumeClaim:
-          claimName: echomuse-controller-config
+          claimName: echomuse-controller-data
