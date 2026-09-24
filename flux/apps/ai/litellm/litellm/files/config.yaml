@@ -8,6 +8,15 @@ model_list:
       model: openai/qwen3.8-27b
       api_base: http://192.168.30.254:9931/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY
+    # Local electricity cost (measured 2026-09-24 on 192.168.30.254):
+    # 2x Radeon Pro V620 ~227W under generation + ~50W system baseline = 277W,
+    # ~16.8 tok/s output / ~400 tok/s uncached prompt, rate $0.12215/kWh
+    # (Aug 2026: $217.43 / 1780 kWh). Re-estimate with
+    # /home/paul/llama-server/llm-cost.sh on the host.
+    model_info:
+      input_cost_per_token: 0.0000000235
+      output_cost_per_token: 0.0000005605
+      cache_read_input_token_cost: 0.00000000235
   - model_name: gemma4-12b
     litellm_params:
       model: openai/gemma-4-12b
