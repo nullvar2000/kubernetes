@@ -17,21 +17,38 @@ model_list:
       input_cost_per_token: 0.0000000235
       output_cost_per_token: 0.0000005605
       cache_read_input_token_cost: 0.00000000235
+  # P40 (192.168.30.254, GPU 0) costs measured 2026-09-24:
+  # active GPU W + ~50W system baseline, rate $0.12215/kWh (Aug 2026 bill).
+  # gemma-4-12b: 123W, 25.5 tok/s gen; gemma-4-26b (MoE A4B): 93W, 47.5 tok/s;
+  # muse-glimmer-30b: 154W, 12.5 tok/s. Only ~one model fits in the 24GB VRAM
+  # at a time (see --models-max on the llama container).
   - model_name: gemma4-12b
     litellm_params:
       model: openai/gemma-4-12b
       api_base: http://192.168.30.254:9932/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY
+    model_info:
+      input_cost_per_token: 0.00000001554
+      output_cost_per_token: 0.00000022991
+      cache_read_input_token_cost: 0.00000000155
   - model_name: gemma4-26b
     litellm_params:
-      model: openai/gemma-4-12b
+      model: openai/gemma-4-26b
       api_base: http://192.168.30.254:9932/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY
+    model_info:
+      input_cost_per_token: 0.00000000834
+      output_cost_per_token: 0.00000010191
+      cache_read_input_token_cost: 0.00000000083
   - model_name: muse-glimmer-30b
     litellm_params:
       model: openai/muse-glimmer-30b
       api_base: http://192.168.30.254:9932/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY
+    model_info:
+      input_cost_per_token: 0.00000002790
+      output_cost_per_token: 0.00000055180
+      cache_read_input_token_cost: 0.00000000279
 
 mcp_servers:
   searxng_local:
