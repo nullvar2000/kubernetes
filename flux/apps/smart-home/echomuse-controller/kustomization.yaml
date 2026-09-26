@@ -11,5 +11,5 @@ resources:
 configMapGenerator:
   - name: echomuse-controller-env
     namespace: homeassistant
-    files:
+    envs:
       - files/echomuse-controller.env
