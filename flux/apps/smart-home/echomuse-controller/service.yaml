@@ -8,7 +8,15 @@ spec:
     app: echomuse-controller
   type: LoadBalancer
   ports:
+    - name: ws
+      port: 8767
+      protocol: TCP
+      targetPort: 8767
+    - name: ws-tls
+      port: 8770
+      protocol: TCP
+      targetPort: 8770
     - name: echomuse-controller
       port: 8768
-      protocol: TCP 
+      protocol: TCP
       targetPort: 8768
