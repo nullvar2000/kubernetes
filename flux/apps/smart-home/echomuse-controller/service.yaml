@@ -20,3 +20,7 @@ spec:
       port: 8768
       protocol: TCP
       targetPort: 8768
+    - name: emos-01
+      port: 16001
+      protocol: TCP
+      targetPort: 16001
