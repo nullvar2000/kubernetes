@@ -33,10 +33,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 64M
+            memory: 128M
           limits:
             cpu: 1000m
-            memory: 128M
+            memory: 512M
       volumes:
       - name: echomuse-controller-data
         persistentVolumeClaim:
