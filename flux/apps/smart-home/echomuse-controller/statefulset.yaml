@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: echomuse-controller
-        image: ghcr.io/wilbowes/echomuse-controller:2.24.1 # {"$imagepolicy": "flux-system:echomuse-controller-policy"}
+        image: ghcr.io/wilbowes/echomuse-controller:2.25.0 # {"$imagepolicy": "flux-system:echomuse-controller-policy"}
         envFrom:
           - configMapRef:
               name: echomuse-controller-env
