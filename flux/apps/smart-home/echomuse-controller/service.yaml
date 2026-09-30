@@ -32,3 +32,15 @@ spec:
       port: 16003
       protocol: TCP
       targetPort: 16003
+    - name: emos-01-bt-proxy
+      port: 17001
+      protocol: TCP
+      targetPort: 17001
+    - name: emos-02-bt-proxy
+      port: 17002
+      protocol: TCP
+      targetPort: 17002
+    - name: emos-03-bt-proxy
+      port: 17003
+      protocol: TCP
+      targetPort: 17003
