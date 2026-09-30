@@ -24,6 +24,10 @@ spec:
       port: 16001
       protocol: TCP
       targetPort: 16001
+    - name: emos-02
+      port: 16002
+      protocol: TCP
+      targetPort: 16002
     - name: emos-03
       port: 16003
       protocol: TCP
