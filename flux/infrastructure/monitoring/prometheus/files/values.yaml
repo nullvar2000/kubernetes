@@ -62,22 +62,19 @@ alertmanager:
         - receiver: 'null'
           matchers:
             - severity = "info"
-        # Quiet hours (UTC 03:00-12:00 / 23:00-07:00 Eastern): suppress warning
-        - receiver: 'null'
-          active_time_intervals:
+        # Warning: notify, but muted during quiet hours (UTC 03:00-12:00 /
+        # 23:00-07:00 Eastern). In AM >= 0.31 route time intervals gate
+        # notification, not route matching, so warnings and criticals need
+        # separate routes.
+        - receiver: 'mattermost'
+          mute_time_intervals:
             - quiet-hours
           matchers:
             - severity = "warning"
-        # Quiet hours (UTC 03:00-12:00 / 23:00-07:00 Eastern): critical still notifies
+        # Critical: always notify (including quiet hours)
         - receiver: 'mattermost'
-          active_time_intervals:
-            - quiet-hours
           matchers:
             - severity = "critical"
-        # All other hours: warning + critical notify
-        - receiver: 'mattermost'
-          matchers:
-            - severity =~ "warning|critical"
     receivers:
       - name: 'null'
       - name: 'mattermost'
