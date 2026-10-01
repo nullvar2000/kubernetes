@@ -59,7 +59,7 @@ class Handler(BaseHTTPRequestHandler):
             self._send(404)
 
     def do_POST(self):  # noqa: N802
-        if RELAY_TOKEN and self.headers.get("X-Relay-Token") != RELAY_TOKEN:
+        if RELAY_TOKEN and self.headers.get("Authorization") != f"Bearer {RELAY_TOKEN}":
             self._send(401, b"unauthorized")
             return
         length = int(self.headers.get("Content-Length", 0) or 0)
