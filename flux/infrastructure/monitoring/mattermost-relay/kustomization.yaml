@@ -11,5 +11,3 @@ configMapGenerator:
     namespace: monitoring
     files:
       - files/relay.py
-generatorOptions:
-  disableNameSuffixHash: true
