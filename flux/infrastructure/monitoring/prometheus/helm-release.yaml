@@ -2,9 +2,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
-  annotations:
-    # temporary: force immediate reconcile with updated helm-values (remove after upgrade lands)
-    reconcile.fluxcd.io/requestedAt: "2026-10-01T14:10:00Z"
 spec:
   interval: 1h
   releaseName: kube-prometheus-stack
