@@ -9,8 +9,6 @@ resources:
   - helm-release.yaml
   - helm-repo.yaml
   - namespace.yaml
-  # TEMP: e2e test for mattermost relay delivery — revert this + the rule after verification
-  - relay-test-rule.yaml
 
 configMapGenerator:
   - name: helm-values
