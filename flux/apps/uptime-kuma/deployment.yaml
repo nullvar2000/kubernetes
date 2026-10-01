@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
       - name: uptime-kuma
-        image: ghcr.io/louislam/uptime-kuma:2.0.2 # {"$imagepolicy": "flux-system:uptime-kuma-policy"}
+        image: ghcr.io/louislam/uptime-kuma:2.5.5 # {"$imagepolicy": "flux-system:uptime-kuma-policy"}
         ports:
         - containerPort: 3001
         volumeMounts:
-        - mountPath: /app/data 
+        - mountPath: /app/data
           name: data
         resources: {}
       volumes:
