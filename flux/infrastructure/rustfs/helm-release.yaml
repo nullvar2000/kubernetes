@@ -27,6 +27,8 @@ spec:
           size: 100 # MB per rotated log file
           time: day
           keep_files: 5
+    podAnnotations:
+      config-revision: "2026-10-06-log-rotation"
     resources:
       requests:
         cpu: 100m
