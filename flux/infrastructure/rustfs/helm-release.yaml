@@ -20,6 +20,13 @@ spec:
       existingSecret: rustfs
     ingress:
       enabled: false
+    config:
+      rustfs:
+        obs_environment: production
+        log_rotation:
+          size: 100 # MB per rotated log file
+          time: day
+          keep_files: 5
     resources:
       requests:
         cpu: 100m
@@ -30,3 +37,4 @@ spec:
     storageclass:
       name: longhorn
       dataStorageSize: 16Gi
+      logStorageSize: 2Gi
