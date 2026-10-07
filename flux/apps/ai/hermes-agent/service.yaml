@@ -18,3 +18,8 @@ spec:
       protocol: TCP
       targetPort: 8443
       appProtocol: kubernetes.io/ws
+    # In-cluster only: consumed by the LiteLLM agent gateway (no HTTPRoute)
+    - name: a2a
+      port: 9900
+      protocol: TCP
+      targetPort: 9900

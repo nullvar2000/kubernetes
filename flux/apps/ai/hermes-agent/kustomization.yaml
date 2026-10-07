@@ -10,6 +10,7 @@ resources:
   - fastcrw/service.yaml
   - httproute.yaml
   - imageupdateautomation.yaml
+  - rbac.yaml
   - service.yaml
   - statefulset.yaml
 
@@ -18,6 +19,10 @@ configMapGenerator:
     namespace: hermes-agent
     envs:
       - files/agent.env
+  - name: agent-scripts
+    namespace: hermes-agent
+    files:
+      - files/gh-pr.py
   - name: camofox-config
     namespace: hermes-agent
     envs:

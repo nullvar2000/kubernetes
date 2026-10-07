@@ -22,11 +22,34 @@ spec:
         app: hermes-agent
     spec:
       automountServiceAccountToken: false
+      serviceAccountName: hermes-agent
       securityContext:
         fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
       initContainers:
+        - name: install-sops
+          image: docker.io/library/alpine:3.22 # {"$imagepolicy": "flux-system:alpine-policy"}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              if [ -x /opt/data/.local/bin/sops ] && /opt/data/.local/bin/sops --version 2>/dev/null | grep -q 'v3\.13\.3'; then
+                echo "sops v3.13.3 already installed"
+              else
+                apk add --no-cache curl >/dev/null
+                curl -fsSL -o /opt/data/.local/bin/sops https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
+                chmod 755 /opt/data/.local/bin/sops
+                echo "installed $(/opt/data/.local/bin/sops --version)"
+              fi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: hermes-agent-data
+              mountPath: /opt/data
         - name: camofox
           image: ghcr.io/jo-inc/camofox-browser:1.18.1 # {"$imagepolicy": "flux-system:camofox-policy"}
           envFrom:
@@ -66,6 +89,9 @@ spec:
             - name: webhook
               containerPort: 8644
               protocol: TCP
+            - name: a2a
+              containerPort: 9900
+              protocol: TCP
           resources:
             requests:
               memory: 64Mi
@@ -80,6 +106,10 @@ spec:
               mountPath: /dev/shm
             - name: kube-api-access
               mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
+            - name: agent-scripts
+              mountPath: /opt/data/.local/bin/gh-pr.py
+              subPath: gh-pr.py
               readOnly: true
         - name: code-server
           image: docker.io/linuxserver/code-server:4.140.0 # {"$imagepolicy": "flux-system:code-server-policy"}
@@ -129,6 +159,10 @@ spec:
                   items:
                     - key: ca.crt
                       path: ca.crt
+        - name: agent-scripts
+          configMap:
+            name: agent-scripts
+            defaultMode: 0755
   volumeClaimTemplates:
     - metadata:
         name: hermes-agent-data
