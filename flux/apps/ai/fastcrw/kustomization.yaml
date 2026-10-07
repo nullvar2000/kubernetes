@@ -3,6 +3,9 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - lightpanda/deployment.yaml
+  - lightpanda/imageupdateautomation.yaml
+  - lightpanda/service.yaml
+  - crw/deployment.yaml
   - crw/imageupdateautomation.yaml
   - crw/service.yaml
-  - crw/deployment.yaml

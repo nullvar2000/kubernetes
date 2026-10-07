@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lightpanda
+  namespace: fastcrw
+  labels:
+    app: lightpanda
+spec:
+  selector:
+    matchLabels:
+      app: lightpanda
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lightpanda
+    spec:
+      containers:
+        - name: lightpanda
+          image: docker.io/lightpanda/lightpanda:1.0.0 # {"$imagepolicy": "flux-system:lightpanda-policy"}
+          command:
+            - "/bin/lightpanda"
+            - "serve"
+            - "--host"
+            - "0.0.0.0"
+            - "--port"
+            - "9222"
+            - "--log-level"
+            - "info"
+            - "--block-private-networks"
+            - "--block-cidrs"
+            - "0.0.0.0/8,10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.168.0.0/16,100.64.0.0/10,224.0.0.0/4,240.0.0.0/4,192.0.0.0/24,192.0.2.0/24,198.18.0.0/15,198.51.100.0/24,203.0.113.0/24,fc00::/7,fe80::/10,fec0::/10,ff00::/8,::/96,64:ff9b:1::/48,2002::/16"
+          env:
+            - name: LIGHTPANDA_DISABLE_TELEMETRY
+              value: 'true'
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 60
+          resources:
+            requests:
+              cpu: 100m
+              memory: 32M
+            limits:
+              cpu: 1000m
+              memory: 2G
+      restartPolicy: Always
