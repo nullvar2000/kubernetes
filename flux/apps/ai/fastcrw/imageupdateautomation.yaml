@@ -5,7 +5,7 @@ metadata:
   name: crw
   namespace: flux-system
 spec:
-  image: ghcr.io/us/crw
+  image: ghcr.io/fastcrw/crw
   interval: 6h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1

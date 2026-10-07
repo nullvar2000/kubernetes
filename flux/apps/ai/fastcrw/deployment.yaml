@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crw
-  namespace: hermes-agent
+  namespace: fastcrw
   labels:
     app: crw
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: crw
-          image: ghcr.io/us/crw:0.37.2 # {"$imagepolicy": "flux-system:crw-policy"}
+          image: ghcr.io/fastcrw/crw:0.37.2 # {"$imagepolicy": "flux-system:crw-policy"}
           ports:
             - name: http
               containerPort: 3000
