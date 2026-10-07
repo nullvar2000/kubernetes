@@ -1,3 +1,4 @@
+# E2E test comment added by platform-engineer on 2026-10-07
 apiVersion: v1
 kind: Namespace
 metadata:
