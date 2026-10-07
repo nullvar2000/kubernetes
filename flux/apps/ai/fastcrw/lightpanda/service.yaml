@@ -10,6 +10,6 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: 3000
+      port: 9222
       protocol: TCP
-      targetPort: 3000
+      targetPort: 9222
