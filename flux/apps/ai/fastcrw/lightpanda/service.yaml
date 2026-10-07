@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  crw
+  name: lightpanda
   namespace: fastcrw
 spec:
   selector:
-    app:  crw
+    app: lightpanda
   type: ClusterIP
   ports:
     - name: http
