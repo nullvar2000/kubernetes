@@ -75,5 +75,9 @@ agents:
       name: "Platform Engineer"
       description: "Implements approved Kubernetes GitOps plans for the cluster. Opens a pull request and alerts on Mattermost."
       url: "http://hermes-agent.hermes-agent.svc.cluster.local:9900"
+    # Upstream (hermes A2A) bearer auth for every hop, incl. tasks/*.
+    # litellm_params.api_key alone is not sent as a hop header in v1.104.0.
+    static_headers:
+      Authorization: "Bearer ${AI_HERMES_A2A_TOKEN}"
     litellm_params:
       api_key: ${AI_HERMES_A2A_TOKEN}
