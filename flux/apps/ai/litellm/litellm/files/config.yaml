@@ -54,7 +54,7 @@ model_list:
       output_cost_per_token: 0.00000055180
       cache_read_input_token_cost: 0.00000000279
 
- mcp_servers:
+mcp_servers:
   searxng_local:
     transport: "http"
     url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
@@ -73,7 +73,7 @@ agents:
     agent_card_params:
       protocolVersion: "1.0"
       name: "Platform Engineer"
-      description: "Implements approved Kubernetes GitOps plans for the kingperch.xyz cluster. Opens a pull request and alerts on Mattermost."
+      description: "Implements approved Kubernetes GitOps plans for the cluster. Opens a pull request and alerts on Mattermost."
       url: "http://hermes-agent.hermes-agent.svc.cluster.local:9900"
     litellm_params:
       api_key: ${AI_HERMES_A2A_TOKEN}
