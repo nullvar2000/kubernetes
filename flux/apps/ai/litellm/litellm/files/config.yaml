@@ -54,7 +54,7 @@ model_list:
       output_cost_per_token: 0.00000055180
       cache_read_input_token_cost: 0.00000000279
 
-mcp_servers:
+ mcp_servers:
   searxng_local:
     transport: "http"
     url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
@@ -63,3 +63,17 @@ mcp_servers:
   kubernetes:
     transport: "http"
     url: "http://kubernetes-mcp-server.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
+
+# A2A agents (Hermes in-cluster). Invoked as model "a2a/<agent_name>" or via
+# the JSON-RPC passthrough POST /a2a/<agent_name> (message/send, tasks/get,
+# tasks/list, ...). message/send blocks until the agent replies, so long
+# tasks must be polled with tasks/list {contextId} (see ~/.local/bin/k8s-a2a).
+agents:
+  - agent_name: platform-engineer
+    agent_card_params:
+      protocolVersion: "1.0"
+      name: "Platform Engineer"
+      description: "Implements approved Kubernetes GitOps plans for the kingperch.xyz cluster. Opens a pull request and alerts on Mattermost."
+      url: "http://hermes-agent.hermes-agent.svc.cluster.local:9900"
+    litellm_params:
+      api_key: ${AI_HERMES_A2A_TOKEN}
