@@ -3,6 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - imageupdateautomation.yaml
-  - service.yaml
-  - deployment.yaml
+  - crw/imageupdateautomation.yaml
+  - crw/service.yaml
+  - crw/deployment.yaml
