@@ -14,4 +14,4 @@ configMapGenerator:
   - name: crw-config-toml
     namespace: fastcrw
     files:
-      - files/config.toml
+      - crw/files/config.toml
