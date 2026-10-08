@@ -29,7 +29,7 @@ spec:
           type: RuntimeDefault
       initContainers:
         - name: install-sops
-          image: docker.io/library/alpine:3.22 # {"$imagepolicy": "flux-system:alpine-policy"}
+          image: docker.io/library/alpine:3.24.2 # {"$imagepolicy": "flux-system:alpine-policy"}
           command:
             - /bin/sh
             - -c
