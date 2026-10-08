@@ -9,3 +9,9 @@ resources:
   - crw/deployment.yaml
   - crw/imageupdateautomation.yaml
   - crw/service.yaml
+
+configMapGenerator:
+  - name: crw-config-toml
+    namespace: fastcrw
+    files:
+      - files/config.toml

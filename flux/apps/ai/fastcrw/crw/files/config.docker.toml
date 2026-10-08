@@ -1,0 +1,163 @@
+# Docker-specific overrides (layered on top of config.default.toml).
+# Renderer failover order: HTTP → LightPanda → Chrome.
+
+[request]
+# Bench analysis (May 2026): 12 of 14 zero-byte misses on the 150-URL diagnose
+# bench were hitting the default 8s deadline cap (latency ~8000ms,
+# structural_failure: 0 bytes with HTTP 200) — chrome had loaded but
+# post-navigate snapshot was killed mid-flight. clover.com confirms a 30s
+# deadline yields a 264kb response. 15s is the budget that recovers the
+# stragglers without ballooning p50 on healthy pages.
+deadline_ms_default = 15000
+# Issue #35: when an implicit request omits `deadlineMs`, auto-extend the
+# effective deadline to `max(deadline_ms_default, ladder_min)` where
+# ladder_min = sum(per-tier timeouts) + N_cdp_tiers * 28s. Prevents
+# `chrome_timeout_ms = 30000` from appearing inert when this default is
+# small. Set to false to enforce the strict 15s SLO regardless of tier
+# sizing — explicit per-request `deadlineMs` always wins either way.
+auto_extend_deadline_for_ladder = true
+
+[server]
+# Disable global rps cap for benchmark + production load — the bench fires
+# 8-concurrency for 5-10s and gets rate-limited at the default 10 rps.
+# Per-host rps (eTLD+1) is still enforced via the crawler limiter.
+rate_limit_rps = 0
+
+
+[renderer]
+# Per-tier nav timeouts. Bench analysis (April 2026): the flat 30s budget
+# pushed slow gov/legal SPAs to client_timeout in chrome (~6 URLs) while
+# letting the http tier monopolize 30s of budget on stalled origins. Splitting
+# 15/20/45 lets HTTP fail fast into the JS escalation while giving Chrome
+# enough headroom for `networkidle` on heavy pages.
+# Tightened tier timeouts to fit the 8s end-to-end deadline (the SLO target).
+# Was 15/20/45 — the old long-tail allowance worked when deadline wasn't
+# enforced; once T15-T18 enforced it server-side, lightpanda's 20s budget
+# consumed the entire 8s deadline before chrome could escalate. The new
+# 4/4 split lets HTTP fail fast (~200ms) into lightpanda (≤4s budget,
+# bounded by deadline.remaining), then chrome with the residual budget.
+# chrome_timeout_ms is the absolute ceiling — chrome_nav_budget_ms drives
+# the actual partial-snapshot race inside.
+http_timeout_ms = 4000
+# LightPanda bounded tight so chrome always has ≥3s residual under the 8s
+# deadline. LP is flaky on heavy SPAs (segfaults, CDP closes mid-eval); the
+# escalation loss from skipping marginal LP renders is dominated by chrome
+# winning more often inside its budget. Bench analysis (May 2026):
+# 12/30 failures were `Timeout after Xms` where LP burned the whole deadline.
+lightpanda_timeout_ms = 2500
+chrome_timeout_ms = 30000
+
+# Phase 2: chrome request interception. Pump blocks images/media/fonts/
+# manifests/websockets + analytics/ads/session-replay hosts via
+# Fetch.requestPaused. Cuts subresource volume by ~50% on commercial
+# pages, dropping per-render latency. See blocklist.rs for entries.
+chrome_intercept_resources = true
+# Hard ceiling for chrome post-navigate phase. Inner race; on hit a
+# partial-DOM snapshot is returned with truncated=true.
+chrome_nav_budget_ms = 12000
+
+# Post-navigate challenge retry loop, cut from the default 3 to 1.
+#
+# A/B measured 2026-06-21 (plans/PHASE-RESULTS-2026-06-21.md, same binary, same
+# config, this knob alone): scrape-success 90% -> 90%, truth-recall 67.57% ->
+# 67.57%, median markdown 7816 -> 8218, and p90 23857 -> 20314 (-15%, -3543ms).
+# `quality_gate.py` verdict: PASS, 0 new failures, 0 content drops.
+#
+# The render-phase breakdown attributes 28% of render time to this loop (mean
+# 1028ms, p90 7209ms), and the pages that burn the full 3x3s never clear anyway,
+# so one retry loses nothing and keeps the fast-clearing CF challenges. Neither
+# Firecrawl (defaultWait=0, no retry loop) nor Spider runs a blind challenge
+# retry; we were the only one.
+#
+# The 2026-06-21 run recommended this for prod and it was never applied, so prod
+# ran the default 3 until now. Not set to 0 (Firecrawl-style) deliberately: 1
+# still clears a challenge that resolves on the first re-check.
+#
+# This knob is shared by both the `chrome` and `chrome_proxy` renderer tiers
+# (crw-renderer/src/lib.rs). The A/B above only exercised `chrome`; no
+# [renderer.chrome_proxy] tier is configured in this file, so retries=1 has no
+# effect on residential-egress recovery today. Re-validate before enabling
+# chrome_proxy: a challenge over a fresh residential IP may need more than one
+# re-check to clear.
+chrome_challenge_max_retries = 1
+
+# Phase 4 §B5: bounded browser-context pool. Validated 2026-05-11
+# (PROGRESS.md gap-closure): cookie/storage isolation T1 PASS, B2 sanity
+# ratio < 2× (T2), RSS soak chrome 1.08× over 500 reqs (T3), TOML flip
+# 75/75 across 3 cycles (T5). Backend explicitly vanilla — pool is gated
+# off on browserless via lib.rs.
+chrome_backend = "vanilla"
+chrome_context_pool_enabled = true
+
+[renderer.lightpanda]
+ws_url = "ws://lightpanda:9222/"
+
+[renderer.chrome]
+ws_url = "ws://chrome:9222/"
+
+# Phase A (latency-qn): the browser-CONTEXT pool. This — not the legacy
+# `CRW_RENDERER__POOL_SIZE` env — is the knob that limits Chrome concurrency.
+# Bench (stealth rig, conc=8): size 4 → 8 cut p90 -34% / p99 -37% with recall
+# held, because under concurrent load the 4-slot pool saturates and requests
+# queue behind in-flight renders. Pair with chrome mem_limit 3g (8 contexts can
+# exceed the old 2g under load). Drop to 6 if RAM headroom tightens.
+[renderer.chrome_pool]
+size = 8
+# Interactive render reserve (B lane). Of the 8-slot pool, guarantee 3 slots for
+# interactive single /scrape so one tenant's batch/crawl of slow sites can't
+# squeeze other tenants' interactive scrapes below 3 (batch keeps 8-3=5). Was an
+# effective 2 (pool/4); raised after the 2026-07-30 cross-tenant timeout leak.
+# Fast revert without redeploy: CRW_RENDERER__CHROME_POOL__RESERVED_INTERACTIVE_RENDERS=2
+# (env overrides this file; merely unsetting it falls back to 3, not the old 2).
+reserved_interactive_renders = 3
+
+# /v1/search points at the bundled SearXNG sidecar. On the reference
+# docker-compose stack the sidecar is reachable as `searxng:8080` over the
+# default bridge network (the service is named `searxng`). To point CRW at an
+# external SearXNG instead, override this without editing the file by setting
+# `CRW_SEARCH__SEARXNG_URL=http://your-host:8080` (env wins over this default).
+[search]
+searxng_url = "http://searxng.searxng.svc.cluster.local:8080"
+# Multi-query expansion (cycle-2 of the answer-quality loop): the proven win.
+# On a 50-q SimpleQA+FRAMES sample it lifted overall 64%->76% and FRAMES
+# 56%->80% by unioning an entity-rewrite's results with the original. Baked on
+# here (code default is false/gated) so it survives container/compose churn.
+# passage_select stays OFF — cycle-3 over-filtered multi-hop (FRAMES 80%->8%).
+query_expand = true
+# Multi-variant query expansion (recall lever). A/B on a 25-q SimpleQA sample at
+# answerTemperature=0: n=1 -> n=3 lifted accuracy 80%->88% and truthfulness
+# (correct-incorrect) 18->20, fixing retrieval-misses where the answer page only
+# surfaces under an acronym-expanded / keyword-focused rewrite (e.g. a full name
+# completed, an abstain->correct). Fetched concurrently so N rewrites cost ~one
+# extra fetch of wall-clock. Watch hallucination on larger evals — extra recall
+# can occasionally surface a misleading page (1 abstain->wrong observed).
+query_expand_variants = 3
+# Calibrated answer path (the proven over-abstention fix). On a 152-q
+# SimpleQA+NQ+TriviaQA+PopQA+TruthfulQA set it lifted overall 81.6%->~85% with
+# INCORRECT FLAT (the moat held — inverse of cycle-1), abstentions converting
+# 1:1 to correct. SimpleQA 76->92, TruthfulQA 72->80. Confirmed across two runs.
+# Baked on (code default false/gated) so it survives container/compose churn.
+answer_calibrated = true
+
+# /map URL filter — defaults on. Set `drop_action_urls = false` to revert
+# to legacy behaviour (action URLs surface in results).
+[map.url_filter]
+strip_tracking_params = true
+drop_action_urls = true
+gov_tld_drop_actions = false
+
+# Document (PDF) parsing — see config.default.toml for field docs.
+[document]
+enabled = true
+max_pages = 0
+attempt_scanned = false
+max_upload_bytes = 52428800
+upload_concurrency = 2
+# Sized so concurrent sandbox children fit the container mem_limit (2g):
+# 2 × sandbox_memory_bytes (512 MiB) + engine base ≈ 1.3 GiB < 2 GiB.
+max_concurrent_parses = 2
+parse_timeout_ms = 30000
+max_decompressed_bytes = 104857600
+# Docker images accept untrusted uploads → isolate parses by default.
+sandbox = true
+sandbox_memory_bytes = 536870912
