@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chrome
+  namespace: fastcrw
+spec:
+  selector:
+    app: chrome
+  type: ClusterIP
+  ports:
+    - name: cdp
+      port: 9222
+      protocol: TCP
+      targetPort: 9222

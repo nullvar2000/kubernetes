@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chrome
+  namespace: fastcrw
+  labels:
+    app: chrome
+spec:
+  selector:
+    matchLabels:
+      app: chrome
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chrome
+    spec:
+      containers:
+        - name: chrome
+          image: docker.io/chromedp/headless-shell:156.0.8078.12
+          args:
+            - "--remote-allow-origins=*"
+            - "--ignore-certificate-errors"
+            - "--disable-http2"
+            - "--disable-blink-features=AutomationControlled"
+          ports:
+            - name: cdp
+              containerPort: 9222
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: cdp
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: cdp
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256M
+            limits:
+              cpu: 2000m
+              memory: 2G
+          volumeMounts:
+            - name: shm
+              mountPath: /dev/shm
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+      restartPolicy: Always
