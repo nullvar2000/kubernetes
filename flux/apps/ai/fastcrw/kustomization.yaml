@@ -6,9 +6,13 @@ resources:
   - lightpanda/deployment.yaml
   - lightpanda/imageupdateautomation.yaml
   - lightpanda/service.yaml
+  - chrome/deployment.yaml
+  - chrome/service.yaml
   - crw/deployment.yaml
   - crw/imageupdateautomation.yaml
+  - crw/secrets.clear.yaml
   - crw/service.yaml
+  - crw/httproute.yaml
 
 configMapGenerator:
   - name: crw-config-toml

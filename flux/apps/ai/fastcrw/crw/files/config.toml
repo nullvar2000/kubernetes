@@ -23,6 +23,10 @@ auto_extend_deadline_for_ladder = true
 # Per-host rps (eTLD+1) is still enforced via the crawler limiter.
 rate_limit_rps = 0
 
+# Public endpoint behind the gateway: require a bearer API key on all API
+# calls. Key is substituted by Flux postBuild from apps-secrets.
+[auth]
+api_keys = ["${FASTCRW_API_KEY}"]
 
 [renderer]
 # Per-tier nav timeouts. Bench analysis (April 2026): the flat 30s budget
@@ -110,6 +114,15 @@ size = 8
 # Fast revert without redeploy: CRW_RENDERER__CHROME_POOL__RESERVED_INTERACTIVE_RENDERS=2
 # (env overrides this file; merely unsetting it falls back to 3, not the old 2).
 reserved_interactive_renders = 3
+
+# LLM for /v1/search answer synthesis, formats:["summary"], and the JSON
+# extraction fallback. Points at the in-cluster LiteLLM proxy (local models
+# only). api_key is deliberately NOT in this file — it is supplied via the
+# CRW_EXTRACTION__LLM__API_KEY env var (from the crw Secret).
+[extraction.llm]
+provider = "openai-compatible"
+base_url = "http://litellm.litellm.svc.cluster.local:4000/v1"
+model = "gemma4-26b"
 
 # /v1/search points at the bundled SearXNG sidecar. On the reference
 # docker-compose stack the sidecar is reachable as `searxng:8080` over the

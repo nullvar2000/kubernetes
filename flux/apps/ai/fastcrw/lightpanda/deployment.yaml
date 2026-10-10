@@ -55,5 +55,5 @@ spec:
               memory: 32M
             limits:
               cpu: 1000m
-              memory: 2G
+              memory: 1Gi
       restartPolicy: Always
