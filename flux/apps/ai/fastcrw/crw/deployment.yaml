@@ -18,6 +18,16 @@ spec:
       containers:
         - name: crw
           image: ghcr.io/fastcrw/crw:0.37.2 # {"$imagepolicy": "flux-system:crw-policy"}
+          env:
+            - name: RUST_LOG
+              value: "info"
+            - name: CRW_CONFIG
+              value: "config.docker"
+            - name: CRW_EXTRACTION__LLM__API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: crw
+                  key: LITELLM_API_KEY
           ports:
             - name: http
               containerPort: 3000
@@ -41,11 +51,22 @@ spec:
             limits:
               cpu: 1000m
               memory: 2G
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: crw-config-toml
-              mountPath: /app/config.toml
+              mountPath: /app/config.docker.toml
+              subPath: config.toml
+            - name: tmp
+              mountPath: /tmp
       volumes:
-      - name: crw-config-toml
-        configMap:
-          name: crw-config-toml
+        - name: crw-config-toml
+          configMap:
+            name: crw-config-toml
+        - name: tmp
+          emptyDir: {}
       restartPolicy: Always
