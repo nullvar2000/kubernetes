@@ -24,9 +24,16 @@ auto_extend_deadline_for_ladder = true
 rate_limit_rps = 0
 
 # Public endpoint behind the gateway: require a bearer API key on all API
-# calls. Key is substituted by Flux postBuild from apps-secrets.
+# calls. Key is substituted by Flux postBuild from apps-secrets
+# (AI_FASTCRW_API_KEY — the same key the LiteLLM MCP registration presents).
 [auth]
-api_keys = ["${FASTCRW_API_KEY}"]
+api_keys = ["${AI_FASTCRW_API_KEY}"]
+
+# MCP surface (POST /mcp) — registered with the LiteLLM gateway.
+# Self-hosted: the SaaS credit-billing fields are unused bookkeeping that
+# still cost context tokens on every tool response — strip them.
+[mcp]
+hide_credits = true
 
 [renderer]
 # Per-tier nav timeouts. Bench analysis (April 2026): the flat 30s budget
