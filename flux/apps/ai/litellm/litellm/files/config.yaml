@@ -71,6 +71,14 @@ mcp_servers:
     url: "http://crw.fastcrw.svc.cluster.local:3000/mcp"
     auth_type: "bearer_token"
     auth_value: os.environ/FASTCRW_API_KEY
+  # ComfyUI MCP gateway on the P40 host (supergateway, stateless Streamable
+  # HTTP; ai-server repo projects/comfyui). Bearer key = host-local
+  # COMFYUI_MCP_KEY; pod network 10.244.0.0/16 is allowlisted on 8001.
+  comfyui:
+    transport: "http"
+    url: "http://192.168.30.254:8001/mcp"
+    auth_type: "bearer_token"
+    auth_value: os.environ/COMFYUI_MCP_KEY
 
 # A2A agents (Hermes in-cluster). Invoked as model "a2a/<agent_name>" or via
 # the JSON-RPC passthrough POST /a2a/<agent_name> (message/send, tasks/get,
