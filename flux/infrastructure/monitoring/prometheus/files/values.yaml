@@ -62,6 +62,14 @@ alertmanager:
         - receiver: 'null'
           matchers:
             - severity = "info"
+        # Kube{Proxy,Scheduler,ControllerManager}Down fire via the chart's
+        # absent(up{job=...}) rules whenever the corresponding ServiceMonitor
+        # has zero targets (disabled on this Talos cluster — see the
+        # serviceMonitor blocks below). Not actionable; keep them out of the
+        # notification path.
+        - receiver: 'null'
+          matchers:
+            - alertname =~ "KubeProxyDown|KubeSchedulerDown|KubeControllerManagerDown"
         # Warning: notify, but muted during quiet hours (UTC 03:00-12:00 /
         # 23:00-07:00 Eastern). In AM >= 0.31 route time intervals gate
         # notification, not route matching, so warnings and criticals need
