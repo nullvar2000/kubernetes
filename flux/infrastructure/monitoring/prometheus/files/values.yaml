@@ -126,3 +126,17 @@ kubeScheduler:
 kubeControllerManager:
   serviceMonitor:
     enabled: false
+
+# Talos runs etcd as a machined service (not a pod), so the chart's default
+# headless service (selector component=etcd) has no endpoints and the kube-etcd
+# ServiceMonitor scrapes nothing. This cluster's etcd metrics are exposed via a
+# manual Talos machine-config patch on each control-plane node
+# (talosctl patch machineconfig: cluster.etcd.extraArgs.listen-metrics-urls:
+# http://0.0.0.0:2381, then talosctl restart etcd); the chart's static
+# endpoints below point the monitor at those nodes (metrics-only endpoint,
+# port 2381). If a control-plane node IP changes, update this list.
+kubeEtcd:
+  endpoints:
+    - 192.168.30.101
+    - 192.168.30.102
+    - 192.168.30.103
