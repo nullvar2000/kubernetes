@@ -106,3 +106,23 @@ prometheus:
         - path:
             type: PathPrefix
             value: /
+
+# Talos binds kube-proxy (10249), kube-scheduler (10259) and
+# kube-controller-manager (10257) metrics to 127.0.0.1, so the chart's
+# ServiceMonitors for these three can never scrape on this cluster (permanent
+# TargetDown + Kube{Proxy,Scheduler,ControllerManager}InstanceUnreachable,
+# 2026-10-06 alert audit). Disable them to stop the noise. To re-enable: first
+# expose the endpoints in the Talos machine config (proxy:
+# --metrics-bind-address=0.0.0.0:10249 on all nodes; scheduler and
+# controller-manager: --bind-address=0.0.0.0 on the control-plane nodes, then
+# talosctl upgrade-k8s --version <same version> or reboot per node), then flip
+# these back to true.
+kubeProxy:
+  serviceMonitor:
+    enabled: false
+kubeScheduler:
+  serviceMonitor:
+    enabled: false
+kubeControllerManager:
+  serviceMonitor:
+    enabled: false
