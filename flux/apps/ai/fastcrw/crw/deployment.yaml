@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: crw
-          image: ghcr.io/fastcrw/crw:0.38.0 # {"$imagepolicy": "flux-system:crw-policy"}
+          image: ghcr.io/fastcrw/crw:0.39.0 # {"$imagepolicy": "flux-system:crw-policy"}
           env:
             - name: RUST_LOG
               value: "info"
