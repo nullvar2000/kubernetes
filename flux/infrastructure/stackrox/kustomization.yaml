@@ -10,4 +10,4 @@ resources:
   - central.yaml
   - secured-cluster.yaml
   - httproute.yaml
-  - backendtlspolicy.yaml
+  - central-backend-tls-dr.yaml
