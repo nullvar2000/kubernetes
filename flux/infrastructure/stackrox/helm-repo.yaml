@@ -4,6 +4,5 @@ metadata:
   name: stackrox
   namespace: stackrox-operator-system
 spec:
-  type: generic
   interval: 1h
   url: https://raw.githubusercontent.com/stackrox/helm-charts/main/opensource/
