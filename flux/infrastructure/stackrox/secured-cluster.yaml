@@ -6,17 +6,20 @@ metadata:
 spec:
   clusterName: kingperch
   centralEndpoint: central.stackrox.svc:443
-  initBundle:
-    name: kingperch
+  # Field names verified against the live 4.11.6 CRD:
+  # - no spec.initBundle (the init-bundle secrets are applied imperatively once)
+  # - collector config lives under perNode, network policies under network.policies
+  # - no admissionControl.clusterAdmissionPolicy (enforcement stays at its
+  #   Enabled default; with no build-time policies configured nothing blocks,
+  #   i.e. observe/scan-only)
   admissionControl:
     listenOnCreates: true
     listenOnUpdates: true
     listenOnEvents: true
     contactImageScanners: ScanIfMissing
     timeoutSeconds: 4
-    clusterAdmissionPolicy: Scan
-  monitoring:
+  perNode:
     collector:
       collection: CORE_BPF
-  networkPolicy:
-    generate: true
+  network:
+    policies: Enabled

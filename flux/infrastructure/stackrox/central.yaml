@@ -5,11 +5,10 @@ metadata:
   namespace: stackrox
 spec:
   central:
-    adminGenerationEnabled: true
     # Serve the cert-manager LE cert (cert.yaml) on 443 so the gateway can
     # re-encrypt with BackendTLSPolicy (wellKnownCACertificates: System).
-    # Field name verified against the stackrox-operator 4.11.6 Central CRD:
-    # the old tls.httpsKeyCert path does not exist.
+    # Field names verified against the live 4.11.6 CRD: there is no
+    # adminGenerationEnabled (admin password generation is on by default).
     defaultTLSSecret:
       name: stackrox-tls
     exposure:
@@ -43,7 +42,7 @@ spec:
     telemetry:
       enabled: false
   scannerV4:
-    scannerComponent: Auto
+    scannerComponent: Enabled
     db:
       persistence:
         persistentVolumeClaim:
