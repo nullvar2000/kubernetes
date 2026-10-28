@@ -7,7 +7,6 @@ resources:
   - cert.yaml
   - helm-repo.yaml
   - helm-release.yaml
-  - pvc.yaml
   - central.yaml
   - secured-cluster.yaml
   - httproute.yaml

@@ -21,10 +21,14 @@ spec:
     persistence:
       persistentVolumeClaim:
         claimName: stackrox-db
+        size: 10Gi
+        storageClassName: longhorn
     db:
       persistence:
         persistentVolumeClaim:
           claimName: central-db
+          size: 10Gi
+          storageClassName: longhorn
       resources:
         requests:
           cpu: 250m
@@ -47,6 +51,8 @@ spec:
       persistence:
         persistentVolumeClaim:
           claimName: scanner-v4-db
+          size: 15Gi
+          storageClassName: longhorn
     indexer:
       scaling:
         autoScaling: Disabled
