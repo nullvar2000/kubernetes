@@ -1,0 +1,13 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: central-backend-tls
+  namespace: stackrox
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: stackrox
+  validation:
+    hostname: stackrox.${GLOBAL_DOMAIN}
+    wellKnownCACertificates: System
