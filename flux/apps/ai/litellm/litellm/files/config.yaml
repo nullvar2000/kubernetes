@@ -3,7 +3,7 @@ general_settings:
   disable_env_credential_login: true
   
 model_list:
-  - model_name: qwen3.8-27b
+  - model_name: qwen3.8-flash-next
     litellm_params:
       model: strata/qwen3.8-flash-next-iq3_s
       api_base: http://192.168.30.225:8080/v1
