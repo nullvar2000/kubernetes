@@ -6,6 +6,12 @@ metadata:
 spec:
   central:
     adminGenerationEnabled: true
+    # Serve the cert-manager LE cert (cert.yaml) on 443 so the gateway can
+    # re-encrypt with BackendTLSPolicy (wellKnownCACertificates: System).
+    # Field name verified against the stackrox-operator 4.11.6 Central CRD:
+    # the old tls.httpsKeyCert path does not exist.
+    defaultTLSSecret:
+      name: stackrox-tls
     exposure:
       loadBalancer:
         enabled: false

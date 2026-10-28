@@ -9,4 +9,5 @@ spec:
       kind: HTTPRoute
       name: stackrox
   validation:
-    insecure: true
+    hostname: stackrox.${GLOBAL_DOMAIN}
+    wellKnownCACertificates: System
