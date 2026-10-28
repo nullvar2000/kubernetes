@@ -1,0 +1,58 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: Central
+metadata:
+  name: stackrox-central-services
+  namespace: stackrox
+spec:
+  central:
+    adminGenerationEnabled: true
+    exposure:
+      loadBalancer:
+        enabled: false
+      nodePort:
+        enabled: false
+      route:
+        enabled: false
+    persistence:
+      persistentVolumeClaim:
+        claimName: stackrox-db
+    db:
+      persistence:
+        persistentVolumeClaim:
+          claimName: central-db
+      resources:
+        requests:
+          cpu: 250m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 2Gi
+    resources:
+      requests:
+        cpu: 500m
+        memory: 3Gi
+      limits:
+        cpu: 2
+        memory: 4Gi
+    telemetry:
+      enabled: false
+  scannerV4:
+    scannerComponent: Auto
+    db:
+      persistence:
+        persistentVolumeClaim:
+          claimName: scanner-v4-db
+    indexer:
+      scaling:
+        autoScaling: Disabled
+        replicas: 1
+        minReplicas: 1
+        maxReplicas: 2
+    matcher:
+      scaling:
+        autoScaling: Disabled
+        replicas: 1
+        minReplicas: 1
+        maxReplicas: 2
+  egress:
+    connectivityPolicy: Online

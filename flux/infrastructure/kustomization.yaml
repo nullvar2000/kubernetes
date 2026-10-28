@@ -16,6 +16,7 @@ resources:
   - monitoring
   # - rocm-operator
   - rustfs
+  - stackrox
   - kyverno
   # - kyverno-policies/overlays/prod
   - infrastructure-secrets.sops.yaml

@@ -1,0 +1,22 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: SecuredCluster
+metadata:
+  name: stackrox-secured-cluster-services
+  namespace: stackrox
+spec:
+  clusterName: kingperch
+  centralEndpoint: central.stackrox.svc:443
+  initBundle:
+    name: kingperch
+  admissionControl:
+    listenOnCreates: true
+    listenOnUpdates: true
+    listenOnEvents: true
+    contactImageScanners: ScanIfMissing
+    timeoutSeconds: 4
+    clusterAdmissionPolicy: Scan
+  monitoring:
+    collector:
+      collection: CORE_BPF
+  networkPolicy:
+    generate: true
