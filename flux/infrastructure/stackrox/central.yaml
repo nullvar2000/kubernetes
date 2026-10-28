@@ -67,3 +67,8 @@ spec:
         maxReplicas: 2
   egress:
     connectivityPolicy: Online
+  # 4.11 ships legacy Clair-based Scanner v1 as Enabled by default; V4 above
+  # covers all scanning on non-OpenShift, and v1 would add a scanner-db PVC
+  # on the default (nfs-client) class.
+  scanner:
+    scannerComponent: Disabled
