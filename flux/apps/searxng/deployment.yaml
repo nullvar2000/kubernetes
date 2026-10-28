@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: searxng
-          image: ghcr.io/searxng/searxng:2026.10.19-d47cb96bf # {"$imagepolicy": "flux-system:searxng-policy"}
+          image: ghcr.io/searxng/searxng:2026.10.27-ef7bae9dd # {"$imagepolicy": "flux-system:searxng-policy"}
           env:
             - name: SEARXNG_SECRET
               value: ${SEARXNG_SECRET}
@@ -49,7 +49,7 @@ spec:
               cpu: 1000m
               memory: 2G
         - name: mcp
-          image: docker.io/isokoliuk/mcp-searxng:2.7.0 # {"$imagepolicy": "flux-system:mcp-searxng-policy"}
+          image: docker.io/isokoliuk/mcp-searxng:2.9.0 # {"$imagepolicy": "flux-system:mcp-searxng-policy"}
           envFrom:
             - configMapRef:
                 name: mcp-config
