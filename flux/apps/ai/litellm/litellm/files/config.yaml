@@ -5,6 +5,12 @@ general_settings:
 model_list:
   - model_name: qwen3.8-27b
     litellm_params:
+      model: strata/qwen3.8-flash-next-iq3_s
+      api_base: http://192.168.30.225:8080/v1
+      api_key: os.environ/STRATA_SERVER_API_KEY
+      max_context_length: 262144
+  - model_name: qwen3.8-27b
+    litellm_params:
       model: openai/qwen3.8-27b
       api_base: http://192.168.30.254:9931/v1
       api_key: os.environ/LLAMA_SERVER_API_KEY
