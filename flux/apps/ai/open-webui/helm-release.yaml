@@ -87,3 +87,23 @@ spec:
         clientSecret: ${AI_OPENWEBUI_OIDC_CLIENT_SECRET}
         providerUrl: https://keycloak.${GLOBAL_DOMAIN}/realms/${GLOBAL_KEYCLOAK_REALM}/.well-known/openid-configuration
         scopes: ${AI_OPENWEBUI_OIDC_SCOPES}
+
+    extraEnvVars:
+      - name: AUDIO_STT_ENGINE
+        value: fast-whisper
+      - name: WHISPER_MODEL
+        value: large-v3-turbo
+      - name: WHISPER_MODEL_AUTO_UPDATE
+        value: "true"
+      - name: WHISPER_LANGUAGE
+        value: en
+      - name: AUDIO_TTS_ENGINE
+        value: openai
+      - name: AUDIO_TTS_OPENAI_API_BASE_URL
+        value: http://kokoro-fastapi.kokoro-fastapi.svc.cluster.local:8880/v1
+      - name: AUDIO_TTS_OPENAI_API_KEY
+        value: no-auth
+      - name: AUDIO_TTS_MODEL
+        value: kokoro
+      - name: AUDIO_TTS_VOICE
+        value: bf_isabella
