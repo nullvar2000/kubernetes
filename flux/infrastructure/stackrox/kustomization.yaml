@@ -11,3 +11,4 @@ resources:
   - secured-cluster.yaml
   - httproute.yaml
   - central-backend-tls-dr.yaml
+  - service-monitor.yaml

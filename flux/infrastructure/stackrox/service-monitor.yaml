@@ -1,0 +1,20 @@
+# Scrape StackRox's unauthenticated monitoring endpoints (port 9090, added to
+# the central / scanner-v4-indexer / scanner-v4-matcher Services by the
+# operator via central.monitoring.exposeEndpoint + scannerV4.monitoring.exposeEndpoint).
+# The `release` label is what the kube-prometheus-stack Prometheus CR selects on.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: stackrox
+  namespace: stackrox
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: stackrox-central-services
+  endpoints:
+    - port: monitoring
+      path: /metrics
+      scheme: http
+      interval: 60s
