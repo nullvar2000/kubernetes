@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: open-webui
-      version: '17.0.0'
+      version: '17.4.0'
       sourceRef:
         kind: HelmRepository
         name: open-webui
@@ -46,7 +46,7 @@ spec:
 
     persistence:
       enabled: true
-      size: 2Gi
+      size: 5Gi
       accessModes:
         - ReadWriteOnce
       storageClass: "longhorn"
