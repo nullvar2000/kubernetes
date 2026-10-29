@@ -7,8 +7,8 @@ resources:
   - namespace.yaml
   - helm-repo.yaml
   - helm-release.yaml
-  # - networkpolicy-egress.yaml
-  # - networkpolicy-ingress.yaml
+  - networkpolicy-egress.yaml
+  - networkpolicy-ingress.yaml
 
 configMapGenerator:
   - name: helm-values
