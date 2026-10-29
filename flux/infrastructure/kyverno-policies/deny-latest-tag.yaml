@@ -10,6 +10,7 @@ metadata:
       Requires all containers to specify an explicit image tag
       other than ':latest'. Immutable infrastructure mandate.
 spec:
+  failurePolicy: Ignore
   evaluation:
     admission:
       enabled: true
