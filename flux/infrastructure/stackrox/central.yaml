@@ -45,8 +45,12 @@ spec:
         memory: 4Gi
     telemetry:
       enabled: false
+    monitoring:
+      exposeEndpoint: Enabled
   scannerV4:
     scannerComponent: Enabled
+    monitoring:
+      exposeEndpoint: Enabled
     db:
       persistence:
         persistentVolumeClaim:
