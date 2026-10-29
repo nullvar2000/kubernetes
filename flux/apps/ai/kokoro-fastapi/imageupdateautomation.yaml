@@ -1,0 +1,47 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: kokoro
+  namespace: flux-system
+spec:
+  image: ghcr.io/remsky/kokoro-fastapi-cpu
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: kokoro-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: kokoro
+  filterTags:
+    pattern: '^v[0-9]+\.[0-9]+\.[0-9]+$'
+  policy:
+    semver:
+      range: ">=0.9.1"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: kokoro-fastapi-image-update
+  namespace: flux-system
+spec:
+  interval: 6h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-kokoro-fastapi-image-update
+  update:
+    path: ./flux/apps/ai/kokoro-fastapi

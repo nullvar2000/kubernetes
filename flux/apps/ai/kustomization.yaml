@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - fastcrw
   - hermes-agent
+  - kokoro-fastapi
   - litellm
   - mcp
   - open-webui
