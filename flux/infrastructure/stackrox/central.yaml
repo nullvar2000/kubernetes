@@ -55,7 +55,10 @@ spec:
       persistence:
         persistentVolumeClaim:
           claimName: scanner-v4-db
-          size: 15Gi
+          # 15Gi filled to 95% mid rhel-vex import (Postgres SQLSTATE 53100 disk-full),
+          # which wedged the matcher's vuln-store load ("not initialized") and zeroed all
+          # image CVEs. Longhorn (allowVolumeExpansion) grows this online.
+          size: 30Gi
           storageClassName: longhorn
     indexer:
       scaling:
