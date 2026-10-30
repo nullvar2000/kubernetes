@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kokoro-fastapi
+  namespace: kokoro-fastapi
+  labels:
+    app: kokoro-fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kokoro-fastapi
+  template:
+    metadata:
+      labels:
+        app: kokoro-fastapi
+    spec:
+      containers:
+      - name: kokoro-fastapi
+        image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.9.1 # {"$imagepolicy": "flux-system:kokoro-policy"}
+        env:
+        - name: DEFAULT_VOICE
+          value: bf_isabella
+        ports:
+        - containerPort: 8880
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8880
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8880
+          initialDelaySeconds: 30
+          periodSeconds: 15
