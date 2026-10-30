@@ -70,10 +70,13 @@ spec:
       # Default 3Gi limit OOM-kills (exit 137) during the periodic vuln-definition
       # import (NVD/OSV/RHEL-VEX); steady-state RSS is only ~1.4Gi. Raise the limit
       # so a single import pass completes instead of crash-looping.
+      # ROX_MEMLIMIT is derived from requests.memory (NOT limits) and is the Go soft
+      # heap cap, so keep requests.memory high (near limits) or the matcher GC-thrashes
+      # during the vuln-store initial load.
       resources:
         requests:
-          cpu: 500m
-          memory: 2Gi
+          cpu: 1
+          memory: 5Gi
         limits:
           cpu: 2
           memory: 6Gi
