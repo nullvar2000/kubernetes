@@ -10,6 +10,8 @@ spec:
     matchLabels:
       app: heimdall
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
