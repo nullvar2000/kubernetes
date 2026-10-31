@@ -22,7 +22,10 @@ spec:
       - http://192.168.30.234:11434
       
     pipelines:
-      enabled: true
+      # Upstream open-webui/pipelines is deprecated and its only published
+      # image (main -> git-039f9c5, Aug-2025) is a Debian base carrying ~7k CVEs.
+      # Not used here, so disable the sidecar instead of pinning a dead image.
+      enabled: false
 
     tika: 
       enabled: true
