@@ -21,7 +21,7 @@ spec:
       containers:
       - name: wyoming-whisper
         image: docker.io/rhasspy/wyoming-whisper:3.8.1 # {"$imagepolicy": "flux-system:whisper-policy"}
-        args: ["--model", "distil-large-v3", "--language", "en"]
+        args: ["--model", "small.en", "--language", "en"]
         ports:
         - containerPort: 10300
         volumeMounts:
@@ -30,10 +30,10 @@ spec:
         resources:
           requests:
             cpu: 1000m
-            memory: 2Gi
+            memory: 1Gi
           limits:
             cpu: 4000m
-            memory: 6Gi
+            memory: 4Gi
       volumes:
       - name: data
         persistentVolumeClaim:
