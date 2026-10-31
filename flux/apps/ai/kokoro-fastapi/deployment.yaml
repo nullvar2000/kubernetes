@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: kokoro-fastapi
-        image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.9.1 # {"$imagepolicy": "flux-system:kokoro-policy"}
+        image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.9.2 # {"$imagepolicy": "flux-system:kokoro-policy"}
         env:
         - name: DEFAULT_VOICE
           value: bf_isabella
