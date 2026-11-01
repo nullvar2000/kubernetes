@@ -26,11 +26,26 @@ spec:
   # crash-loops there ("Fatal glibc error: CPU does not support x86-64-v3").
   # Keep the DaemonSet on the capable nodes; all other 4.11 workloads land
   # on capable nodes through normal scheduling anyway.
+  # The per-node Scanner V4 index runs inside the collector pod's compliance
+  # container, which the operator hardens with readOnlyRootFilesystem: true and
+  # gives no writable /tmp. claircore's RPM indexer spools its db to $TMPDIR, so
+  # every node index dies with "internal/rpm: error spooling db: open
+  # /tmp/rpm.package.sqlite.<n>: read-only file system", central never gets an
+  # index report, and node CVEs stay empty (nodes=10, node_components=0).
+  # Give that container an emptyDir at /tmp.
   overlays:
     - apiVersion: apps/v1
       kind: DaemonSet
       name: collector
       patches:
+        - path: spec.template.spec.volumes[-1]
+          value: |
+            name: compliance-tmp
+            emptyDir: {}
+        - path: spec.template.spec.containers[name:compliance].volumeMounts[-1]
+          value: |
+            name: compliance-tmp
+            mountPath: /tmp
         - path: spec.template.spec.affinity
           value: |
             nodeAffinity:
