@@ -1,0 +1,12 @@
+# Seeded by seed.sh on first boot. Edit in-place inside the pod (or via the
+# hermes CLI), not in git — this file is only the first-boot template.
+model:
+  provider: litellm
+  default: qwen3.8-flash-next
+  base_url: http://litellm.litellm.svc.cluster.local:4000/v1
+  api_mode: chat_completions
+providers:
+  litellm:
+    api: http://litellm.litellm.svc.cluster.local:4000/v1
+    api_key: ${LITELLM_API_KEY}
+    session_affinity_header: x-litellm-session-id

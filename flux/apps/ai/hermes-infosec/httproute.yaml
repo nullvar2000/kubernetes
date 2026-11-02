@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: hermes-infosec
+  namespace: hermes-infosec
+spec:
+  parentRefs:
+  - name: gateway-api
+    namespace: istio-gateway
+  hostnames:
+    - hermes-infosec.${GLOBAL_DOMAIN}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+      - name: hermes-infosec
+        port: 8443
+      timeouts:
+        request: 0s

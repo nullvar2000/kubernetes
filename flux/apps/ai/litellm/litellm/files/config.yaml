@@ -103,3 +103,16 @@ agents:
       Authorization: "Bearer ${AI_HERMES_A2A_TOKEN}"
     litellm_params:
       api_key: ${AI_HERMES_A2A_TOKEN}
+
+  - agent_name: infosec-engineer
+    agent_card_params:
+      protocolVersion: "1.0"
+      name: "Infosec Engineer"
+      description: "Reviews pull requests for security issues; authors Kyverno/StackRox policy pull requests; monitors Kyverno and StackRox findings."
+      url: "http://hermes-infosec.hermes-infosec.svc.cluster.local:9900"
+    # Same upstream-header pattern as platform-engineer (static_headers is the
+    # only hop-auth that works in litellm v1.104.0).
+    static_headers:
+      Authorization: "Bearer ${AI_HERMES_INFOSEC_A2A_TOKEN}"
+    litellm_params:
+      api_key: ${AI_HERMES_INFOSEC_A2A_TOKEN}
