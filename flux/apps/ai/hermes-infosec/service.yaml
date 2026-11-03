@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hermes-infosec
+  namespace: hermes-infosec
+spec:
+  selector:
+    app: hermes-infosec
+  type: ClusterIP
+  ports:
+    - name: code-server
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+      appProtocol: kubernetes.io/ws
+    # In-cluster only: consumed by the LiteLLM agent gateway (no HTTPRoute)
+    - name: a2a
+      port: 9900
+      protocol: TCP
+      targetPort: 9900
+    # Reserved for the future StackRox webhook upgrade (§9); in-cluster only
+    - name: webhook
+      port: 8644
+      protocol: TCP
+      targetPort: 8644
