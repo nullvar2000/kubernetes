@@ -39,6 +39,7 @@ spec:
               if [ -x /opt/data/.local/bin/sops ] && /opt/data/.local/bin/sops --version 2>/dev/null | grep -q 'v3\.13\.3'; then
                 echo "sops v3.13.3 already installed"
               else
+                mkdir -p /opt/data/.local/bin
                 apk add --no-cache curl >/dev/null
                 curl -fsSL -o /opt/data/.local/bin/sops https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
                 chmod 755 /opt/data/.local/bin/sops
