@@ -1,12 +1,21 @@
-# Seeded by seed.sh on first boot. Edit in-place inside the pod (or via the
-# hermes CLI), not in git — this file is only the first-boot template.
+# Seeded by seed.sh on first boot (copy, no substitution). Edit in-place inside
+# the pod (or via the hermes CLI), not in git — this file is only the first-boot
+# template. Shape mirrors the WORKING hermes-agent home (verified 2026-11-03):
+# the providers-dict form from current docs is dropped by this image's config
+# init; the legacy custom_providers list with key_env is what survives.
+# The key itself travels via env (agent-secrets Secret -> LITELLM_API_KEY);
+# key_env references its name, so no secret ever lands in git or on the PVC config.
 model:
-  provider: litellm
   default: qwen3.8-flash-next
-  base_url: http://litellm.litellm.svc.cluster.local:4000/v1
-  api_mode: chat_completions
-providers:
-  litellm:
-    api: http://litellm.litellm.svc.cluster.local:4000/v1
-    api_key: ${LITELLM_API_KEY}
-    session_affinity_header: x-litellm-session-id
+  provider: litellm-local
+  context_length: 262144
+custom_providers:
+  - name: litellm-local
+    base_url: http://litellm.litellm.svc.cluster.local:4000/v1
+    key_env: LITELLM_API_KEY
+    model: qwen3.8-flash-next
+    models:
+      qwen3.8-27b:
+        context_length: 262144
+      qwen3.8-flash-next:
+        context_length: 262144

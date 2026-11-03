@@ -5,7 +5,7 @@ DATA=/opt/data
 SEED=/seed
 
 if [ ! -f "$DATA/config.yaml" ]; then
-  sed -e "s|\${LITELLM_API_KEY}|$LITELLM_API_KEY|g" "$SEED/config.yaml.tmpl" > "$DATA/config.yaml"
+  cp "$SEED/config.yaml.tmpl" "$DATA/config.yaml"
   echo "seeded config.yaml"
 fi
 
