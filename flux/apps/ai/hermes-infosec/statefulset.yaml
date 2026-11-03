@@ -45,6 +45,17 @@ spec:
                 chmod 755 /opt/data/.local/bin/sops
                 echo "installed $(/opt/data/.local/bin/sops --version)"
               fi
+              # kubectl is absent from the hermes image; pin to the API server
+              # minor (Talos reports v1.35.x — verified 2026-11-03 via /version).
+              if [ -x /opt/data/.local/bin/kubectl ] && /opt/data/.local/bin/kubectl version --client -o json 2>/dev/null | grep -q '"gitVersion": "v1\.35\.'; then
+                echo "kubectl v1.35.x already installed"
+              else
+                mkdir -p /opt/data/.local/bin
+                apk add --no-cache curl >/dev/null
+                curl -fsSL -o /opt/data/.local/bin/kubectl "https://dl.k8s.io/release/v1.35.9/bin/linux/amd64/kubectl"
+                chmod 755 /opt/data/.local/bin/kubectl
+                echo "installed $(/opt/data/.local/bin/kubectl version --client --short 2>/dev/null)"
+              fi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

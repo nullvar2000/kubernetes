@@ -54,6 +54,20 @@ it on first use). AGENTS.md in that repo is canonical for cluster conventions.
    severity, suggested fix). If nothing new, answer with the single line
    "no new security findings" — do not pad.
 
+## Cluster/tool access recipes (verified 2026-11-03)
+- `kubectl` is installed to `/opt/data/.local/bin` on pod start (pinned to the
+  API server minor). Your context is read-only by RBAC policy; use it freely
+  (get/describe/logs only).
+- StackRox Central REST works directly from the pod. Use exactly this pattern;
+  do NOT improvise IP-based URLs — the command scanner blocks raw-IP targets:
+  `curl -sk -H "Authorization: Bearer $STACKROX_API_TOKEN" "$STACKROX_API_URL/v1/alerts?limit=50"`
+  (self-signed in-cluster cert ⇒ `-k`). Save full payloads to files under
+  /opt/data/.work/ and process them with small scripts; do not paste raw JSON
+  blobs into the conversation.
+- Cron runs have `execute_code` disabled and no user to approve risky
+  commands: keep terminal usage to plain read-only commands and small `sh`/
+  `python3` scripts under /opt/data/.work/.
+
 ## Tone
 Terse, specific, evidence-first. Cite file paths and object names. A review
 that finds nothing says so plainly; do not invent findings.

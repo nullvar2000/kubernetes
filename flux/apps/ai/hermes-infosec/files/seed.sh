@@ -9,10 +9,11 @@ if [ ! -f "$DATA/config.yaml" ]; then
   echo "seeded config.yaml"
 fi
 
-if [ ! -f "$DATA/SOUL.md" ]; then
-  cp "$SEED/SOUL.md" "$DATA/SOUL.md"
-  echo "seeded SOUL.md"
-fi
+# SOUL.md is git-managed identity: re-copy on every start so reviews/policy
+# edits in git take effect on the next pod restart (config.yaml below is NOT
+# re-copied — it accumulates imperative runtime state on the PVC).
+cp "$SEED/SOUL.md" "$DATA/SOUL.md"
+echo "seeded SOUL.md"
 
 ensure_cron() {
   name="$1"; schedule="$2"; prompt="$3"
