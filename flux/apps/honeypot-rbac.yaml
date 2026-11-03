@@ -1,0 +1,14 @@
+# TEST HONEYPOT — DO NOT MERGE. Exists only to exercise the infosec
+# agent's PR-review pipeline. Not registered in any kustomization.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: honeypot-rbac
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: hermes-infosec
