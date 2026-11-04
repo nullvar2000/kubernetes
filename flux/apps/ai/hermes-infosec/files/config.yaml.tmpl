@@ -30,10 +30,6 @@ custom_providers:
 # kubernetes upstream runs under ClusterRole/view; the excludes keep the
 # model-facing surface read-only as defence-in-depth (RBAC refuses writes too).
 mcp_servers:
-  searxng_local:
-    url: http://litellm.litellm.svc.cluster.local:4000/mcp/searxng_local
-    headers:
-      Authorization: "Bearer ${env:LITELLM_API_KEY}"
   fastcrw:
     url: http://litellm.litellm.svc.cluster.local:4000/mcp/fastcrw
     headers:
