@@ -2,14 +2,19 @@
 # Runs in the alpine install-sops initContainer (agent-files ConfigMap,
 # mounted at /seed). Installs pinned sops + kubectl onto the data PVC.
 # Idempotent: skips downloads when the pinned binaries already exist.
+# Binaries land in a temp file and are moved into place: a target already on
+# the PVC may be owned by the agent user (uid 10000), and this container runs
+# as root with all capabilities dropped (no CAP_FOWNER), so chmod on such a
+# file fails with EPERM.
 set -eu
 
 BIN=/opt/data/.local/bin
 mkdir -p "$BIN"
 
+# NB sops --version prints "sops 3.13.3 (latest)" — no leading "v".
 install_sops=0
-if [ -x "$BIN/sops" ] && "$BIN/sops" --version 2>/dev/null | grep -q 'v3\.13\.3'; then
-  echo "sops v3.13.3 already installed"
+if [ -x "$BIN/sops" ] && "$BIN/sops" --version 2>/dev/null | grep -q '^sops 3\.13\.3'; then
+  echo "sops 3.13.3 already installed"
 else
   install_sops=1
 fi
@@ -28,13 +33,15 @@ if [ "$install_sops" = 1 ] || [ "$install_kubectl" = 1 ]; then
 fi
 
 if [ "$install_sops" = 1 ]; then
-  curl -fsSL -o "$BIN/sops" https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
-  chmod 755 "$BIN/sops"
-  echo "installed $("$BIN/sops" --version)"
+  curl -fsSL -o "$BIN/sops.new" https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
+  chmod 755 "$BIN/sops.new"
+  mv -f "$BIN/sops.new" "$BIN/sops"
+  echo "installed $( "$BIN/sops" --version 2>/dev/null | head -1 )"
 fi
 
 if [ "$install_kubectl" = 1 ]; then
-  curl -fsSL -o "$BIN/kubectl" "https://dl.k8s.io/release/v1.35.9/bin/linux/amd64/kubectl"
-  chmod 755 "$BIN/kubectl"
+  curl -fsSL -o "$BIN/kubectl.new" "https://dl.k8s.io/release/v1.35.9/bin/linux/amd64/kubectl"
+  chmod 755 "$BIN/kubectl.new"
+  mv -f "$BIN/kubectl.new" "$BIN/kubectl"
   echo "installed kubectl v1.35.9"
 fi

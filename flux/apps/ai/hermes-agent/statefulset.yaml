@@ -35,13 +35,20 @@ spec:
             - -c
             - |
               set -e
-              if [ -x /opt/data/.local/bin/sops ] && /opt/data/.local/bin/sops --version 2>/dev/null | grep -q 'v3\.13\.3'; then
-                echo "sops v3.13.3 already installed"
+              BIN=/opt/data/.local/bin
+              mkdir -p "$BIN"
+              # NB sops --version prints "sops 3.13.3 (latest)" — no leading "v".
+              # Temp file + mv: an existing sops on the PVC may be owned by the
+              # agent user (uid 10000) and this container drops all capabilities
+              # (no CAP_FOWNER), so chmod on that file fails with EPERM.
+              if [ -x "$BIN/sops" ] && "$BIN/sops" --version 2>/dev/null | grep -q '^sops 3\.13\.3'; then
+                echo "sops 3.13.3 already installed"
               else
                 apk add --no-cache curl >/dev/null
-                curl -fsSL -o /opt/data/.local/bin/sops https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
-                chmod 755 /opt/data/.local/bin/sops
-                echo "installed $(/opt/data/.local/bin/sops --version)"
+                curl -fsSL -o "$BIN/sops.new" https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
+                chmod 755 "$BIN/sops.new"
+                mv -f "$BIN/sops.new" "$BIN/sops"
+                echo "installed $( "$BIN/sops" --version 2>/dev/null | head -1 )"
               fi
           securityContext:
             allowPrivilegeEscalation: false
