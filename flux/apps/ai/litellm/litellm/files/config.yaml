@@ -9,6 +9,10 @@ model_list:
       api_base: http://192.168.30.225:8080/v1
       api_key: os.environ/STRATA_SERVER_API_KEY
       max_context_length: 262144
+    model_info:
+      input_cost_per_token: 0.000000042134        # $0.0421 / Mtok uncached prompt
+      output_cost_per_token: 0.000000902435       # $0.9024 / Mtok generated
+      cache_read_input_token_cost: 0.000000004213 # $0.0042 / Mtok cache hits
   - model_name: qwen3.8-27b
     litellm_params:
       model: openai/qwen3.8-27b
