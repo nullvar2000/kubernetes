@@ -8,7 +8,9 @@ resources:
   - view/configmap.yaml
   - view/deployment.yaml
   - view/service.yaml
+  - view/networkpolicy.yaml
   - ops/rbac.yaml
   - ops/configmap.yaml
   - ops/deployment.yaml
   - ops/service.yaml
+  - ops/networkpolicy.yaml
