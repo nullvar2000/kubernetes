@@ -33,18 +33,7 @@ spec:
           image: docker.io/library/alpine:3.24.3 # {"$imagepolicy": "flux-system:alpine-policy"}
           command:
             - /bin/sh
-            - -c
-            - |
-              set -e
-              if [ -x /opt/data/.local/bin/sops ] && /opt/data/.local/bin/sops --version 2>/dev/null | grep -q 'v3\.13\.3'; then
-                echo "sops v3.13.3 already installed"
-              else
-                mkdir -p /opt/data/.local/bin
-                apk add --no-cache curl >/dev/null
-                curl -fsSL -o /opt/data/.local/bin/sops https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
-                chmod 755 /opt/data/.local/bin/sops
-                echo "installed $(/opt/data/.local/bin/sops --version)"
-              fi
+            - /seed/install-tools.sh
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -59,6 +48,9 @@ spec:
           volumeMounts:
             - name: hermes-infosec-data
               mountPath: /opt/data
+            - name: agent-files
+              mountPath: /seed
+              readOnly: true
         - name: seed-agent
           image: docker.io/nousresearch/hermes-agent:v2026.9.24 # {"$imagepolicy": "flux-system:hermes-agent-policy"}
           command:

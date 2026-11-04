@@ -19,3 +19,24 @@ custom_providers:
         context_length: 262144
       qwen3.8-flash-next:
         context_length: 262144
+
+# LiteLLM MCP gateway (mcp_servers in litellm's config.yaml) exposes each
+# upstream at /mcp/<server_name> on streamable HTTP (verified 2026-11-03).
+# Auth is the agent's own LITELLM_API_KEY, resolved by HERMES from the process
+# env (agent-secrets envFrom). The ${env:VAR} form is deliberate: Flux
+# postBuild envsub only matches bare ${VAR}, so "${VAR}" here would be baked
+# into the cluster ConfigMap if a same-named apps-secrets key ever appears.
+# comfyui is intentionally omitted (irrelevant to security work).
+# kubernetes upstream runs under ClusterRole/view; the excludes keep the
+# model-facing surface read-only as defence-in-depth (RBAC refuses writes too).
+mcp_servers:
+  fastcrw:
+    url: http://litellm.litellm.svc.cluster.local:4000/mcp/fastcrw
+    headers:
+      Authorization: "Bearer ${env:LITELLM_API_KEY}"
+  kubernetes:
+    url: http://litellm.litellm.svc.cluster.local:4000/mcp/kubernetes
+    headers:
+      Authorization: "Bearer ${env:LITELLM_API_KEY}"
+    tools:
+      exclude: [resources_create_or_update, pods_exec, pods_run]

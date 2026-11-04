@@ -9,10 +9,11 @@ if [ ! -f "$DATA/config.yaml" ]; then
   echo "seeded config.yaml"
 fi
 
-if [ ! -f "$DATA/SOUL.md" ]; then
-  cp "$SEED/SOUL.md" "$DATA/SOUL.md"
-  echo "seeded SOUL.md"
-fi
+# SOUL.md is git-managed identity: re-copy on every start so reviews/policy
+# edits in git take effect on the next pod restart (config.yaml below is NOT
+# re-copied — it accumulates imperative runtime state on the PVC).
+cp "$SEED/SOUL.md" "$DATA/SOUL.md"
+echo "seeded SOUL.md"
 
 ensure_cron() {
   name="$1"; schedule="$2"; prompt="$3"
@@ -34,5 +35,12 @@ ensure_cron "pr-security-review" "every 30m" \
 
 ensure_cron "security-signals-digest" "every 30m" \
   "Run the security-signals digest workflow exactly as defined in SOUL.md: read Kyverno ClusterPolicyReports with kubectl and StackRox alerts from the Central REST API, diff against /opt/data/.work/security-signals/ state, triage anything new, update the state files, and report only new/changed findings."
+
+# This initContainer runs as root (image default) but the gateway/cron
+# scheduler drop to the `hermes` user (uid 1000). Root-owned files broke
+# every scheduled fire (EACCES on the cron fire-fence locks, incident
+# 2026-11-03: jobs silently failed for 21h). Re-own anything root-created,
+# including stale contamination from imperative operator execs.
+find "$DATA" -user root -exec chown hermes:hermes {} + 2>/dev/null || true
 
 echo "hermes-infosec seed complete"
