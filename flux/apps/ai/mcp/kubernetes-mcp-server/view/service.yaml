@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubernetes-mcp-view
+  namespace: kubernetes-mcp-server
+spec:
+  selector:
+    app.kubernetes.io/name: kubernetes-mcp-server
+    app.kubernetes.io/component: view
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

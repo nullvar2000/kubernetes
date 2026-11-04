@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: kubernetes-mcp-server
+  namespace: flux-system
+spec:
+  image: quay.io/containers/kubernetes_mcp_server
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: kubernetes-mcp-server-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: kubernetes-mcp-server
+  policy:
+    semver:
+      range: ">=v0.0.63"
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: kubernetes-mcp-server-image-update
+  namespace: flux-system
+spec:
+  interval: 6h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: fluxcd-kubernetes-mcp-server-image-update
+  update:
+    path: ./flux/apps/ai/mcp/kubernetes-mcp-server

@@ -70,9 +70,18 @@ mcp_servers:
     url: "https://mcp-searxng.${GLOBAL_DOMAIN}/mcp"
     auth_type: "bearer_token"
     auth_value: os.environ/SEARXNG_MCP_HTTP_AUTH_TOKEN
+  # Read-only diagnostic profile (ClusterRole view + nodes/metrics extras,
+  # server-side read_only=true). Existing agents keep tool prefix
+  # litellm_kubernetes_* with no client changes.
   kubernetes:
     transport: "http"
-    url: "http://kubernetes-mcp-server.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
+    url: "http://kubernetes-mcp-view.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
+  # Triage profile: pod delete/exec/evict + workload scale/patch (RBAC-bounded).
+  # Grant the "kubernetes_ops" server per virtual key in the LiteLLM DB — see
+  # Section 6 step 7. Tools surface as litellm_kubernetes_ops_*.
+  kubernetes_ops:
+    transport: "http"
+    url: "http://kubernetes-mcp-ops.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
   # In-cluster CRW (fastcrw ns) built-in MCP server — scrape/search/crawl/map/
   # extract for agents. Same AI_FASTCRW_API_KEY that CRW's [auth] enforces;
   # exposed to clients as fastcrw_crw_* tools.
