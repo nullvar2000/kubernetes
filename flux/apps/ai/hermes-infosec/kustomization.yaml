@@ -23,6 +23,7 @@ configMapGenerator:
   - name: agent-files
     namespace: hermes-infosec
     files:
+      - files/install-tools.sh
       - files/seed.sh
       - files/SOUL.md
       - files/config.yaml.tmpl
