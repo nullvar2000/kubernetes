@@ -1,16 +1,15 @@
-# Restrict MCP endpoint ingress: ops endpoint takes exec/delete-capable RBAC and
-# the server itself has no auth, so only LiteLLM (the only client) may reach it.
-# Fixes the High finding on PR #486.
+# Restrict MCP endpoint ingress to LiteLLM (the only client). Declarative on
+# flannel today; becomes effective with a policy-enforcing CNI.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: mcp-ops-ingress
+  name: mcp-infosec-ingress
   namespace: kubernetes-mcp-server
 spec:
   podSelector:
     matchLabels:
       app.kubernetes.io/name: kubernetes-mcp-server
-      app.kubernetes.io/component: ops
+      app.kubernetes.io/component: infosec
   policyTypes:
     - Ingress
   ingress:

@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kubernetes-mcp-ops
+  name: kubernetes-mcp-infosec
   namespace: kubernetes-mcp-server
 data:
   config.toml: |
     port = "8080"
     stateless = true
+    read_only = true
     toolsets = ["core"]
-    disabled_tools = ["pods_run"]
 
+    # belt-and-braces: hermes-infosec-read has no Secrets access anyway
     [[denied_resources]]
     group = ""
     version = "v1"
