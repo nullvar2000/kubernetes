@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-mcp-ops
+  namespace: kubernetes-mcp-server
+  labels:
+    app.kubernetes.io/name: kubernetes-mcp-server
+    app.kubernetes.io/component: ops
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubernetes-mcp-server
+      app.kubernetes.io/component: ops
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kubernetes-mcp-server
+        app.kubernetes.io/component: ops
+    spec:
+      serviceAccount: kubernetes-mcp-ops
+      serviceAccountName: kubernetes-mcp-ops
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: kubernetes-mcp-server
+          image: quay.io/containers/kubernetes_mcp_server:v0.0.63
+          imagePullPolicy: IfNotPresent
+          args:
+            - --config
+            - /etc/kubernetes-mcp-server/config.toml
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: config
+              mountPath: /etc/kubernetes-mcp-server
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: kubernetes-mcp-ops

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubernetes-mcp-ops
+  namespace: kubernetes-mcp-server
+data:
+  config.toml: |
+    port = "8080"
+    stateless = true
+    toolsets = ["core"]
+    disabled_tools = ["pods_run"]
+
+    [[denied_resources]]
+    group = ""
+    version = "v1"
+    kind = "Secret"

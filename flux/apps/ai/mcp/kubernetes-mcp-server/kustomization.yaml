@@ -3,5 +3,14 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - oci-repository.yaml
-  - helm-release.yaml
+  - imageupdateautomation.yaml
+  - view/rbac.yaml
+  - view/configmap.yaml
+  - view/deployment.yaml
+  - view/service.yaml
+  - view/networkpolicy.yaml
+  - ops/rbac.yaml
+  - ops/configmap.yaml
+  - ops/deployment.yaml
+  - ops/service.yaml
+  - ops/networkpolicy.yaml
