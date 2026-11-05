@@ -9,8 +9,8 @@ resources:
   - view/deployment.yaml
   - view/service.yaml
   - view/networkpolicy.yaml
-  - ops/rbac.yaml
-  - ops/configmap.yaml
-  - ops/deployment.yaml
-  - ops/service.yaml
-  - ops/networkpolicy.yaml
+  - infosec/rbac.yaml
+  - infosec/configmap.yaml
+  - infosec/deployment.yaml
+  - infosec/service.yaml
+  - infosec/networkpolicy.yaml

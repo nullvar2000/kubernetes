@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubernetes-mcp-ops
+  name: kubernetes-mcp-infosec
   namespace: kubernetes-mcp-server
   labels:
     app.kubernetes.io/name: kubernetes-mcp-server
-    app.kubernetes.io/component: ops
+    app.kubernetes.io/component: infosec
 spec:
   replicas: 1
   revisionHistoryLimit: 5
   selector:
     matchLabels:
       app.kubernetes.io/name: kubernetes-mcp-server
-      app.kubernetes.io/component: ops
+      app.kubernetes.io/component: infosec
   template:
     metadata:
       labels:
         app.kubernetes.io/name: kubernetes-mcp-server
-        app.kubernetes.io/component: ops
+        app.kubernetes.io/component: infosec
     spec:
-      serviceAccount: kubernetes-mcp-ops
-      serviceAccountName: kubernetes-mcp-ops
+      serviceAccount: kubernetes-mcp-infosec
+      serviceAccountName: kubernetes-mcp-infosec
       automountServiceAccountToken: true
       securityContext:
         seccompProfile:
@@ -68,4 +68,4 @@ spec:
           emptyDir: {}
         - name: config
           configMap:
-            name: kubernetes-mcp-ops
+            name: kubernetes-mcp-infosec
