@@ -5,7 +5,6 @@ resources:
   - namespace.yaml
   - httproute.yaml
   - imageupdateautomation.yaml
-  - rbac.yaml
   - secrets.clear.yaml
   - service.yaml
   - statefulset.yaml
