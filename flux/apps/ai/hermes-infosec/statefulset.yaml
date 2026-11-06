@@ -23,7 +23,6 @@ spec:
         app: hermes-infosec
     spec:
       automountServiceAccountToken: false
-      serviceAccountName: hermes-infosec
       securityContext:
         fsGroup: 1000
         seccompProfile:
