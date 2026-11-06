@@ -10,7 +10,7 @@ data:
     read_only = true
     toolsets = ["core"]
 
-    # belt-and-braces: hermes-infosec-read has no Secrets access anyway
+    # belt-and-braces: infosec needs no Secrets access
     [[denied_resources]]
     group = ""
     version = "v1"
