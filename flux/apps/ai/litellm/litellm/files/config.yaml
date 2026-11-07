@@ -113,10 +113,12 @@ agents:
       url: "http://hermes-agent.hermes-agent.svc.cluster.local:9900"
     # Upstream (hermes A2A) bearer auth for every hop, incl. tasks/*.
     # litellm_params.api_key alone is not sent as a hop header in v1.104.0.
+    # os.environ/ is resolved by litellm at config load; the value carries the
+    # "Bearer " prefix because only whole-value indirection is supported.
     static_headers:
-      Authorization: "Bearer ${AI_HERMES_A2A_TOKEN}"
+      Authorization: os.environ/AI_HERMES_A2A_AUTH_HEADER
     litellm_params:
-      api_key: ${AI_HERMES_A2A_TOKEN}
+      api_key: os.environ/AI_HERMES_A2A_TOKEN
 
   - agent_name: infosec-engineer
     agent_card_params:
@@ -127,6 +129,6 @@ agents:
     # Same upstream-header pattern as platform-engineer (static_headers is the
     # only hop-auth that works in litellm v1.104.0).
     static_headers:
-      Authorization: "Bearer ${AI_HERMES_INFOSEC_A2A_TOKEN}"
+      Authorization: os.environ/AI_HERMES_INFOSEC_A2A_AUTH_HEADER
     litellm_params:
-      api_key: ${AI_HERMES_INFOSEC_A2A_TOKEN}
+      api_key: os.environ/AI_HERMES_INFOSEC_A2A_TOKEN
