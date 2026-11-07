@@ -1,6 +1,7 @@
-# Mirrors the infosec-engineer agent's own permissions: bound to the SAME
-# ClusterRole defined in flux/apps/ai/hermes-infosec/rbac.yaml. Edit it there;
-# both consumers follow.
+# Security-audit read surface for the infosec MCP server, used by the
+# kubernetes-mcp-infosec ServiceAccount below. The infosec-engineer agent pod
+# itself has no dedicated ServiceAccount since ca3d8c8; if it gets one again,
+# keep the two in sync.
 apiVersion: v1
 kind: ServiceAccount
 metadata:
