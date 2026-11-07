@@ -16,9 +16,12 @@ metadata:
 spec:
   imageRepositoryRef:
     name: chrome
+  filterTags:
+    pattern: '^157\.0\.8103\.(?P<build>\d+)$'
+    extract: '$build'
   policy:
-    semver:
-      range: ">=156.0"
+    numerical:
+      order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
