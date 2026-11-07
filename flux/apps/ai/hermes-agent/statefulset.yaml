@@ -86,6 +86,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: agent-env
+            - secretRef:
+                name: agent-secrets
           ports:
             - name: api-server
               containerPort: 8642
