@@ -34,6 +34,7 @@ fi
 
 if [ "$install_sops" = 1 ]; then
   curl -fsSL -o "$BIN/sops.new" https://github.com/getsops/sops/releases/download/v3.13.3/sops-v3.13.3.linux.amd64
+  echo "e5bec3346a873ae91d871550f3e698c1aad962aff462a080e40f25fde17fef6b  $BIN/sops.new" | sha256sum -c -
   chmod 755 "$BIN/sops.new"
   mv -f "$BIN/sops.new" "$BIN/sops"
   echo "installed $( "$BIN/sops" --version 2>/dev/null | head -1 )"
@@ -41,6 +42,7 @@ fi
 
 if [ "$install_kubectl" = 1 ]; then
   curl -fsSL -o "$BIN/kubectl.new" "https://dl.k8s.io/release/v1.35.9/bin/linux/amd64/kubectl"
+  echo "3cfeaf80be482b435b0aa214aff6e0b2c312ee23c0ff20810c75517b6004c6eb  $BIN/kubectl.new" | sha256sum -c -
   chmod 755 "$BIN/kubectl.new"
   mv -f "$BIN/kubectl.new" "$BIN/kubectl"
   echo "installed kubectl v1.35.9"

@@ -63,7 +63,7 @@ spec:
                   key: POSTGRES_PASSWORD
                   name: postgres-secrets
             - name: 'KC_DB_USERNAME'
-              vvalueFrom:
+              valueFrom:
                 secretKeyRef:
                   key: POSTGRES_USER
                   name: postgres-secrets

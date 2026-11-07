@@ -16,7 +16,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: avahi
-        image: ghcr.io/nullvar2000/avahi-reflector:latest
+        image: ghcr.io/nullvar2000/avahi-reflector@sha256:6b9cde344d0d76f61fbbefd4521366dae2ebfea7947c3e67455a9c1322b4eaf1
         imagePullPolicy: Always
         securityContext:
           capabilities:
