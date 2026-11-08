@@ -6,7 +6,10 @@ metadata:
   name: istio-base
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: istio-base
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: base
@@ -23,7 +26,10 @@ spec:
   interval: 1h
   dependsOn:
     - name: istio-base
+  timeout: 15m
   releaseName: istiod
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: istiod
@@ -42,7 +48,10 @@ spec:
   interval: 1h
   dependsOn:
     - name: istiod
+  timeout: 15m
   releaseName: istio-cni
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: cni
@@ -61,7 +70,10 @@ spec:
   interval: 1h
   dependsOn:
     - name: istio-cni
+  timeout: 15m
   releaseName: istio-ztunnel
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: ztunnel
