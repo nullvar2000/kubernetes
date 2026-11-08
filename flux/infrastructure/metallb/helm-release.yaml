@@ -5,7 +5,10 @@ metadata:
   namespace: metallb
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: metallb
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: metallb

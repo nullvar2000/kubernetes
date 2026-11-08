@@ -5,7 +5,10 @@ metadata:
   namespace: node-feature-discovery
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: nfd
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: node-feature-discovery

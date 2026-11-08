@@ -4,7 +4,10 @@ metadata:
   name: headlamp
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: headlamp
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: headlamp
