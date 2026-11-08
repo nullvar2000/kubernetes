@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ai
   - bookstack
+  - fun-prompts
   - heimdall
   - jellyfin
   - kanboard

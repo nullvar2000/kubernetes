@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fun-prompts
+  namespace: fun-prompts
+  labels:
+    app: fun-prompts
+spec:
+  selector:
+    app: fun-prompts
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
