@@ -5,7 +5,10 @@ metadata:
   namespace: stackrox-operator-system
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: stackrox-operator
+  remediation:
+    retries: 3
   install:
     crds: CreateReplace
   upgrade:

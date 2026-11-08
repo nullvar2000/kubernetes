@@ -14,7 +14,6 @@ resources:
   - longhorn
   - metallb
   - monitoring
-  # - rocm-operator
   - rustfs
   - stackrox
   - kyverno

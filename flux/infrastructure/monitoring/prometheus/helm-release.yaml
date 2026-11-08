@@ -4,7 +4,10 @@ metadata:
   name: kube-prometheus-stack
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: kube-prometheus-stack
+  remediation:
+    retries: 3
   chart:
     spec:
       chart: kube-prometheus-stack
