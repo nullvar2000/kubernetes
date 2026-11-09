@@ -64,27 +64,7 @@ spec:
   policy:
     semver:
       range: ">=2.3.0"
----
-apiVersion: image.toolkit.fluxcd.io/v1
-kind: ImageUpdateAutomation
-metadata:
-  name: mcp-searxng-image-update
-  namespace: flux-system
-spec:
-  interval: 6h
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  git:
-    checkout:
-      ref:
-        branch: main
-    commit:
-      author:
-        email: fluxcdbot@users.noreply.github.com
-        name: fluxcdbot
-      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
-    push:
-      branch: fluxcd-mcp-searxng-image-update
-  update:
-    path: ./flux/apps/searxng
+# mcp-searxng has no ImageUpdateAutomation of its own: its marker lives in
+# deployment.yaml next to the searxng one, and searxng-image-update already
+# rewrites every marker under ./flux/apps/searxng. A second automation on the
+# same path pushed duplicate branches (fluxcd-mcp-searxng-image-update).
