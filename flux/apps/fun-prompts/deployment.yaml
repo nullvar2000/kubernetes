@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fun-prompts
+  namespace: fun-prompts
+  labels:
+    app: fun-prompts
+    app.kubernetes.io/name: fun-prompts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fun-prompts
+  template:
+    metadata:
+      labels:
+        app: fun-prompts
+        app.kubernetes.io/name: fun-prompts
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - name: fun-prompts
+        image: ghcr.io/nullvar2000/fun-prompts:main-8383401
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /gallery/
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /gallery/
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 20
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
