@@ -8,8 +8,12 @@ spec:
   interval: 1h
   timeout: 15m
   releaseName: istio-base
-  remediation:
-    retries: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: base
@@ -28,8 +32,12 @@ spec:
     - name: istio-base
   timeout: 15m
   releaseName: istiod
-  remediation:
-    retries: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: istiod
@@ -50,8 +58,12 @@ spec:
     - name: istiod
   timeout: 15m
   releaseName: istio-cni
-  remediation:
-    retries: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: cni
@@ -72,8 +84,12 @@ spec:
     - name: istio-cni
   timeout: 15m
   releaseName: istio-ztunnel
-  remediation:
-    retries: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ztunnel

@@ -7,11 +7,13 @@ spec:
   interval: 1h
   timeout: 15m
   releaseName: stackrox-operator
-  remediation:
-    retries: 3
   install:
+    remediation:
+      retries: 3
     crds: CreateReplace
   upgrade:
+    remediation:
+      retries: 3
     crds: CreateReplace
   chart:
     spec:
