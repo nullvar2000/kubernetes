@@ -42,4 +42,4 @@ spec:
     push:
       branch: fluxcd-litellm-image-update
   update:
-    path: ./flux/apps/ai/litellm
+    path: ./flux/apps/ai/litellm/litellm

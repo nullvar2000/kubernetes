@@ -42,4 +42,4 @@ spec:
     push:
       branch: fluxcd-paperless-ngx-image-update
   update:
-    path: ./flux/apps/paperless-ngx
+    path: ./flux/apps/paperless-ngx/paperless-ngx
