@@ -27,7 +27,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-mcp-server
-          image: quay.io/containers/kubernetes_mcp_server:v0.0.63 # {"$imagepolicy": "flux-system:kubernetes-mcp-server-policy"}
+          image: quay.io/containers/kubernetes_mcp_server:v0.1.2 # {"$imagepolicy": "flux-system:kubernetes-mcp-server-policy"}
           imagePullPolicy: IfNotPresent
           args:
             - --config
