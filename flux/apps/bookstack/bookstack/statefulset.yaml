@@ -78,23 +78,23 @@ spec:
             limits:
               memory: 4Gi
               cpu: 500m
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
       restartPolicy: Always
-      readinessProbe:
-        httpGet:
-          path: /
-          port: 8080
-        initialDelaySeconds: 30
-        periodSeconds: 30
-        timeoutSeconds: 5
-        failureThreshold: 5
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 8080
-        initialDelaySeconds: 15
-        periodSeconds: 10
-        timeoutSeconds: 5
-        failureThreshold: 3
       volumes:
         - name: bookstack-config
           persistentVolumeClaim:
