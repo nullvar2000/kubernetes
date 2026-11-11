@@ -17,8 +17,11 @@ spec:
         app.kubernetes.io/name: bookstack-mcp
     spec:
       securityContext:
-        # Image runs as the non-root "bun" user (uid verified at build time).
+        # Image runs as the non-root "bun" user; pinned numerically because
+        # kubelet cannot verify a non-numeric image USER against runAsNonRoot.
         runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
       containers:
