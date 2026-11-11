@@ -8,9 +8,16 @@ resources:
   - mariadb/statefulset.yaml
   - mariadb/service.yaml
   - mariadb/imageupdateautomation.yaml
-  - bookstack/configmap.yaml
   - bookstack/httproute.yaml
   - bookstack/pvc.yaml
   - bookstack/service.yaml
   - bookstack/statefulset.yaml
   - bookstack/imageupdateautomation.yaml
+
+# Generated with a hash suffix: editing the env file changes the ConfigMap name,
+# which rewrites the StatefulSet's configMapRef and rolls the pod automatically.
+configMapGenerator:
+  - name: bookstack-config
+    namespace: bookstack
+    envs:
+      - bookstack/files/bookstack-config.env
