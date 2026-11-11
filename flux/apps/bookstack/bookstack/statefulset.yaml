@@ -21,9 +21,23 @@ spec:
       labels:
         app: bookstack
     spec:
+      securityContext:
+        # solidnerd/bookstack runs as USER 33 (www-data); apache listens on
+        # unprivileged 8080, so this satisfies PodSecurity "restricted".
+        runAsNonRoot: true
+        runAsUser: 33
+        runAsGroup: 33
+        fsGroup: 33
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: bookstack
           image: docker.io/solidnerd/bookstack:26.9.2 # {"$imagepolicy": "flux-system:bookstack-policy"}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           ports:
             - containerPort: 6875
               protocol: TCP
