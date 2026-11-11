@@ -59,7 +59,7 @@ spec:
             - name: hermes-agent-data
               mountPath: /opt/data
         - name: camofox
-          image: ghcr.io/jo-inc/camofox-browser:1.18.1 # {"$imagepolicy": "flux-system:camofox-policy"}
+          image: ghcr.io/jo-inc/camofox-browser:1.19.0 # {"$imagepolicy": "flux-system:camofox-policy"}
           envFrom:
             - configMapRef:
                 name: camofox-config
