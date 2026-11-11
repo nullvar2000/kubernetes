@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
 #   - mcpo
+  - bookstack
   - kubernetes-mcp-server
