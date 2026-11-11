@@ -42,12 +42,14 @@ spec:
                 name: bookstack-mcp-config
             - secretRef:
                 name: bookstack-mcp
-          # /health returns 503 while the BookStack token is invalid/unreachable,
-          # so gate readiness on it but keep liveness on the always-200 "/"
-          # (avoids a restart loop from a misconfigured token).
+          # Both probes use "/" (always 200 when the process is up): the
+          # server's /health endpoint calls BookStack's /system API, which the
+          # deliberately-scoped agents token 403s on, so /health is
+          # permanently "unhealthy" by design. Connection problems surface
+          # through tool errors instead.
           readinessProbe:
             httpGet:
-              path: /health
+              path: /
               port: http
             initialDelaySeconds: 10
             periodSeconds: 30
