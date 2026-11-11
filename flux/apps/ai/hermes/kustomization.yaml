@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - platform-engineer
+  - infosec
+  # Shared image pipeline (ImageRepository hermes + ImagePolicy hermes-policy
+  # + one ImageUpdateAutomation) lives in common/imageupdateautomation.yaml.
+  # It is registered from here, NOT via the overlays: the overlay `namespace:`
+  # transformer would rewrite these flux-system-scoped objects. The overlay
+  # Kustomizations above do NOT register common/ themselves.
+  - common/imageupdateautomation.yaml

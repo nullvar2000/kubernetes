@@ -1,0 +1,165 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hermes
+  labels:
+    app: hermes
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  selector:
+    matchLabels:
+      app: hermes
+  replicas: 1
+  revisionHistoryLimit: 3
+  serviceName: hermes
+  template:
+    metadata:
+      labels:
+        app: hermes
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: hermes
+      securityContext:
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: install-tools
+          image: docker.io/library/alpine:3.24.4 # {"$imagepolicy": "flux-system:alpine-policy"}
+          command:
+            - /bin/sh
+            - /seed/install-tools.sh
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 500m
+          volumeMounts:
+            - name: hermes-data
+              mountPath: /opt/data
+            - name: agent-files
+              mountPath: /seed
+              readOnly: true
+        - name: seed-agent
+          image: docker.io/nousresearch/hermes-agent:v2026.9.24 # {"$imagepolicy": "flux-system:hermes-policy"}
+          command:
+            - /bin/sh
+            - /seed/seed.sh
+          envFrom:
+            - configMapRef:
+                name: agent-env
+            - secretRef:
+                name: agent-secrets
+          env:
+            - name: HOME
+              value: /opt/data
+            - name: HERMES_HOME
+              value: /opt/data
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: 500m
+          volumeMounts:
+            - name: hermes-data
+              mountPath: /opt/data
+            - name: agent-files
+              mountPath: /seed
+              readOnly: true
+      containers:
+        - name: agent
+          image: docker.io/nousresearch/hermes-agent:v2026.9.24 # {"$imagepolicy": "flux-system:hermes-policy"}
+          args:
+            - gateway
+            - run
+          envFrom:
+            - configMapRef:
+                name: agent-env
+            - secretRef:
+                name: agent-secrets
+          ports:
+            - name: api-server
+              containerPort: 8642
+              protocol: TCP
+            - name: dashboard
+              containerPort: 9119
+              protocol: TCP
+            - name: webhook
+              containerPort: 8644
+              protocol: TCP
+            - name: a2a
+              containerPort: 9900
+              protocol: TCP
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 100m
+            limits:
+              memory: 2Gi
+              cpu: 1500m
+          volumeMounts:
+            - name: hermes-data
+              mountPath: /opt/data
+            - name: shm
+              mountPath: /dev/shm
+            - name: kube-api-access
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
+            - name: agent-scripts
+              mountPath: /opt/data/.local/bin/gh-pr.py
+              subPath: gh-pr.py
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
+        - name: kube-api-access
+          projected:
+            sources:
+              - serviceAccountToken:
+                  path: token
+                  expirationSeconds: 3600
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef:
+                        fieldPath: metadata.namespace
+              - configMap:
+                  name: kube-root-ca.crt # Talos creates this automatically
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+        - name: agent-scripts
+          configMap:
+            name: agent-scripts
+            defaultMode: 0755
+        - name: agent-files
+          configMap:
+            name: agent-files
+  volumeClaimTemplates:
+    - metadata:
+        name: hermes-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+        storageClassName: longhorn

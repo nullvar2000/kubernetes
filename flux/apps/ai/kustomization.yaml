@@ -3,8 +3,7 @@ kind: Kustomization
 
 resources:
   - fastcrw
-  - hermes-agent
-  - hermes-infosec
+  - hermes
   - kokoro-fastapi
   - litellm
   - mcp

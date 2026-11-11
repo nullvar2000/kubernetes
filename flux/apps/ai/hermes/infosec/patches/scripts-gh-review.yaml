@@ -1,0 +1,17 @@
+# infosec-only mount: gh-review.py lands in the merged agent-scripts
+# ConfigMap; mount it per-file into the agent container (same subPath
+# pattern the base uses for gh-pr.py).
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hermes
+spec:
+  template:
+    spec:
+      containers:
+        - name: agent
+          volumeMounts:
+            - name: agent-scripts
+              mountPath: /opt/data/.local/bin/gh-review.py
+              subPath: gh-review.py
+              readOnly: true

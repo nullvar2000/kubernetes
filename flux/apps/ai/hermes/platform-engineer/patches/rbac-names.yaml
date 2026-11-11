@@ -1,0 +1,10 @@
+# Shared JSON6902 ops for the RBAC rename: applied (via targeted patches
+# entries in kustomization.yaml) to the base ClusterRole AND ClusterRoleBinding
+# named hermes-read. kustomize's nameReference transformer follows the rename
+# into roleRef.name; subjects[].name stays `hermes` (the SA keeps its
+# uniform name; the overlay pins subjects[].namespace with an extra patch —
+# the nameReference transformer cannot pick between the overlays' identically
+# named SAs at the ai umbrella level).
+- op: replace
+  path: /metadata/name
+  value: hermes-platform-engineer-read

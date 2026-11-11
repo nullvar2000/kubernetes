@@ -1,0 +1,2 @@
+# Skills stay git-managed but are NOT seeded through /seed (the agent syncs
+# them into its PVC skills/ dir). Placeholder keeps the directory tracked.
