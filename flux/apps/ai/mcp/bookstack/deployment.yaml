@@ -23,7 +23,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: bookstack-mcp
-          image: ghcr.io/nullvar2000/bookstack-mcp-server:v2.1.1@sha256:3bb045a4c75b62a44f2b5b97711b08bac002d41e11c84ad10e72507ddb2260d0
+          image: ghcr.io/nullvar2000/bookstack-mcp-server:v2.1.1@sha256:55716780926915a34331105f49c44a3f283fa996b423b777547d8eba9efefabf
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
