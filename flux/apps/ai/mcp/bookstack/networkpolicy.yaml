@@ -22,7 +22,7 @@ spec:
               kubernetes.io/metadata.name: litellm
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: hermes-agent
+              kubernetes.io/metadata.name: hermes-platform-engineer
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: hermes-infosec

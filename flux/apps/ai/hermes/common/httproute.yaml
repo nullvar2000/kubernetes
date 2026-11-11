@@ -1,0 +1,24 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: hermes
+spec:
+  parentRefs:
+  - name: gateway-api
+    namespace: istio-gateway
+  hostnames:
+    # Overridden per overlay (patches/httproute-host.yaml); namespace carries
+    # the agent identity.
+    - hermes.${GLOBAL_DOMAIN}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      # Dashboard (basic-auth); was service <agent> port 8443 (code-server,
+      # now removed entirely).
+      backendRefs:
+      - name: hermes
+        port: 9119
+      timeouts:
+        request: 0s

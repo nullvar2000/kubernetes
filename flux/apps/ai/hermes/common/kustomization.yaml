@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Base for every hermes agent overlay. Consumed via `resources: [../common]`
+# from each overlay; this file is never registered as a Flux app entry itself.
+# imageupdateautomation.yaml is NOT listed here: it is flux-system-scoped and
+# is registered by ../kustomization.yaml so the overlay namespace transformer
+# cannot touch it.
+
+resources:
+  - service.yaml
+  - httproute.yaml
+  - rbac.yaml
+  - statefulset.yaml
+
+configMapGenerator:
+  - name: agent-env
+    envs:
+      - files/agent.env
+  - name: agent-scripts
+    files:
+      - files/gh-pr.py
+  - name: agent-files
+    files:
+      - files/install-tools.sh
+      - files/seed.sh
+      - files/config.yaml.tmpl

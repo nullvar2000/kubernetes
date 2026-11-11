@@ -110,22 +110,22 @@ agents:
       protocolVersion: "1.0"
       name: "Platform Engineer"
       description: "Implements approved Kubernetes GitOps plans for the cluster. Opens a pull request and alerts on Mattermost."
-      url: "http://hermes-agent.hermes-agent.svc.cluster.local:9900"
+      url: "http://hermes.hermes-platform-engineer.svc.cluster.local:9900"
     # Upstream (hermes A2A) bearer auth for every hop, incl. tasks/*.
     # litellm_params.api_key alone is not sent as a hop header in v1.104.0.
     # os.environ/ is resolved by litellm at config load; the value carries the
     # "Bearer " prefix because only whole-value indirection is supported.
     static_headers:
-      Authorization: os.environ/AI_HERMES_A2A_AUTH_HEADER
+      Authorization: os.env...ADER
     litellm_params:
-      api_key: os.environ/AI_HERMES_A2A_TOKEN
+      api_key: os.environ/AI_HERMES_PLATFORM_ENGINEER_A2A_TOKEN
 
   - agent_name: infosec-engineer
     agent_card_params:
       protocolVersion: "1.0"
       name: "Infosec Engineer"
       description: "Reviews pull requests for security issues; authors Kyverno/StackRox policy pull requests; monitors Kyverno and StackRox findings."
-      url: "http://hermes-infosec.hermes-infosec.svc.cluster.local:9900"
+      url: "http://hermes.hermes-infosec.svc.cluster.local:9900"
     # Same upstream-header pattern as platform-engineer (static_headers is the
     # only hop-auth that works in litellm v1.104.0).
     static_headers:

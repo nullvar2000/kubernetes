@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: hermes-platform-engineer
+
+resources:
+  - ../common
+  - namespace.yaml
+  - secrets.clear.yaml
+
+configMapGenerator:
+  # Merge into the base generators (one merged CM per name; verified in
+  # rendered output).
+  - name: agent-env
+    behavior: merge
+    envs:
+      - files/agent.env
+  - name: agent-files
+    behavior: merge
+    files:
+      - files/SOUL.md
+
+patches:
+  - path: patches/rbac-names.yaml
+    target:
+      kind: ClusterRole
+      name: hermes-read
+  - path: patches/rbac-names.yaml
+    target:
+      kind: ClusterRoleBinding
+      name: hermes-read
+  # Pin roleRef + subject explicitly: every overlay's base objects share the
+  # names hermes-read / hermes, so the umbrella-level nameReference
+  # transformer cannot disambiguate. We rewrite the refs ourselves instead.
+  - target:
+      kind: ClusterRoleBinding
+      name: hermes-read
+    patch: |-
+      - op: replace
+        path: /roleRef/name
+        value: hermes-platform-engineer-read
+      - op: add
+        path: /subjects/0/namespace
+        value: hermes-platform-engineer
+  - path: patches/httproute-host.yaml
