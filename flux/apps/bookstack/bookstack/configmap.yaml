@@ -4,6 +4,6 @@ metadata:
   name: bookstack-config
   namespace: bookstack
 data:
-  APP_URL: http://wiki.${GLOBAL_DOMAIN}
+  APP_URL: https://wiki.${GLOBAL_DOMAIN}
   DB_HOST: mariadb:3306
   QUEUE_CONNECTION: ''
