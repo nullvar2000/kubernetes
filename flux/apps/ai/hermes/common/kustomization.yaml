@@ -24,4 +24,6 @@ configMapGenerator:
     files:
       - files/install-tools.sh
       - files/seed.sh
+      - files/gitops-token.py
+      - files/git-fetch-origin.sh
       - files/config.yaml.tmpl
