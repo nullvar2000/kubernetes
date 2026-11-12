@@ -76,10 +76,13 @@ mcp_servers:
   kubernetes:
     transport: "http"
     url: "http://kubernetes-mcp-view.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
-  # Infosec profile: exact mirror of the infosec-engineer agent's own RBAC
-  # (SA bound to the shared hermes-infosec-read ClusterRole). Grant
-  # "kubernetes_infosec" to the infosec key in the LiteLLM DB. Tools surface
-  # as litellm_kubernetes_infosec_*.
+  # Infosec profile: rule-for-rule mirror of the infosec-engineer agent's own
+  # read surface (hermes-infosec-read = hermes common baseline + infosec
+  # rbac-extra-rules.yaml). This endpoint's own SA is kubernetes-mcp-infosec,
+  # bound to the equivalent ClusterRole in
+  # flux/apps/ai/mcp/kubernetes-mcp-server/infosec/rbac.yaml; keep the two in
+  # step (jq -S .rules diff). Grant "kubernetes_infosec" to the infosec key in
+  # the LiteLLM DB. Tools surface as litellm_kubernetes_infosec_*.
   kubernetes_infosec:
     transport: "http"
     url: "http://kubernetes-mcp-infosec.kubernetes-mcp-server.svc.cluster.local:8080/mcp"
