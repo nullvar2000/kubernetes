@@ -1,24 +1,38 @@
 # Security-audit read surface for the infosec MCP server, used by the
-# kubernetes-mcp-infosec ServiceAccount below. The infosec-engineer agent pod
-# itself has no dedicated ServiceAccount since ca3d8c8; if it gets one again,
-# keep the two in sync.
+# kubernetes-mcp-infosec ServiceAccount below.
+#
+# The infosec-engineer agent pod has its own SA/ClusterRole: the hermes
+# infosec overlay renders SA `hermes` in namespace hermes-infosec bound to
+# ClusterRole hermes-infosec-read = common/rbac.yaml baseline +
+# flux/apps/ai/hermes/infosec/patches/rbac-extra-rules.yaml.
+#
+# MIRROR INVARIANT: this ClusterRole is that same rule set, same order (the
+# core block is split into two rules to match baseline + extras exactly — do
+# not merge it back into one). LiteLLM's kubernetes_infosec MCP profile is
+# documented as that mirror (flux/apps/ai/litellm/litellm/files/config.yaml) —
+# note that file's comment still says "shared hermes-infosec-read ClusterRole"
+# and is stale until the operator applies the deferred §5.10 fix.
+# Verify with:
+#   diff <(kubectl get clusterrole hermes-infosec-read -o json | jq -S .rules) \
+#        <(kubectl get clusterrole kubernetes-mcp-infosec -o json | jq -S .rules)
+#
+# Deliberately NOT the aggregate `view`, no secrets, no configmaps, no
+# pods-exec, no writes. configmaps was dropped (2026-11-12) so the
+# no-ConfigMaps stance is uniform with the agent-side baseline: agent-env /
+# agent-files ConfigMaps exist on the agent PVC, so the old "§5.7 keeps every
+# credential out of ConfigMaps" justification did not hold cluster-wide.
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kubernetes-mcp-infosec
   namespace: kubernetes-mcp-server
 ---
-# Security-audit read surface: broad cluster read incl. CRDs relevant to the
-# mandate (Kyverno reports/policies, Flux state, Gateway API, RBAC, networking,
-# StackRox operator CRs). Deliberately NOT the aggregate `view` (no CRDs) and
-# deliberately NO secrets / no pods-exec / no writes. `configmaps` read is safe
-# here because §5.7 keeps every credential out of ConfigMaps (unlike the
-# existing hermes-agent agent-env pattern — see §9 retrofit note).
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: kubernetes-mcp-infosec
 rules:
+  # --- baseline: mirrors flux/apps/ai/hermes/common/rbac.yaml ---
   - apiGroups: [""]
     resources:
       - pods
@@ -27,14 +41,10 @@ rules:
       - endpoints
       - namespaces
       - nodes
-      - configmaps
       - events
       - serviceaccounts
       - persistentvolumes
       - persistentvolumeclaims
-      - resourcequotas
-      - limitranges
-      - replicationcontrollers
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"]
     resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
@@ -54,14 +64,8 @@ rules:
   - apiGroups: ["gateway.networking.k8s.io"]
     resources: ["httproutes", "gateways", "referencegrants", "listenersets"]
     verbs: ["get", "list", "watch"]
-  - apiGroups: ["kyverno.io"]
-    resources: ["*"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["policies.kyverno.io"]
-    resources: ["*"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["wgpolicyk8s.io"]
-    resources: ["policyreports", "clusterpolicyreports"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["applications", "applicationsets"]
     verbs: ["get", "list", "watch"]
   - apiGroups:
       - source.toolkit.fluxcd.io
@@ -73,20 +77,30 @@ rules:
   - apiGroups: ["cert-manager.io"]
     resources: ["certificates", "issuers", "clusterissuers"]
     verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  # --- extras: mirrors flux/apps/ai/hermes/infosec/patches/rbac-extra-rules.yaml ---
+  - apiGroups: [""]
+    resources: ["resourcequotas", "limitranges", "replicationcontrollers"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["kyverno.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["policies.kyverno.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["wgpolicyk8s.io"]
+    resources: ["policyreports", "clusterpolicyreports"]
+    verbs: ["get", "list", "watch"]
   - apiGroups: ["admissionregistration.k8s.io"]
     resources: ["mutatingwebhookconfigurations", "validatingwebhookconfigurations"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
     verbs: ["get", "list", "watch"]
-  - apiGroups:
-      - platform.stackrox.io
-      - apps.stackrox.io
-      - install.stackrox.io
+  - apiGroups: ["platform.stackrox.io"]
     resources: ["*"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
     verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

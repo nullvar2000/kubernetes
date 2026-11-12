@@ -1,0 +1,24 @@
+# infosec-only mount: stackrox-alerts.py lands in the merged agent-scripts
+# ConfigMap; mount it per-file into the agent container (same subPath pattern
+# the base uses for gh-pr.py and this overlay uses for gh-review.py). The
+# agent-scripts volume already has defaultMode 0755
+# (common/statefulset.yaml), so the file is executable as-is.
+#
+# This mount is what lets SOUL.md drop its curl-with-Bearer-token recipe: the
+# credential-bearing request stops being text in the agent's system prompt
+# (which hermes flagged as prompt injection: pattern exfil_curl) and becomes a
+# named GET-only tool.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hermes
+spec:
+  template:
+    spec:
+      containers:
+        - name: agent
+          volumeMounts:
+            - name: agent-scripts
+              mountPath: /opt/data/.local/bin/stackrox-alerts.py
+              subPath: stackrox-alerts.py
+              readOnly: true

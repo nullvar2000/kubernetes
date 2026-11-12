@@ -21,6 +21,13 @@ configMapGenerator:
       - files/SOUL.md
 
 patches:
+  # Additive rules FIRST: the target selector below matches the un-renamed
+  # base name hermes-read, and it is only guaranteed to resolve if it runs
+  # before the metadata/name replace. Do not reorder.
+  - path: patches/rbac-extra-rules.yaml
+    target:
+      kind: ClusterRole
+      name: hermes-read
   - path: patches/rbac-names.yaml
     target:
       kind: ClusterRole
