@@ -1,0 +1,16 @@
+# platform-engineer-only addition on top of the common hermes-read baseline.
+# metrics.k8s.io is what makes `kubectl top nodes` / `kubectl top pods -A`
+# usable for the capacity checks an approved plan cites (metrics-server is
+# installed: flux/infrastructure/monitoring/metrics-server). Verbs mirror the
+# kubernetes-mcp-view-extra precedent (mcp/kubernetes-mcp-server/view/rbac.yaml).
+#
+# Deliberately NOT added here: kyverno.io / policies.kyverno.io /
+# wgpolicyk8s.io / stackrox / admissionregistration / apiextensions. The
+# security-audit surface belongs to the infosec overlay
+# (infosec/patches/rbac-extra-rules.yaml), not to the implementer.
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["metrics.k8s.io"]
+    resources: ["nodes", "pods"]
+    verbs: ["get", "list"]

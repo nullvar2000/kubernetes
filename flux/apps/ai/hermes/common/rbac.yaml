@@ -8,9 +8,24 @@ metadata:
 # state, pods, logs, events, Gateway API routes). Deliberately NOT the
 # aggregate `view`: `view` also grants cluster-wide configmaps read, which is
 # an escalation path for a workload that runs an LLM agent against
-# prompt-injectable input. No secrets, no pods/exec, no writes.
+# prompt-injectable input. No secrets, no configmaps, no pods/exec, no writes.
+#
+# BASELINE ONLY. Each agent overlay gets exactly these rules plus its own
+# additive JSON6902 patch (append to /rules). Never widen this file for one
+# agent's needs; add a per-overlay rbac-extra-rules.yaml instead:
+#   infosec/patches/rbac-extra-rules.yaml            (security-audit surface)
+#   platform-engineer/patches/rbac-extra-rules.yaml  (metrics.k8s.io only)
+#
 # ClusterRole/CRB are renamed per agent by the overlays
 # (patches/rbac-names.yaml): hermes-<agent>-read.
+#
+# MIRROR INVARIANT: the ClusterRole `kubernetes-mcp-infosec`
+# (flux/apps/ai/mcp/kubernetes-mcp-server/infosec/rbac.yaml) equals this
+# baseline + the infosec extras, same rules in the same order, so
+#   diff <(kubectl get clusterrole hermes-infosec-read -o json | jq -S .rules) \
+#        <(kubectl get clusterrole kubernetes-mcp-infosec -o json | jq -S .rules)
+# is empty. LiteLLM's kubernetes_infosec MCP profile is documented as that
+# mirror. If you edit either side, edit the other and re-run the diff.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -56,6 +71,14 @@ rules:
       - helm.toolkit.fluxcd.io
       - image.toolkit.fluxcd.io
     resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  # Every HTTPRoute has a Certificate behind it and every plan cites a
+  # StorageClass; both agents verify these after their changes.
+  - apiGroups: ["cert-manager.io"]
+    resources: ["certificates", "issuers", "clusterissuers"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
     verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

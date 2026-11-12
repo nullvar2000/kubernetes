@@ -19,6 +19,7 @@ configMapGenerator:
     behavior: merge
     files:
       - files/gh-review.py
+      - files/stackrox-alerts.py
   - name: agent-files
     behavior: merge
     files:
@@ -26,10 +27,18 @@ configMapGenerator:
       - files/cron-jobs.tsv
 
 patches:
+  # Additive rules FIRST: the target selector below matches the un-renamed
+  # base name hermes-read, and it is only guaranteed to resolve if it runs
+  # before the metadata/name replace. Do not reorder.
+  - path: patches/rbac-extra-rules.yaml
+    target:
+      kind: ClusterRole
+      name: hermes-read
   - path: patches/rbac-names.yaml
     target:
       kind: ClusterRole
       name: hermes-read
+  - path: patches/scripts-stackrox-alerts.yaml
   - path: patches/rbac-names.yaml
     target:
       kind: ClusterRoleBinding

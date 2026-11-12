@@ -1,0 +1,64 @@
+# Security-audit rules added on top of the common hermes-read baseline, for
+# this overlay only (targeted at the ClusterRole named hermes-read by
+# kustomization.yaml). Without these, the security-signals-digest cron dies on
+# its first step (SOUL.md: `kubectl get clusterpolicyreports -A -o json` ->
+# wgpolicyk8s.io) and the PR-review checklist cannot inspect Kyverno policies,
+# admission webhooks or CRDs.
+#
+# MIRROR INVARIANT: baseline (common/rbac.yaml) + these rules, in this order,
+# must equal the ClusterRole `kubernetes-mcp-infosec` at
+# flux/apps/ai/mcp/kubernetes-mcp-server/infosec/rbac.yaml. Keep both in step.
+#
+# Still deliberately absent: secrets, configmaps, pods/exec, and every write
+# verb. No configmaps even though agent-env/agent-files are ConfigMaps (they
+# hold no credentials) — cluster-wide configmaps read stays off for an
+# LLM-driven pod.
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: [""]
+    resources: ["resourcequotas", "limitranges", "replicationcontrollers"]
+    verbs: ["get", "list", "watch"]
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["kyverno.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["policies.kyverno.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["wgpolicyk8s.io"]
+    resources: ["policyreports", "clusterpolicyreports"]
+    verbs: ["get", "list", "watch"]
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["admissionregistration.k8s.io"]
+    resources: ["mutatingwebhookconfigurations", "validatingwebhookconfigurations"]
+    verbs: ["get", "list", "watch"]
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list", "watch"]
+- op: add
+  path: /rules/-
+  value:
+    # Verified with `kubectl api-resources --api-group=platform.stackrox.io`:
+    # centrals + securedclusters (both v1alpha1). The groups `apps.stackrox.io`
+    # and `install.stackrox.io` that the old MCP role listed serve NOTHING in
+    # this cluster (`kubectl api-resources --api-group=apps.stackrox.io` and
+    # `--api-group=install.stackrox.io` both return empty), so they are dropped.
+    # Re-add `apps.stackrox.io` only if the operator ever moves SecuredCluster
+    # back to that group.
+    apiGroups: ["platform.stackrox.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
