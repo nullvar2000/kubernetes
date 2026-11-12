@@ -23,9 +23,14 @@ custom_providers:
 # LiteLLM MCP gateway (mcp_servers in litellm's config.yaml) exposes each
 # upstream at /mcp/<server_name> on streamable HTTP (verified 2026-11-03).
 # Auth is the agent's own LITELLM_API_KEY, resolved by HERMES from the process
-# env (agent-secrets envFrom). The ${env:VAR} form is deliberate: Flux
-# postBuild envsub only matches bare ${VAR}, so "${VAR}" here would be baked
-# into the cluster ConfigMap if a same-named apps-secrets key ever appears.
+# env (agent-secrets envFrom). The ${env:VAR} form is Hermes' expansion
+# syntax; this file only reaches the cluster intact because the agent-files
+# ConfigMap carries the annotation kustomize.toolkit.fluxcd.io/substitute:
+# disabled (see ../kustomization.yaml). Without that annotation, Flux's
+# non-strict postBuild envsub blanks EVERY ${...} here — verified broken in
+# the live ConfigMaps on 2026-11-12. Do not reintroduce bare ${VAR} either,
+# in case the annotation is ever dropped: a same-named apps-secrets key
+# would then be baked in verbatim.
 # comfyui is intentionally omitted (irrelevant to agent work).
 # kubernetes MCP is intentionally absent: agents reach the cluster via the
 # in-pod kubectl (ClusterRole hermes-<agent>-read) instead of a cluster-wide

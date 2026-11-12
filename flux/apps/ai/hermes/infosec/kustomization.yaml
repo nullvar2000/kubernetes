@@ -17,11 +17,18 @@ configMapGenerator:
       - files/agent.env
   - name: agent-scripts
     behavior: merge
+    # keep the base's substitution opt-out annotation on the merged CM
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - files/gh-review.py
       - files/stackrox-alerts.py
   - name: agent-files
     behavior: merge
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - files/SOUL.md
       - files/cron-jobs.tsv
