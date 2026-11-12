@@ -14,13 +14,29 @@ resources:
   - statefulset.yaml
 
 configMapGenerator:
+  # agent-env INTENTIONALLY stays subject to postBuild substitution: its
+  # ${GLOBAL_*}/${AI_*} placeholders are the substituteFrom mechanism.
   - name: agent-env
     envs:
       - files/agent.env
+  # agent-scripts/agent-files embed shell/python/hermes sources containing
+  # literal ${...} (shell parameter expansions, Hermes ${env:VAR}). Flux's
+  # postBuild envsub is non-strict (StrictPostBuildSubstitutions gate off):
+  # every unrecognized ${...} in the rendered tree is replaced with the
+  # EMPTY STRING, silently gutting these files (observed 2026-11-12:
+  # fastcrw "Bearer " header, seed.sh GH_APP_* guards, clone URL tokens).
+  # Per-resource opt-out via this annotation is kustomize-controller's
+  # documented escape. Do not remove.
   - name: agent-scripts
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - files/gh-pr.py
   - name: agent-files
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - files/install-tools.sh
       - files/seed.sh

@@ -17,6 +17,10 @@ configMapGenerator:
       - files/agent.env
   - name: agent-files
     behavior: merge
+    # keep the base's substitution opt-out annotation on the merged CM
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - files/SOUL.md
 
