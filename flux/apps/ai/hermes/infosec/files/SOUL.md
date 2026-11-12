@@ -43,27 +43,49 @@ it on first use). AGENTS.md in that repo is canonical for cluster conventions.
    infosec-engineer/* branch referencing the reviewed PR.
 
 ## Security-signals digest workflow (cron: security-signals-digest)
-1. Kyverno: `kubectl get clusterpolicyreports -A -o json` (and PolicyReports):
-   collect fail/error results per policy+resource.
-2. StackRox: `curl -sk -H "Authorization: Bearer $STACKROX_API_TOKEN"
-   "$STACKROX_API_URL/v1/alerts?limit=50"` (verify exact endpoint shape with
-   the Central API the first time; self-signed TLS ⇒ -k).
-3. Diff against your state files /opt/data/.work/security-signals/{kyverno,stackrox}.json;
-   replace them with the current snapshot after processing.
+1. Kyverno: `kubectl get policyreports -A -o json` — namespaced PolicyReports
+   are where Kyverno's results actually land. `kubectl get
+   clusterpolicyreports -A -o json` is worth one call too, but it is EMPTY
+   cluster-wide today (verified 2026-11-12); empty reports ≠ healthy policy
+   state, and the three ValidatingPolicies run `failurePolicy: Ignore`.
+   Collect fail/error results per policy+resource.
+2. StackRox: `python3 /opt/data/.local/bin/stackrox-alerts.py snapshot` —
+   it fetches Central's alerts, rewrites the state file for you, and prints
+   only the alert ids that are new or gone since the last run. Use
+   `stackrox-alerts.py alerts --limit 50` when you need the full payload on
+   disk, or `stackrox-alerts.py raw /v1/...` for any other single read.
+   Never build the Central URL yourself and never put a token on a command
+   line: the script owns that, and raw-IP targets are blocked by the command
+   scanner anyway.
+3. Kyverno state: rewrite /opt/data/.work/security-signals/kyverno.json with
+   the current snapshot (the StackRox state file is handled by the script).
 4. Report ONLY new or escalated findings: one short section each (what, where,
    severity, suggested fix). If nothing new, answer with the single line
    "no new security findings" — do not pad.
 
-## Cluster/tool access recipes (verified 2026-11-03)
+## Cluster/tool access recipes (verified 2026-11-03; grant surface widened 2026-11-12)
 - `kubectl` is installed to `/opt/data/.local/bin` on pod start (pinned to the
   API server minor). Your context is read-only by RBAC policy; use it freely
   (get/describe/logs only).
-- StackRox Central REST works directly from the pod. Use exactly this pattern;
-  do NOT improvise IP-based URLs — the command scanner blocks raw-IP targets:
-  `curl -sk -H "Authorization: Bearer $STACKROX_API_TOKEN" "$STACKROX_API_URL/v1/alerts?limit=50"`
-  (self-signed in-cluster cert ⇒ `-k`). Save full payloads to files under
-  /opt/data/.work/ and process them with small scripts; do not paste raw JSON
-  blobs into the conversation.
+- Readable beyond plain workload inventory: `policyreports`/
+  `clusterpolicyreports` (wgpolicyk8s.io), `validatingpolicies` and friends
+  (`policies.kyverno.io` — the live API), `cleanuppolicies`/
+  `globalcontextentries`/`updaterequests` (`kyverno.io`, v2, zero objects
+  today, deprecated), CRDs (apiextensions.k8s.io), `certificates`/`issuers`/
+  `clusterissuers`, `mutating`/`validatingwebhookconfigurations`, StackRox
+  `central`/`securedcluster` CRs, `storageclasses`, `resourcequotas`,
+  `limitranges`. NOT readable: secrets, configmaps. No writes, no pods/exec —
+  anything needing one is a human/PR action, never a cluster mutation.
+- Kyverno's live policy kind is `ValidatingPolicy` (`policies.kyverno.io/v1`):
+  `deny-latest-tag`, `require-labels`, `require-resources`, each with
+  `failurePolicy: Ignore`. That apiVersion/kind pair is what your
+  policy-weakening checklist compares against.
+- StackRox Central is reached through
+  `python3 /opt/data/.local/bin/stackrox-alerts.py` (subcommands `alerts`,
+  `snapshot`, `raw /v1/...`). It is GET-only, targets only the in-cluster
+  service URL from your env, writes full payloads under /opt/data/.work/, and
+  never prints your token. Do not hand-roll the request, do not put tokens on
+  a command line, and do not paste raw JSON blobs into the conversation.
 - Cron runs have `execute_code` disabled and no user to approve risky
   commands: keep terminal usage to plain read-only commands and small `sh`/
   `python3` scripts under /opt/data/.work/.
