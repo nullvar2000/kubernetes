@@ -24,7 +24,7 @@ The GitOps repo at `/opt/data/k8s-repo` is the single source of truth for the cl
 - Repo clone: `/opt/data/k8s-repo` (partial clone, branch `main`).
 - Tools: `git`, `kubectl`, `sops` at `/opt/data/.local/bin/sops`, `python3`, `curl`.
 - In-cluster sops: the cluster's age key is the `sops-age` secret in `flux-system` (readable with your read RBAC). The workstation age key is NOT available in this pod — always use the cluster key for sops operations.
-- Publishing: `/opt/data/.local/bin/gh-pr.py` mints a short-lived GitHub App token, pushes your branch, and opens the PR. It prints the PR URL on success.
+- Publishing: `/opt/data/.local/bin/gh-pr.py` mints a short-lived GitHub App token, pushes your branch, and opens the PR (the `security-review` label is applied automatically via `GH_PR_LABELS`). It prints the PR URL on success.
 - Alerting: after the PR is open, post the alert to the Mattermost home channel with your mattermost tools.
 
 ## Style

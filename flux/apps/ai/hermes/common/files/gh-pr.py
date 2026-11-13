@@ -9,6 +9,7 @@ Usage:
 
 Env (from the hermes-agent agent-env configmap):
     GH_APP_ID, GH_APP_INSTALLATION_ID, GH_APP_PRIVATE_KEY_B64, GH_PR_REPO
+    GH_PR_LABELS (optional): comma-separated label names to set on the PR
 """
 import base64
 import json
@@ -90,9 +91,15 @@ def push_branch(token: str, branch: str) -> None:
 
 def open_pr(token: str, branch: str, title: str, body: str) -> str:
     repo = get_env("GH_PR_REPO")
-    payload = json.dumps(
-        {"title": title, "head": branch, "base": "main", "body": body}
-    ).encode()
+    pr = {"title": title, "head": branch, "base": "main", "body": body}
+    labels = [
+        s.strip()
+        for s in os.environ.get("GH_PR_LABELS", "").split(",")
+        if s.strip()
+    ]
+    if labels:
+        pr["labels"] = labels
+    payload = json.dumps(pr).encode()
     req = urllib.request.Request(
         f"{API}/repos/{repo}/pulls",
         data=payload,
