@@ -94,6 +94,21 @@ mcp_servers:
     url: "http://crw.fastcrw.svc.cluster.local:3000/mcp"
     auth_type: "bearer_token"
     auth_value: os.environ/FASTCRW_API_KEY
+  # BookStack wiki (flux/apps/ai/mcp/bookstack, ns mcp, Service 8080 -> pod 3000).
+  # The MCP endpoint is POST /message — NOT /mcp (upstream pnocera/bookstack-mcp-
+  # server exposes exactly /, /health and /message; everything else 404s). Inbound
+  # bearer = the same BOOKSTACK_MCP_AUTH_TOKEN the shim is started with
+  # (its MCP_AUTH_TOKEN). Outbound BookStack identity is the shim's own scoped
+  # API token, so BookStack RBAC is the real permission boundary; grants here are
+  # per-key (object_permission.mcp_servers: ["bookstack"]) in the LiteLLM DB.
+  # 59 upstream tools, all named bookstack_*, so clients see them as
+  # bookstack-bookstack_* (short prefix) / litellm_bookstack_bookstack_* (long).
+  bookstack:
+    transport: "http"
+    url: "http://bookstack-mcp.mcp.svc.cluster.local:8080/message"
+    auth_type: "bearer_token"
+    auth_value: os.environ/BOOKSTACK_MCP_AUTH_TOKEN
+    description: "BookStack wiki: books, pages, chapters, shelves, search, export, users/roles (writes follow the shim's scoped BookStack API token)"
   # ComfyUI MCP gateway on the P40 host (supergateway, stateless Streamable
   # HTTP; ai-server repo projects/comfyui). Bearer key = host-local
   # COMFYUI_MCP_KEY; pod network 10.244.0.0/16 is allowlisted on 8001.
