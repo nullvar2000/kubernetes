@@ -3,5 +3,8 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - httproute.yaml
+  - httproute-artifacts.yaml
   - namespace.yaml
+  - pvc.yaml
+  - secrets.clear.yaml
   - service.yaml

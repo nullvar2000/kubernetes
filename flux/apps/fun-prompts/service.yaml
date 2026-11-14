@@ -14,3 +14,7 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 8080
+  - name: artifacts
+    port: 8081
+    protocol: TCP
+    targetPort: 8081
