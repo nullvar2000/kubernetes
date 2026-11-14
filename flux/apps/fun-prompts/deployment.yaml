@@ -8,8 +8,16 @@ metadata:
     app.kubernetes.io/name: fun-prompts
 spec:
   replicas: 1
+  # Recreate semantics without `type: Recreate`: the live Deployment still carries
+  # server-defaulted spec.strategy.rollingUpdate that no SSA field manager owns, so
+  # Flux applying `type: Recreate` leaves it in place and the API rejects the object.
+  # maxSurge: 0 keeps the old pod down before the new one starts, which the RWO
+  # Longhorn PVC needs anyway.
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: fun-prompts
@@ -24,6 +32,8 @@ spec:
         runAsUser: 10001
         runAsGroup: 10001
         fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: fun-prompts
         image: ghcr.io/nullvar2000/fun-prompts:main-27f4780
