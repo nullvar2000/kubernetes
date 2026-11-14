@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/name: fun-prompts
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: fun-prompts
@@ -19,33 +21,70 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
       containers:
       - name: fun-prompts
-        image: ghcr.io/nullvar2000/fun-prompts:main-8383401
+        image: ghcr.io/nullvar2000/fun-prompts:main-27f4780
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
           containerPort: 8080
+        - name: artifacts
+          containerPort: 8081
+        env:
+        - name: FP_DATA_DIR
+          value: /data
+        - name: FP_ARTIFACT_BASE_URL
+          value: https://fun-prompts-artifacts.${GLOBAL_DOMAIN}
+        - name: FP_GALLERY_BASE_URL
+          value: https://fun-prompts.${GLOBAL_DOMAIN}
+        - name: FP_COOKIE_SECURE
+          value: "1"
+        - name: FP_JOB_TIMEOUT_S
+          value: "300"
+        - name: FP_RATE_LIMIT_PER_HOUR
+          value: "20"
+        - name: FP_ENDPOINT_ALLOWLIST
+          value: litellm.litellm.svc.cluster.local,litellm.litellm.svc.cluster.local:4000
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: fun-prompts
+              key: ADMIN_PASSWORD
+        - name: FP_SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: fun-prompts
+              key: FP_SESSION_SECRET
         readinessProbe:
           httpGet:
-            path: /gallery/
+            path: /healthz
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /gallery/
+            path: /healthz
             port: 8080
-          initialDelaySeconds: 10
+          initialDelaySeconds: 15
           periodSeconds: 20
         resources:
           requests:
-            cpu: 10m
-            memory: 32Mi
-          limits:
-            cpu: 100m
+            cpu: 50m
             memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
             drop: ["ALL"]
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: fun-prompts-data
