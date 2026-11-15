@@ -36,7 +36,7 @@ spec:
           type: RuntimeDefault
       containers:
       - name: fun-prompts
-        image: ghcr.io/nullvar2000/fun-prompts:main-27f4780
+        image: ghcr.io/nullvar2000/fun-prompts:main-29891da
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -52,6 +52,12 @@ spec:
           value: https://fun-prompts.${GLOBAL_DOMAIN}
         - name: FP_COOKIE_SECURE
           value: "1"
+        # Trust X-Forwarded-Proto/Host only from the pod network: the app's only
+        # peer is the istio gateway pod (10.244.3.x), so the origin derived from
+        # those headers matches the browser's Origin header instead of the
+        # plain-http socket the pod listens on.
+        - name: FP_FORWARDED_ALLOW_IPS
+          value: 10.244.0.0/16
         - name: FP_JOB_TIMEOUT_S
           value: "300"
         - name: FP_RATE_LIMIT_PER_HOUR
