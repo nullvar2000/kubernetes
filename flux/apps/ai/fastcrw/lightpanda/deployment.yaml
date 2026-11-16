@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: lightpanda
-          image: docker.io/lightpanda/browser:1.0.3 # {"$imagepolicy": "flux-system:lightpanda-policy"}
+          image: docker.io/lightpanda/browser:1.0.4 # {"$imagepolicy": "flux-system:lightpanda-policy"}
           command:
             - "/bin/lightpanda"
             - "serve"
