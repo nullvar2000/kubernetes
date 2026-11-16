@@ -36,7 +36,7 @@ spec:
           type: RuntimeDefault
       containers:
       - name: fun-prompts
-        image: ghcr.io/nullvar2000/fun-prompts:main-29891da
+        image: ghcr.io/nullvar2000/fun-prompts:main-2f2f276
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
