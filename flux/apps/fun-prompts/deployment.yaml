@@ -61,7 +61,7 @@ spec:
         - name: FP_JOB_TIMEOUT_S
           value: "300"
         - name: FP_MAX_OUTPUT_TOKENS
-          value: 65536
+          value: "65536"
         - name: FP_RATE_LIMIT_PER_HOUR
           value: "20"
         - name: FP_ENDPOINT_ALLOWLIST
