@@ -36,7 +36,7 @@ spec:
           type: RuntimeDefault
       containers:
       - name: fun-prompts
-        image: ghcr.io/nullvar2000/fun-prompts:main-2f2f276
+        image: ghcr.io/nullvar2000/fun-prompts:main-069f4e4
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -60,6 +60,8 @@ spec:
           value: 10.244.0.0/16
         - name: FP_JOB_TIMEOUT_S
           value: "300"
+        - name: FP_MAX_OUTPUT_TOKENS
+          value: 65536
         - name: FP_RATE_LIMIT_PER_HOUR
           value: "20"
         - name: FP_ENDPOINT_ALLOWLIST
