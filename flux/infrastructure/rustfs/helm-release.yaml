@@ -11,6 +11,12 @@ spec:
     name: rustfs
     namespace: flux-system
   values:
+    # Upstream's in-repo chart at git tag 1.0.6 is chart 1.0.4 and its appVersion
+    # (the default image tag) lags at 1.0.4. Pin the app image explicitly so the
+    # git-tag bump lands on the 1.0.6 stable release image.
+    image:
+      rustfs:
+        tag: "1.0.6"
     mode:
       standalone:
         enabled: true
