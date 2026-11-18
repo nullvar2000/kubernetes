@@ -7,6 +7,7 @@ resources:
   - ../common
   - namespace.yaml
   - secrets.clear.yaml
+  - cronjob.yaml
 
 configMapGenerator:
   # Merge into the base generators (one merged CM per name; verified in
@@ -23,6 +24,14 @@ configMapGenerator:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - files/SOUL.md
+  # Own generator (do NOT merge the script into agent-files): the annotation
+  # guards Flux's non-strict envsub so ${...} in the script survive (AGENTS.md).
+  - name: fluxcd-pr-script
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+    files:
+      - files/fluxcd-pr.py
 
 patches:
   # Additive rules FIRST: the target selector below matches the un-renamed
