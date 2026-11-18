@@ -5,7 +5,14 @@ metadata:
   namespace: mattermost
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: mattermost
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: mattermost
