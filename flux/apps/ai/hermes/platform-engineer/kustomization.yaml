@@ -7,6 +7,7 @@ resources:
   - ../common
   - namespace.yaml
   - secrets.clear.yaml
+  - secrets-fluxcd-pr.clear.yaml
   - cronjob.yaml
 
 configMapGenerator:

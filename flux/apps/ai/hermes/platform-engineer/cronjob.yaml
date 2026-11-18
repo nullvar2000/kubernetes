@@ -1,7 +1,10 @@
 # Opens PRs for fluxcd-*-image-update branches that don't have one yet.
-# Reuses the overlay's agent-env (GH_APP_ID/INSTALLATION_ID/GH_PR_REPO) and
-# agent-secrets (GH_APP_PRIVATE_KEY_B64); same hermes-policy marker as the
-# StatefulSet so the existing IUA bumps this image too.
+# Reuses the overlay's agent-env (GH_APP_ID/INSTALLATION_ID/GH_PR_REPO/
+# GH_PR_LABELS — all non-secret literals) but takes the private key from the
+# dedicated fluxcd-pr-secrets Secret, NOT agent-secrets: this job only needs
+# GH_APP_PRIVATE_KEY_B64, so the dashboard/A2A/LiteLLM/Mattermost/API creds
+# stay out of its blast radius (infosec review of PR #548). Same
+# hermes-policy marker as the StatefulSet so the existing IUA bumps it too.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -36,7 +39,7 @@ spec:
                 - configMapRef:
                     name: agent-env
                 - secretRef:
-                    name: agent-secrets
+                    name: fluxcd-pr-secrets
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:

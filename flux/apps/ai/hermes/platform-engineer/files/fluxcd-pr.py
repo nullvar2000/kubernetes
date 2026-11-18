@@ -9,8 +9,10 @@ commits land on the existing PR automatically.
 Mints a short-lived GitHub App installation token (1h expiry), same pattern
 as gh-pr.py. No long-lived credentials are stored.
 
-Env (from the agent-env configmap + agent-secrets):
+Env (from the agent-env configmap + fluxcd-pr-secrets):
     GH_APP_ID, GH_APP_INSTALLATION_ID, GH_PR_REPO, GH_APP_PRIVATE_KEY_B64
+    GH_PR_LABELS (optional): comma-separated label names to set on the PR
+    (same mechanism as gh-pr.py; the overlay sets security-review)
 """
 import base64
 import json
@@ -109,6 +111,20 @@ def api_post(path: str, token: str, body: dict):
         return json.load(resp)
 
 
+def api_get_list(path: str, token: str):
+    """Fetch every page of a list endpoint (infosec review PR #548: single
+    per_page=100 silently truncates past ~100 items)."""
+    items = []
+    page = 1
+    while True:
+        sep = "&" if "?" in path else "?"
+        batch = api_get(f"{path}{sep}per_page=100&page={page}", token)
+        items.extend(batch)
+        if len(batch) < 100:
+            return items
+        page += 1
+
+
 def build_title_and_body(app: str, branch: str, messages) -> tuple:
     """Title from the first old / last new tag; body lists every bump line."""
     bumps = [
@@ -139,14 +155,20 @@ def main() -> None:
 
     branches = sorted(
         b["name"]
-        for b in api_get(f"/repos/{repo}/branches?per_page=100", token)
+        for b in api_get_list(f"/repos/{repo}/branches", token)
         if b["name"].startswith(BRANCH_PREFIX)
         and b["name"].endswith(BRANCH_SUFFIX)
     )
     open_heads = {
         pr["head"]["ref"]
-        for pr in api_get(f"/repos/{repo}/pulls?state=open&per_page=100", token)
+        for pr in api_get_list(f"/repos/{repo}/pulls?state=open", token)
     }
+
+    labels = [
+        s.strip()
+        for s in os.environ.get("GH_PR_LABELS", "").split(",")
+        if s.strip()
+    ]
 
     failures = 0
     for branch in branches:
@@ -164,11 +186,10 @@ def main() -> None:
                 continue
             messages = [c["commit"]["message"] for c in comparison.get("commits", [])]
             title, body = build_title_and_body(app, branch, messages)
-            pr = api_post(
-                f"/repos/{repo}/pulls",
-                token,
-                {"title": title, "head": branch, "base": "main", "body": body},
-            )
+            payload = {"title": title, "head": branch, "base": "main", "body": body}
+            if labels:
+                payload["labels"] = labels
+            pr = api_post(f"/repos/{repo}/pulls", token, payload)
             print(f"created PR for {branch}: {pr['html_url']}")
         except urllib.error.HTTPError as err:
             failures += 1
