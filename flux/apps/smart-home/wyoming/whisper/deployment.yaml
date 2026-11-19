@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: wyoming-whisper
-        image: docker.io/rhasspy/wyoming-whisper:3.9.0 # {"$imagepolicy": "flux-system:whisper-policy"}
+        image: docker.io/rhasspy/wyoming-whisper:3.9.1 # {"$imagepolicy": "flux-system:whisper-policy"}
         args: ["--model", "small.en", "--language", "en", "--compute-type", "int8"]
         ports:
         - containerPort: 10300
