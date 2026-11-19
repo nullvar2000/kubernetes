@@ -1,15 +1,26 @@
 #!/bin/sh
-# Runs in the alpine install-sops initContainer (agent-files ConfigMap,
-# mounted at /seed). Installs pinned sops + kubectl onto the data PVC.
-# Idempotent: skips downloads when the pinned binaries already exist.
+# Runs in the alpine install-tools initContainer (agent-files ConfigMap,
+# mounted at /seed). Installs pinned sops + kubectl + flux onto the data PVC
+# and repairs sandbox leftovers. Idempotent: skips downloads when the pinned
+# binaries already exist.
 # Binaries land in a temp file and are moved into place: a target already on
 # the PVC may be owned by the agent user (uid 10000), and this container runs
-# as root with all capabilities dropped (no CAP_FOWNER), so chmod on such a
-# file fails with EPERM.
+# as root with ALL capabilities dropped EXCEPT CHOWN/FOWNER (granted in the
+# StatefulSet 2026-11-18 so the ownership repair below can work at all).
 set -eu
 
 BIN=/opt/data/.local/bin
 mkdir -p "$BIN"
+
+# --- sandbox leftovers repair (root-owned files are created by the hermes
+# terminal sandbox's uid remap; seed.sh's chown self-repair is a silent no-op
+# because seed-agent drops ALL caps) -------------------------------------
+# Ghost kubeconfigs are poison: kubectl prefers $HOME/.kube/config and fails
+# instead of falling back to the projected SA token (in-cluster auth).
+# Nothing in the GitOps repo ever creates them — always leftovers, always safe
+# to remove.
+rm -rf /opt/data/home/.kube /opt/data/.kube 2>/dev/null || true
+chown -R 10000:10000 "$BIN" /opt/data/home 2>/dev/null || true
 
 # NB sops --version prints "sops 3.13.3 (latest)" — no leading "v".
 install_sops=0
@@ -28,8 +39,18 @@ else
   install_kubectl=1
 fi
 
-if [ "$install_sops" = 1 ] || [ "$install_kubectl" = 1 ]; then
-  apk add --no-cache curl >/dev/null
+# flux CLI is absent too; pin to the cluster's controller series (gotk:
+# source-controller v1.7.4 / kustomize v1.7.3 / helm v1.4.5 => Flux v2.7.x,
+# newest patch v2.7.5). Needed for `flux get ks/hr/sources` verification runs.
+install_flux=0
+if [ -x "$BIN/flux" ] && "$BIN/flux" --version 2>/dev/null | grep -q 'flux: v2\.7\.5'; then
+  echo "flux v2.7.5 already installed"
+else
+  install_flux=1
+fi
+
+if [ "$install_sops" = 1 ] || [ "$install_kubectl" = 1 ] || [ "$install_flux" = 1 ]; then
+  apk add --no-cache curl tar >/dev/null
 fi
 
 if [ "$install_sops" = 1 ]; then
@@ -46,4 +67,14 @@ if [ "$install_kubectl" = 1 ]; then
   chmod 755 "$BIN/kubectl.new"
   mv -f "$BIN/kubectl.new" "$BIN/kubectl"
   echo "installed kubectl v1.35.9"
+fi
+
+if [ "$install_flux" = 1 ]; then
+  curl -fsSL -o /tmp/flux.tgz "https://github.com/fluxcd/flux2/releases/download/v2.7.5/flux_2.7.5_linux_amd64.tar.gz"
+  echo "1e92141e8498289e4b27411385aeb18396053176cf297b0cb99abd6ca8293e75  /tmp/flux.tgz" | sha256sum -c -
+  tar -xzf /tmp/flux.tgz -C /tmp ./flux
+  chmod 755 /tmp/flux
+  mv -f /tmp/flux "$BIN/flux"
+  rm -f /tmp/flux.tgz
+  echo "installed $( "$BIN/flux" --version 2>/dev/null | head -1 )"
 fi

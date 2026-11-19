@@ -23,14 +23,14 @@ spec:
       automountServiceAccountToken: false
       serviceAccountName: hermes
       securityContext:
-        fsGroup: 1000
-        # The agent image runs as uid 10000 (groups: 10000 only), but kubelet
-        # group-owns the projected SA-token volume as root:fsGroup(1000) mode
-        # 0640 (verified in-pod 2026-11-13: token is root:1000 -rw-r-----).
-        # Without gid 1000 on the process, /var/run/secrets/.../token is
-        # unreadable and kubectl fails since inception. supplementalGroups
-        # grants it; fsGroup stays 1000 so PVC/volume group ownership
-        # (/opt/data is hermes:1000 2775) is unchanged.
+        fsGroup: 10000
+        # Kubelet group-owns projected volumes as root:<fsGroup> mode 0640. The
+        # agent image runs as uid 10000 gid 10000 and the hermes terminal sandbox
+        # drops supplementary groups (verified 2026-11-18: `id` shows
+        # groups=10000 despite supplementalGroups), so the SA token must be
+        # readable via the PRIMARY gid: fsGroup 10000 => token root:10000 0640.
+        # supplementalGroups [1000] is kept only for legacy group-1000 content
+        # on the data PVC.
         supplementalGroups: [1000]
         seccompProfile:
           type: RuntimeDefault
@@ -44,6 +44,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop: ["ALL"]
+              add: ["CHOWN", "FOWNER"]
           resources:
             requests:
               memory: 64Mi
