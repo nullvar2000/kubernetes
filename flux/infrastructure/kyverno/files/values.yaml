@@ -23,3 +23,10 @@ cleanupController:
 reportsController:
   serviceMonitor:
     enabled: true
+
+# The chart 3.10 pre-upgrade gate job (kyverno-check-legacy-policies) defaults to
+# activeDeadlineSeconds 120, which a cold pull of the kyverno-cli image alone
+# exceeds (~70s observed 2026-11-18). Raise it; the gate itself stays enabled.
+upgrade:
+  legacyPolicyCheck:
+    activeDeadlineSeconds: 600

@@ -5,7 +5,15 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
+  timeout: 15m
   releaseName: kyverno
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+    crds: CreateReplace
   chart:
     spec:
       chart: kyverno
@@ -13,9 +21,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kyverno
-
-  upgrade:
-    crds: CreateReplace
 
   valuesFrom:
     - kind: ConfigMap
