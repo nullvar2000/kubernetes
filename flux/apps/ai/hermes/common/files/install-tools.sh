@@ -72,7 +72,7 @@ fi
 if [ "$install_flux" = 1 ]; then
   curl -fsSL -o /tmp/flux.tgz "https://github.com/fluxcd/flux2/releases/download/v2.7.5/flux_2.7.5_linux_amd64.tar.gz"
   echo "1e92141e8498289e4b27411385aeb18396053176cf297b0cb99abd6ca8293e75  /tmp/flux.tgz" | sha256sum -c -
-  tar -xzf /tmp/flux.tgz -C /tmp ./flux
+  tar -xzf /tmp/flux.tgz -C /tmp
   chmod 755 /tmp/flux
   mv -f /tmp/flux "$BIN/flux"
   rm -f /tmp/flux.tgz
