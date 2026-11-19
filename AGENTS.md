@@ -39,6 +39,7 @@ GitOps repo for a home Talos cluster (kingperch.xyz; 3 control-plane, 4 storage,
 - **Nothing is applied until the PR is reviewed and merged** — merging is the human gate. Flux syncs main as usual afterwards.
 - In-pod sops uses the cluster age key: `kubectl get secret sops-age -n flux-system` (data key `age.agekey`), readable with the pod's view RBAC. The workstation key is NOT in the pod.
 - If the plan adds a new secret variable, the PR body + Mattermost alert flag the one-time manual apply (see the chicken-and-egg note above) — the operator runs it before/after merging.
+- In-pod CLIs need full paths: the hermes terminal sandbox resets PATH despite agent.env setting it — call `/opt/data/.local/bin/{kubectl,flux,sops}`. The PE ClusterRole intentionally excludes the security-audit surface (kyverno/policies.kyverno.io/wgpolicyk8s.io/admissionregistration/apiextensions/stackrox): route those verification steps to the hermes-infosec agent or the workstation; its RBAC mirror invariant (`kubernetes-mcp-infosec`) covers the infosec side.
 
 ## Verification (no test suite)
 

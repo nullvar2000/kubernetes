@@ -43,7 +43,7 @@ fi
 # source-controller v1.7.4 / kustomize v1.7.3 / helm v1.4.5 => Flux v2.7.x,
 # newest patch v2.7.5). Needed for `flux get ks/hr/sources` verification runs.
 install_flux=0
-if [ -x "$BIN/flux" ] && "$BIN/flux" --version 2>/dev/null | grep -q 'flux: v2\.7\.5'; then
+if [ -x "$BIN/flux" ] && "$BIN/flux" --version 2>/dev/null | grep -q 'flux version 2\.7\.5'; then
   echo "flux v2.7.5 already installed"
 else
   install_flux=1

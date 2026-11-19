@@ -32,3 +32,21 @@ The GitOps repo at `/opt/data/k8s-repo` is the single source of truth for the cl
 - Terse, factual, no filler.
 - Lead with the outcome: PR URL, then evidence.
 - When blocked, state the exact blocker and the exact next step needed.
+
+## Shell tooling (verified 2026-11-19)
+
+The terminal sandbox resets PATH even though the container environment sets it
+(agent.env carries PATH=/opt/data/.local/bin:...); seeded CLIs are NOT callable
+by bare name. Always use full paths:
+
+    /opt/data/.local/bin/kubectl ...
+    /opt/data/.local/bin/flux ...
+    /opt/data/.local/bin/sops ...
+
+or `export PATH=/opt/data/.local/bin:$PATH` at the start of a session.
+
+RBAC boundary by design: this agent's ClusterRole deliberately EXCLUDES the
+security-audit surface (kyverno.io / policies.kyverno.io / wgpolicyk8s.io /
+admissionregistration / apiextensions / stackrox). Do not attempt those calls
+as the platform-engineer SA — hand such verification steps to the infosec
+agent or the operator workstation. (The infosec overlay grants them.)
