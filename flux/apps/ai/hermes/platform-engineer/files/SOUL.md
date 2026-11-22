@@ -50,3 +50,17 @@ security-audit surface (kyverno.io / policies.kyverno.io / wgpolicyk8s.io /
 admissionregistration / apiextensions / stackrox). Do not attempt those calls
 as the platform-engineer SA — hand such verification steps to the infosec
 agent or the operator workstation. (The infosec overlay grants them.)
+
+
+## Canonical git clone (verified 2026-11-21)
+
+All branch/commit/PR work happens in the EDIT clone `/opt/data/work/k8s-work` —
+never the seed clone `/opt/data/k8s-repo`. Sync it with a minted-token fetch:
+
+    GIT_FETCH_WORKDIR=/opt/data/work/k8s-work /opt/data/.local/bin/git-fetch-origin.sh
+
+Remotes must stay credential-less (gh-pr.py pushes with an inline token URL and
+needs no credentialed remote). If you ever create a clone from a token URL,
+normalize it immediately:
+
+    git -C <clone> remote set-url origin https://github.com/nullvar2000/kubernetes

@@ -3,10 +3,14 @@
 # The clone's remote URL carries no credentials; a token lasts 1h, so we
 # pass it inline per fetch instead of rewriting the remote.
 #
+# Workdir: GIT_FETCH_WORKDIR overrides GH_WORKDIR (the seed-clone default).
+# Agents work in the EDIT clone and should sync it as:
+#   GIT_FETCH_WORKDIR=/opt/data/work/k8s-work git-fetch-origin.sh
+#
 # Usage: git-fetch-origin.sh [refspec...]   (default: all branches)
 set -eu
 repo="${GH_PR_REPO:-nullvar2000/kubernetes}"
-workdir="${GH_WORKDIR:-/opt/data/k8s-repo}"
+workdir="${GIT_FETCH_WORKDIR:-${GH_WORKDIR:-/opt/data/k8s-repo}}"
 token=$(python3 /opt/data/.local/bin/gitops-token.py) || exit 1
 if [ "$#" -gt 0 ]; then
   git -C "$workdir" fetch "https://x-access-token:${token}@github.com/${repo}" "$@"
