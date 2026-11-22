@@ -51,6 +51,9 @@ ensure_gitops_repo() {
   # copied (not symlinked): /seed is unmounted once the pod is running, and
   # the agent uses these for fetches mid-session.
   cp "$SEED/gitops-token.py" "$SEED/git-fetch-origin.sh" "$BIN/"
+  # ConfigMap copies land 664; make the fetch helper directly executable (the
+  # SOUL.md/AGENTS.md convention). Runs every pod start → repairs existing PVCs.
+  chmod 755 "$BIN/git-fetch-origin.sh" 2>/dev/null || true
 }
 
 BIN=/opt/data/.local/bin
