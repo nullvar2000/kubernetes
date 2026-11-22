@@ -31,6 +31,13 @@ GitOps repo for a home Talos cluster (kingperch.xyz; 3 control-plane, 4 storage,
 - `hosts/` = out-of-cluster host infrastructure (e.g. `hosts/comfyui/`: ComfyUI + MCP-gateway image and compose for 192.168.30.254). NOT Flux-synced — the repo files are the source of truth, applied manually on the target host (see each dir's README)
 - `venv/` and `tmp/` are local scratch, not project content. `cleank8s.sh` deletes pods in Error/Failed/Unknown phase
 
+## Lab TODO (BookStack)
+
+- Permanent cluster/lab TODO list: BookStack page `lab-ops/cluster-todo` (book "Lab Ops", page id 5) — at wiki.kingperch.xyz, writable via the litellm bookstack MCP (`bookstack_pages_append` / `bookstack_pages_edit`)
+- Any agent may append items under **Next** and change statuses (tick/move to Done after completing work) but must never delete items or restructure the page — pruning is human-only
+- Read the page's House-rules block before writing (entry format, area tags); never put secrets on the page (wiki + mcp-wiki are on the public gateway)
+- hermes agents still lack the bookstack MCP mount (see the tracked item on the page itself); opencode has it via litellm
+
 ## Implementation agent (platform-engineer)
 
 - Approved plans (from k8s-architect or the user) are executed by the **platform-engineer** agent: a Hermes Agent running in-cluster (namespace `hermes-platform-engineer`, pod `hermes-0`; StatefulSet `hermes` from `flux/apps/ai/hermes/common` + the platform-engineer overlay), reached over the A2A protocol through the LiteLLM JSON-RPC passthrough (`POST https://litellm.kingperch.xyz/a2a/platform-engineer`). The opencode subagent `.opencode/agents/platform-engineer.md` is a thin client that wraps `~/.local/bin/k8s-a2a` (send → poll `tasks/list` by contextId; `message/send` blocks upstream for up to 30 min so the wrapper polls).
