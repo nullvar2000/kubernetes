@@ -53,7 +53,9 @@ ensure_gitops_repo() {
   cp "$SEED/gitops-token.py" "$SEED/git-fetch-origin.sh" "$BIN/"
   # ConfigMap copies land 664; make the fetch helper directly executable (the
   # SOUL.md/AGENTS.md convention). Runs every pod start → repairs existing PVCs.
-  chmod 755 "$BIN/git-fetch-origin.sh" 2>/dev/null || true
+  # CHOWN/FOWNER were added to seed-agent on 2026-11-22: this initContainer runs
+  # as root but root-without-FOWNER chmod on a hermes-owned file fails EPERM.
+  chmod 755 "$BIN/git-fetch-origin.sh" 2>/dev/null || echo "WARN: chmod git-fetch-origin.sh failed (need FOWNER)"
 }
 
 BIN=/opt/data/.local/bin

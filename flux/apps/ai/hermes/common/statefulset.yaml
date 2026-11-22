@@ -77,6 +77,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop: ["ALL"]
+              add: ["CHOWN", "FOWNER"]
           resources:
             requests:
               memory: 128Mi
