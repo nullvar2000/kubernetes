@@ -5,7 +5,7 @@
 # binaries already exist.
 # Binaries land in a temp file and are moved into place: a target already on
 # the PVC may be owned by the agent user (uid 10000), and this container runs
-# as root with ALL capabilities dropped EXCEPT CHOWN/FOWNER (granted in the
+# as root with ALL capabilities dropped EXCEPT CHOWN/FOWNER/DAC_OVERRIDE (granted in the
 # StatefulSet 2026-11-18 so the ownership repair below can work at all).
 set -eu
 
@@ -21,6 +21,17 @@ mkdir -p "$BIN"
 # to remove.
 rm -rf /opt/data/home/.kube /opt/data/.kube 2>/dev/null || true
 chown -R 10000:10000 "$BIN" /opt/data/home 2>/dev/null || true
+
+# Credential-less-remote invariant for the EDIT clone (infosec advisory on #575,
+# 2026-11-21): ad-hoc clones made with an inline minted GitHub App token URL
+# persist it in .git/config. The token expires in ~1h (inert), but we keep the
+# same no-credentials-in-remotes pattern seed.sh enforces for the seed clone.
+# busybox sed (alpine) edits .git/config directly; the pattern matches ONLY the
+# x-access-token URL form. Needs DAC_OVERRIDE (the clone is hermes-owned).
+if [ -f /opt/data/work/k8s-work/.git/config ]; then
+  sed -i 's#https://x-access-token:[^@]*@github\.com/#https://github.com/#g' \
+    /opt/data/work/k8s-work/.git/config && echo "normalized edit-clone remote"
+fi
 
 # NB sops --version prints "sops 3.13.3 (latest)" — no leading "v".
 install_sops=0
