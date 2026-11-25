@@ -34,10 +34,18 @@ custom_providers:
 # comfyui is intentionally omitted (irrelevant to agent work).
 # kubernetes MCP is intentionally absent: agents reach the cluster via the
 # in-pod kubectl (ClusterRole hermes-<agent>-read) instead of a cluster-wide
-# MCP server. fastcrw is the agent's only gateway MCP.
+# MCP server.
+# bookstack = the Lab Ops wiki (AGENTS.md "Lab TODO"): agents read/append the
+# Cluster TODO page through it. Requires the agent's LiteLLM key to carry
+# object_permission.mcp_servers: ["bookstack"] in the LiteLLM DB — without
+# that grant the gateway refuses the MCP session (added 2026-11-25).
 mcp_servers:
   fastcrw:
     url: http://litellm.litellm.svc.cluster.local:4000/mcp/fastcrw
+    headers:
+      Authorization: "Bearer ${env:LITELLM_API_KEY}"
+  bookstack:
+    url: http://litellm.litellm.svc.cluster.local:4000/mcp/bookstack
     headers:
       Authorization: "Bearer ${env:LITELLM_API_KEY}"
 
