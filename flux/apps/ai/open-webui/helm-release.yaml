@@ -29,6 +29,17 @@ spec:
 
     tika: 
       enabled: true
+      # Trim the vendored tika subchart (3.2.2) default requests
+      # (1 CPU/1500Mi) to observed usage (~247Mi, ~3.5m); limits keep JVM
+      # parsing headroom. Must live in this same tika: block — YAML forbids
+      # two top-level tika: keys in the values.
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          cpu: "1"
+          memory: 1500Mi
     
     managedCertificate:
       enabled: false
@@ -53,6 +64,37 @@ spec:
       accessModes:
         - ReadWriteOnce
       storageClass: "longhorn"
+
+    # Kyverno ValidatingPolicy require-resources: every container and
+    # initContainer needs requests+limits cpu+memory. Limits for the app are
+    # sized for in-process faster-whisper large-v3-turbo (see extraEnvVars),
+    # not the ~700Mi idle footprint.
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: "4"
+        memory: 4Gi
+
+    copyAppData:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          cpu: 500m
+          memory: 256Mi
+
+    websocket:
+      redis:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
 
     livenessProbe:
       httpGet:
